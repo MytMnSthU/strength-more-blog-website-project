@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    font-family: 'Darker Grotesque', sans-serif;
+}
+
+h6{
+    font-size: 24px;
+    font-weight: 800;
+}
+
+p{
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.25;
+    margin-bottom: 1rem;
+}
