@@ -17,7 +17,7 @@ import {
     FaTwitter,
     FaUserAlt,
 } from "react-icons/fa";
-import { createContext, isValidElement, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import request, { gql } from "graphql-request";
 import PuffLoader from "react-spinners/PuffLoader";
 
@@ -282,7 +282,7 @@ const CommentForm = ({ articleId , fetchAndSetArticles }) => {
     // console.log('valid?',isEmailFormat('aaaa'));
 
     const postData = async (title,  username, email, articleId) => {
-        const endpoint = import.meta.env.VITE_REACT_APP_API_KEY;
+        const endpoint = import.meta.env.VITE_API_KEY;
 
         const createCommentQuery = gql`
             mutation CreateComment(
@@ -845,7 +845,7 @@ const App = () => {
     `;
 
     const fetchData = async (query = defaultGetQuery) => {
-        const endpoint = import.meta.env.VITE_REACT_APP_API_KEY;
+        const endpoint = import.meta.env.VITE_API_KEY;
 
         const data = await request(endpoint, query);
 
@@ -974,7 +974,7 @@ const App = () => {
                     >
                         <Nav />
 
-                        <div className="container grid lg:grid-cols-3  gap-5 p-2.5 mx-auto sm:pb-20">
+                        <div className=" container grid lg:grid-cols-3  gap-5 p-2.5 mx-auto sm:pb-20">
                             <div className=" sm:col-span-2">
                                 <Routes>
                                     <Route
