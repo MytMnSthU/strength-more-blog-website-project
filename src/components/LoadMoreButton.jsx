@@ -1,3 +1,5 @@
+import { PuffLoader } from "react-spinners";
+
 const LoadMoreButton = ({
     children,
     onClickBtn,
