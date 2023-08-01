@@ -79,50 +79,57 @@ const App = () => {
     `;
 
     const fetchData = async (query = defaultGetQuery) => {
-        const endpoint = import.meta.env.VITE_API_KEY;
+        try {
+            const endpoint = import.meta.env.VITE_API_KEY;
 
-        const data = await request(endpoint, query);
+            const data = await request(endpoint, query);
 
-        return data;
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     const fetchAndSetArticles = async (query) => {
-        const data = await fetchData(query);
+        try {
+            const data = await fetchData(query);
 
-        const fetchedArticles = data.articles;
+            const fetchedArticles = data.articles;
 
-        const formattedArticles = fetchedArticles.map((article) => {
-            const newArticle = {
-                ...article,
-                createdAt: formatDate(article.createdAt),
-                comments: article.comments.map((comment) => {
-                    const newComment = {
-                        ...comment,
-                        createdAt: formatDate(comment.createdAt),
-                    };
-                    return newComment;
-                }),
-            };
+            const formattedArticles = fetchedArticles.map((article) => {
+                const newArticle = {
+                    ...article,
+                    createdAt: formatDate(article.createdAt),
+                    comments: article.comments.map((comment) => {
+                        const newComment = {
+                            ...comment,
+                            createdAt: formatDate(comment.createdAt),
+                        };
+                        return newComment;
+                    }),
+                };
 
-            return newArticle;
-        });
+                return newArticle;
+            });
 
-        // console.log('format',formattedArticles);
-        // sortByDesc(formattedArticles);
-        // console.log(formattedArticles);
-        console.log(formattedArticles);
-
-        setArticles(formattedArticles);
-        setLoading(false);
-        setBtnLoading(false);
+            setArticles(formattedArticles);
+            setLoading(false);
+            setBtnLoading(false);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     const fetchAndSetCategories = async (query) => {
-        const data = await fetchData(query);
+        try {
+            const data = await fetchData(query);
 
-        const fetchedCategories = data.categories;
+            const fetchedCategories = data.categories;
 
-        setCategories(fetchedCategories);
+            setCategories(fetchedCategories);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     const formatDate = (date) => {
@@ -137,10 +144,6 @@ const App = () => {
         const formattedDate = `${month} ${day}, ${year}`;
 
         return formattedDate;
-    };
-
-    const sortByDesc = (items) => {
-        items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     };
 
     const searchArticles = (searchTerm) => {
@@ -167,10 +170,8 @@ const App = () => {
     };
 
     const moreBlog = () => {
-        // console.log(maxArticlesCount, currentArticlesCount);
         let newTotal = currentArticlesCount + 2;
         setCurrentArticlesCount(newTotal);
-        // fetchAndSetArticles();
 
         if (maxArticlesCount === currentArticlesCount + 2) {
             setIsDisable(true);
@@ -192,8 +193,6 @@ const App = () => {
         fetchAndSetArticles();
         fetchAndSetCategories(getCategoriesQuery);
         fetchAndSetArticlesTotal();
-
-        // console.log(articles);
     }, [currentArticlesCount]);
 
     return (

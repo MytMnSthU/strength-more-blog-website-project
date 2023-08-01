@@ -23,7 +23,7 @@ const ArticleDetail = ({ articles, fetchAndSetArticles }) => {
 
     return (
         <div className=" grid gap-2.5 p-2.5 lg:pt-10">
-            <div className=" h-[200px] sm:h-[400px] rounded-[20px] border-2 border-black overflow-hidden relative">
+            <div className="w-full h-[200px] sm:h-[400px] rounded-[20px] border-2 border-black overflow-hidden relative">
                 <img
                     src={currentArticle.image.url}
                     className=" w-full h-full object-cover"
