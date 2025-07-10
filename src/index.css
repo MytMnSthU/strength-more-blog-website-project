@@ -19,3 +19,7 @@ p{
     line-height: 1.25;
     margin-bottom: 1rem;
 }
+
+.container {
+	max-width: 1340px;
+}

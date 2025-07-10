@@ -173,7 +173,7 @@ const App = () => {
         let newTotal = currentArticlesCount + 4;
         setCurrentArticlesCount(newTotal);
 
-        if (maxArticlesCount === currentArticlesCount + 4) {
+        if (maxArticlesCount === currentArticlesCount + 4 || maxArticlesCount < currentArticlesCount + 4) {
             setIsDisable(true);
         }
     };
