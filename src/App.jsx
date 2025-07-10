@@ -170,10 +170,10 @@ const App = () => {
     };
 
     const moreBlog = () => {
-        let newTotal = currentArticlesCount + 2;
+        let newTotal = currentArticlesCount + 4;
         setCurrentArticlesCount(newTotal);
 
-        if (maxArticlesCount === currentArticlesCount + 2) {
+        if (maxArticlesCount === currentArticlesCount + 4) {
             setIsDisable(true);
         }
     };
