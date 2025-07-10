@@ -180,7 +180,6 @@ const App = () => {
 
     const scrollToTop = () => {
         scrollContainerRef.current.scrollIntoView({
-            behavior: "smooth",
             block: "start",
         });
     };
