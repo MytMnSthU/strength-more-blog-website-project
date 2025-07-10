@@ -104,21 +104,21 @@ const CommentForm = ({ articleId, fetchAndSetArticles }) => {
             <textarea
                 ref={textRef}
                 rows="4"
-                className=" w-full p-2 px-4 text-lg font-bold  rounded-[20px] border-2 border-black  placeholder:font-normal placeholder:text-black"
+                className=" w-full bg-[#F3F1E8] p-2 px-4 text-lg font-bold  border-2 border-black  placeholder:font-normal placeholder:text-black"
                 placeholder="Some text here..."
             ></textarea>
 
             <input
                 ref={nameInputRef}
                 type="text"
-                className="w-full p-2  px-4 text-lg font-bold rounded-[15px] border-2 border-black  placeholder:font-normal placeholder:text-black"
+                className="w-full bg-[#F3F1E8] p-2  px-4 text-lg font-bold border-2 border-black  placeholder:font-normal placeholder:text-black"
                 placeholder="Name"
             />
 
             <input
                 ref={emailInputRef}
                 type="email"
-                className="w-full p-2  px-4 text-lg font-bold rounded-[15px] border-2 border-black  placeholder:font-normal placeholder:text-black"
+                className="w-full bg-[#F3F1E8] p-2  px-4 text-lg font-bold border-2 border-black  placeholder:font-normal placeholder:text-black"
                 placeholder="Email"
             />
 

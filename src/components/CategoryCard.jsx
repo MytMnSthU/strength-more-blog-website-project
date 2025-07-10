@@ -15,8 +15,8 @@ const CategoryCard = ({ category }) => {
             }}
             className=" relative group"
         >
-            <div className=" h-full bg-white p-2.5 border-2 border-black rounded-[30px] group-hover:translate-x-[3px] group-hover:translate-y-[3px] transition-all relative z-10">
-                <div className=" h-full border border-black rounded-[20px] relative  overflow-hidden">
+            <div className=" h-full bg-[#F3F1E8] p-2.5 border-2 border-black group-hover:translate-x-[3px] group-hover:translate-y-[3px] transition-all relative z-10">
+                <div className=" h-full border border-black relative  overflow-hidden">
                     <img
                         src={category.image.url}
                         className=" w-full h-full object-cover"
@@ -28,7 +28,7 @@ const CategoryCard = ({ category }) => {
                     </span>
                 </div>
             </div>
-            <div className=" w-full h-full rounded-[30px] bg-black  absolute top-0 left-0 translate-x-[3px] translate-y-[3px]"></div>
+            <div className=" w-full h-full bg-black  absolute top-0 left-0 translate-x-[3px] translate-y-[3px]"></div>
         </div>
     );
 };

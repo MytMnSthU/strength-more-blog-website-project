@@ -17,7 +17,7 @@ const SearchBar = ({ searchArticles }) => {
             onMouseLeave={() => setIsSearchInputFocus(false)}
             className=" relative "
         >
-            <form className=" bg-white rounded-[15px]  border-2 border-black relative z-10 translate-x-[-3px] translate-y-[-3px] focus-within:translate-x-0 focus-within:translate-y-0 transition-all">
+            <form className=" bg-[#F3F1E8]  border-2 border-black relative z-10 translate-x-[-3px] translate-y-[-3px] focus-within:translate-x-0 focus-within:translate-y-0 transition-all">
                 <div className="flex items-center gap-2.5 p-2.5">
                     <FaSearch />
                     <input
@@ -31,7 +31,7 @@ const SearchBar = ({ searchArticles }) => {
                         onFocus={() => setIsSearchInputFocus(true)}
                         // onBlur={() => setIsSearchInputFocus(false)}
                         type="text"
-                        className=" w-full focus:outline-none text-lg font-bold placeholder:text-sm placeholder:text-black placeholder:font-normal"
+                        className=" w-full bg-transparent focus:outline-none text-lg font-bold placeholder:text-sm placeholder:text-black placeholder:font-normal"
                         placeholder="SEARCH"
                     />
                 </div>
@@ -60,7 +60,7 @@ const SearchBar = ({ searchArticles }) => {
                     </div>
                 )}
             </form>
-            <div className=" w-full h-full bg-black rounded-[15px] absolute top-0 left-0"></div>
+            <div className=" w-full h-full bg-black absolute top-0 left-0"></div>
         </div>
     );
 };

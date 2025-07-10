@@ -8,7 +8,7 @@ const CategoriesBox = ({ categories }) => {
 
     return (
         <div className=" relative">
-            <div className=" bg-white border-2 border-black rounded-[20px] relative z-10">
+            <div className=" bg-[#F3F1E8] border-2 border-black relative z-10">
                 <span
                     onClick={() => {
                         navigate("/categories");
@@ -24,7 +24,7 @@ const CategoriesBox = ({ categories }) => {
                     ))}
                 </div>
             </div>
-            <div className=" w-full h-full bg-black rounded-[20px] absolute top-0 left-0 translate-x-[3px] translate-y-[3px]"></div>
+            <div className=" w-full h-full bg-black absolute top-0 left-0 translate-x-[3px] translate-y-[3px]"></div>
         </div>
     );
 };

@@ -37,7 +37,7 @@ const ArticleDetail = ({ articles, fetchAndSetArticles }) => {
             <TimeLabel time={currentArticle.createdAt} />
 
 
-            <div className="w-full h-[200px] sm:h-[400px] rounded-[20px] border-2 border-black overflow-hidden relative mt-2.5">
+            <div className="w-full h-[200px] sm:h-[400px] border-2 border-black overflow-hidden relative mt-2.5">
                 <img
                     src={currentArticle.image.url}
                     className=" w-full h-full object-cover"

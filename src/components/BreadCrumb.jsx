@@ -13,7 +13,7 @@ const BreadCrumb = ({ items }) => {
 					return (
 						<li key={idx} className="flex items-center leading-tight">
 							{item.to && !isLast ? (
-								<Link to={item.to} style={{ textDecoration: "none", textDecoration: "underline", fontWeight: "bold", color: "#333" }}>
+								<Link to={item.to} style={{textDecoration: "underline", fontWeight: "bold", color: "#333" }}>
 									{item.label}
 								</Link>
 							) : (

@@ -22,8 +22,8 @@ const ArticleCard = ({ article }) => {
             }}
             className=" relative group cursor-pointer"
         >
-            <div className=" bg-white h-full  grid gap-2.5 border-2 border-black rounded-[30px] p-2.5 pb-5 relative z-10 group-hover:translate-x-[3px] group-hover:translate-y-[3px] transition-all">
-                <div className=" h-[250px] border border-black rounded-[20px] overflow-hidden relative ">
+            <div className=" bg-[#F3F1E8] h-full  grid gap-2.5 border-2 border-black  p-2.5 pb-5 relative z-10 group-hover:translate-x-[4px] group-hover:translate-y-[4px] transition-all">
+                <div className=" h-[250px] border border-black overflow-hidden relative ">
                     <img
                         src={article.image.url}
                         className=" w-full h-full object-cover"
@@ -51,7 +51,7 @@ const ArticleCard = ({ article }) => {
 						: stripHTML(article.content.html)}
 				</p>
             </div>
-            <div className=" w-full h-full bg-black rounded-[30px] absolute top-0 left-0 translate-x-[3px] translate-y-[3px] z-0"></div>
+            <div className=" w-full h-full bg-black  absolute top-0 left-0 translate-x-[4px] translate-y-[4px] z-0"></div>
         </div>
     );
 };
