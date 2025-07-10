@@ -4,7 +4,7 @@ import SearchBar from "./SearchBar";
 
 const SideBar = ({ categories, popularArticles, searchArticles }) => {
     return (
-        <div className=" hidden lg:flex flex-col gap-5 mt-12 px-8">
+        <div className=" hidden lg:flex flex-col gap-5 mt-12 px-8 sticky top-3 h-screen">
             <SearchBar searchArticles={searchArticles} />
             <CategoriesBox categories={categories} />
             <ArticlesBox
