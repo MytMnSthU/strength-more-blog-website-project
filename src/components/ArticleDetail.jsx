@@ -4,6 +4,7 @@ import TimeLabel from "./TimeLabel";
 import CommentBox from "./CommentBox";
 import CommentForm from "./CommentForm";
 import CategoryLabel from "./CategoryLabel";
+import BreadCrumb from "./BreadCrumb";
 
 
 
@@ -21,9 +22,22 @@ const ArticleDetail = ({ articles, fetchAndSetArticles }) => {
         contentRef.current.innerHTML = currentArticle.content.html;
     }, [contentRef, articleId]);
 
+	const breadCrumbItems = [
+		{ label: "Home", to: "/" },
+		{ label: currentArticle.title },
+	];
+
     return (
-        <div className=" grid gap-2.5 p-2.5 lg:pt-10">
-            <div className="w-full h-[200px] sm:h-[400px] rounded-[20px] border-2 border-black overflow-hidden relative">
+		<div className=" grid gap-2.5 ">
+			<BreadCrumb items={breadCrumbItems} />
+
+			<h1 className=" text-3xl md:text-4xl font-extrabold leading-none mt-5">
+                {currentArticle.title}
+            </h1>
+            <TimeLabel time={currentArticle.createdAt} />
+
+
+            <div className="w-full h-[200px] sm:h-[400px] rounded-[20px] border-2 border-black overflow-hidden relative mt-2.5">
                 <img
                     src={currentArticle.image.url}
                     className=" w-full h-full object-cover"
@@ -36,12 +50,6 @@ const ArticleDetail = ({ articles, fetchAndSetArticles }) => {
                     ))}
                 </div>
             </div>
-
-            <TimeLabel time={currentArticle.createdAt} />
-
-            <h1 className=" text-3xl md:text-4xl font-extrabold leading-none mb-3">
-                {currentArticle.title}
-            </h1>
 
             <div ref={contentRef}></div>
 
