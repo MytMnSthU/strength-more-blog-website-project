@@ -20,7 +20,7 @@ const ArticleBoxCard = ({ article }) => {
         >
             <hr className=" border-b-2 border-b-black" />
             <div className=" p-4 grid gap-2.5">
-                <div className=" flex">
+                <div className=" flex gap-2">
                     {article.categories.map((category) => (
                         <CategoryLabel key={category.id} category={category} />
                     ))}

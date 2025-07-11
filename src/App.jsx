@@ -12,6 +12,7 @@ import ArticleList from "./components/ArticleList";
 import FilterArticleList from "./components/FilterArticleList";
 import Footer from "./components/Footer";
 import CategoryList from "./components/CategoryList";
+import { formatDate } from "./utils/utils";
 
 const App = () => {
     const [articles, setArticles] = useState([]);
@@ -132,20 +133,6 @@ const App = () => {
         }
     };
 
-    const formatDate = (date) => {
-        const newDate = new Date(date);
-
-        const month = newDate.toLocaleDateString("en-US", { month: "short" });
-
-        const day = newDate.getDate();
-
-        const year = newDate.getFullYear();
-
-        const formattedDate = `${month} ${day}, ${year}`;
-
-        return formattedDate;
-    };
-
     const searchArticles = (searchTerm) => {
         const searchedArticles = articles.filter((article) =>
             article.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -227,7 +214,6 @@ const App = () => {
                                         path="/articles/:articleId"
                                         element={
                                             <ArticleDetail
-                                                articles={articles}
                                                 fetchAndSetArticles={
                                                     fetchAndSetArticles
                                                 }
@@ -247,7 +233,8 @@ const App = () => {
                                         path="/categories/:categoryId"
                                         element={
                                             <FilterArticleList
-                                                articles={articles}
+												articles={articles}
+												setArticles={setArticles}
                                             />
                                         }
                                     />

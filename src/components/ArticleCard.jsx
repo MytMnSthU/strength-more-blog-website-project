@@ -30,7 +30,7 @@ const ArticleCard = ({ article }) => {
                         alt={article.image.url}
                     />
 
-                    <div className=" flex absolute top-2 left-2 ">
+                    <div className=" flex gap-2 absolute top-2 left-2 ">
                         {article.categories.map((category) => (
                             <CategoryLabel
                                 key={category.id}
