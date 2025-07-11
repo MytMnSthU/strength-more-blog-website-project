@@ -17,7 +17,7 @@ const ArticlesBox = ({ boxTitle, articles }) => {
                     {boxTitle}
                 </span>
 
-                <div className="overflow-y-auto h-[320px]">
+                <div className="overflow-y-auto h-fit max-h-[47vh]">
                     {articles.map((article) => (
                         <ArticleBoxCard key={article.id} article={article} />
                     ))}
