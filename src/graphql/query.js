@@ -1,8 +1,8 @@
 import { gql } from "graphql-request";
 
 export const GET_ARTICLES = gql`
-	query GetArticles($first: Int = 10) {
-		articles(orderBy: publishedAt_DESC, first: $first) {
+	query GetArticles($limit: Int = 8, $skip: Int = 4) {
+		articles(orderBy: publishedAt_DESC, first: $limit, skip: $skip) {
 			id
 			title
 			slug

@@ -3,21 +3,17 @@ import { PuffLoader } from "react-spinners";
 const LoadMoreButton = ({
     children,
     onClickBtn,
-    isDisableBtn,
-    btnLoading,
-    setBtnLoading,
+	isLoading,
     type = "button",
 }) => (
     <button
         onClick={() => {
-            setBtnLoading(true);
             onClickBtn();
         }}
         type={type}
-        disabled={isDisableBtn}
-        className=" px-8 py-4 text-base font-bold uppercase text-white bg-black border-2 border-black leading-none mt-5 disabled:cursor-not-allowed"
+        className=" w-full max-w-[200px] min-h-[70px] px-8 py-4 text-base font-bold uppercase text-white bg-black border-2 border-black leading-none mt-5 disabled:cursor-not-allowed flex justify-center items-center"
     >
-        {btnLoading ? <PuffLoader size={30} color="#ffffff" /> : children}
+        {isLoading ? <PuffLoader size={26} color="#ffffff" /> : children}
     </button>
 );
 

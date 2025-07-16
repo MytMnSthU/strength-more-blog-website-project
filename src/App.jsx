@@ -26,6 +26,8 @@ const queryClient = new QueryClient();
 const App = () => {
 	const [articles, setArticles] = useState([]);
 	const [categories, setCategories] = useState([]);
+
+
 	const [currentArticlesCount, setCurrentArticlesCount] = useState(8);
 	const [maxArticlesCount, setMaxArticlesCount] = useState(0);
 	const [isDisable, setIsDisable] = useState(false);
@@ -36,16 +38,14 @@ const App = () => {
 
 	const popularArticles = articles?.filter((article) => article.popularArticle === true);
 
-	const fetchData = async (query = defaultGetQuery, count = currentArticlesCount ) => {
+	const fetchData = async ({ query = defaultGetQuery, limit = 8, skip = 4 } = {}) => {
 		try {
 			const endpoint = import.meta.env.VITE_API_KEY;
 
 			const data = await request(endpoint, query, {
-				first: count,
+				limit,
+				skip
 			});
-
-			console.log(data);
-			
 
 			return data;
 		} catch (error) {
@@ -85,7 +85,7 @@ const App = () => {
 
 	const fetchAndSetCategories = async (query) => {
 		try {
-			const data = await fetchData(query);
+			const data = await fetchData({query});
 
 			const fetchedCategories = data.categories;
 
@@ -111,7 +111,7 @@ const App = () => {
 			}
 		`;
 
-		const data = await fetchData(getArticlesTotalQuery);
+		const data = await fetchData({query: getArticlesTotalQuery});
 		const newMaxArticlesCount = data.articlesConnection.aggregate.count;
 		setMaxArticlesCount(newMaxArticlesCount);
 	};
@@ -154,12 +154,11 @@ const App = () => {
 										element={
 											<ArticleList
 												title="Recent Articles"
-												articles={articles}
 												moreBlog={moreBlog}
 												isDisable={isDisable}
-												loading={loading}
 												btnLoading={btnLoading}
 												setBtnLoading={setBtnLoading}
+												fetchData={fetchData}
 											/>
 										}
 									/>
