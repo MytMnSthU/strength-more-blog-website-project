@@ -14,254 +14,197 @@ import Footer from "./components/Footer";
 import CategoryList from "./components/CategoryList";
 import { formatDate } from "./utils/utils";
 
+import { useQuery, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import { GET_ARTICLES, GET_CATEGORIES } from "./graphql/query";
+
+const defaultGetQuery = GET_ARTICLES;
+const getCategoriesQuery = GET_CATEGORIES;
+
+const queryClient = new QueryClient();
+
 const App = () => {
-    const [articles, setArticles] = useState([]);
-    const [categories, setCategories] = useState([]);
-    const [currentArticlesCount, setCurrentArticlesCount] = useState(8);
-    const [maxArticlesCount, setMaxArticlesCount] = useState(0);
-    const [isDisable, setIsDisable] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [docLoading, setDocLoading] = useState(true);
-    const [btnLoading, setBtnLoading] = useState(false);
+	const [articles, setArticles] = useState([]);
+	const [categories, setCategories] = useState([]);
+	const [currentArticlesCount, setCurrentArticlesCount] = useState(8);
+	const [maxArticlesCount, setMaxArticlesCount] = useState(0);
+	const [isDisable, setIsDisable] = useState(false);
+	const [loading, setLoading] = useState(true);
+	const [btnLoading, setBtnLoading] = useState(false);
 
-    const scrollContainerRef = useRef(null);
+	const scrollContainerRef = useRef(null);
 
-    const popularArticles = articles?.filter(
-        (article) => article.popularArticle === true
-    );
+	const popularArticles = articles?.filter((article) => article.popularArticle === true);
 
-    const defaultGetQuery = gql`
-        query GetArticles {
-            articles(orderBy: publishedAt_DESC, first: ${currentArticlesCount}) {
-                id
-                title
-                slug
-                image {
-                    url
-                }
-                createdAt
-                categories {
-                    id
-                    color {
-                        hex
-                    }
-                    name
-                    slug
-                }
-                content {
-                    html
-                }
-                popularArticle
-                comments {
-                    email
-                    title
-                    username
-                    id
-                    createdAt
-                  }
-            }
-        }
-    `;
+	const fetchData = async (query = defaultGetQuery, count = currentArticlesCount ) => {
+		try {
+			const endpoint = import.meta.env.VITE_API_KEY;
 
-    const getCategoriesQuery = gql`
-        query GetCategories {
-            categories(orderBy: name_ASC) {
-                id
-                name
-                image {
-                    url
-                }
-                slug
-                color {
-                    hex
-                }
-            }
-        }
-    `;
+			const data = await request(endpoint, query, {
+				first: count,
+			});
 
-    const fetchData = async (query = defaultGetQuery) => {
-        try {
-            const endpoint = import.meta.env.VITE_API_KEY;
+			console.log(data);
+			
 
-            const data = await request(endpoint, query);
+			return data;
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
-            return data;
-        } catch (error) {
-            console.error(error);
-        }
-    };
+	const fetchAndSetArticles = async (query) => {
+		try {
+			const data = await fetchData(query);
 
-    const fetchAndSetArticles = async (query) => {
-        try {
-            const data = await fetchData(query);
+			const fetchedArticles = data.articles;
 
-            const fetchedArticles = data.articles;
+			const formattedArticles = fetchedArticles.map((article) => {
+				const newArticle = {
+					...article,
+					createdAt: formatDate(article.createdAt),
+					comments: article.comments.map((comment) => {
+						const newComment = {
+							...comment,
+							createdAt: formatDate(comment.createdAt),
+						};
+						return newComment;
+					}),
+				};
 
-            const formattedArticles = fetchedArticles.map((article) => {
-                const newArticle = {
-                    ...article,
-                    createdAt: formatDate(article.createdAt),
-                    comments: article.comments.map((comment) => {
-                        const newComment = {
-                            ...comment,
-                            createdAt: formatDate(comment.createdAt),
-                        };
-                        return newComment;
-                    }),
-                };
+				return newArticle;
+			});
 
-                return newArticle;
-            });
+			setArticles(formattedArticles);
+			setLoading(false);
+			setBtnLoading(false);
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
-            setArticles(formattedArticles);
-            setLoading(false);
-            setBtnLoading(false);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+	const fetchAndSetCategories = async (query) => {
+		try {
+			const data = await fetchData(query);
 
-    const fetchAndSetCategories = async (query) => {
-        try {
-            const data = await fetchData(query);
+			const fetchedCategories = data.categories;
 
-            const fetchedCategories = data.categories;
+			setCategories(fetchedCategories);
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
-            setCategories(fetchedCategories);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+	const searchArticles = (searchTerm) => {
+		const searchedArticles = articles.filter((article) => article.title.toLowerCase().includes(searchTerm.toLowerCase()));
+		return searchedArticles;
+	};
 
-    const searchArticles = (searchTerm) => {
-        const searchedArticles = articles.filter((article) =>
-            article.title.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        return searchedArticles;
-    };
+	const fetchAndSetArticlesTotal = async () => {
+		const getArticlesTotalQuery = gql`
+			query GetArticlesTotal {
+				articlesConnection(stage: PUBLISHED) {
+					aggregate {
+						count
+					}
+				}
+			}
+		`;
 
-    const fetchAndSetArticlesTotal = async () => {
-        const getArticlesTotalQuery = gql`
-            query GetArticlesTotal {
-                articlesConnection(stage: PUBLISHED) {
-                    aggregate {
-                        count
-                    }
-                }
-            }
-        `;
+		const data = await fetchData(getArticlesTotalQuery);
+		const newMaxArticlesCount = data.articlesConnection.aggregate.count;
+		setMaxArticlesCount(newMaxArticlesCount);
+	};
 
-        const data = await fetchData(getArticlesTotalQuery);
-        const newMaxArticlesCount = data.articlesConnection.aggregate.count;
-        setMaxArticlesCount(newMaxArticlesCount);
-    };
+	const moreBlog = () => {
+		let newTotal = currentArticlesCount + 4;
+		setCurrentArticlesCount(newTotal);
 
-    const moreBlog = () => {
-        let newTotal = currentArticlesCount + 4;
-        setCurrentArticlesCount(newTotal);
+		if (maxArticlesCount === currentArticlesCount + 4 || maxArticlesCount < currentArticlesCount + 4) {
+			setIsDisable(true);
+		}
+	};
 
-        if (maxArticlesCount === currentArticlesCount + 4 || maxArticlesCount < currentArticlesCount + 4) {
-            setIsDisable(true);
-        }
-    };
+	const scrollToTop = () => {
+		scrollContainerRef.current.scrollIntoView({
+			block: "start",
+		});
+	};
 
-    const scrollToTop = () => {
-        scrollContainerRef.current.scrollIntoView({
-            block: "start",
-        });
-    };
+	useEffect(() => {
+		fetchAndSetArticles();
+		fetchAndSetCategories(getCategoriesQuery);
+		fetchAndSetArticlesTotal();
+	}, [currentArticlesCount]);
 
-    useEffect(() => {
-        setTimeout(() => {
-            setDocLoading(false);
-        }, 1000);
+	return (
+		<BrowserRouter>
+			<QueryClientProvider client={queryClient}>
+				<ScrollTopContext.Provider value={scrollToTop}>
+					<div
+						ref={scrollContainerRef}
+						className="bg-[#F3F1E8] h-max border border-black">
+						<Nav />
 
-        fetchAndSetArticles();
-        fetchAndSetCategories(getCategoriesQuery);
-        fetchAndSetArticlesTotal();
-    }, [currentArticlesCount]);
-
-    return (
-        <BrowserRouter>
-            <ScrollTopContext.Provider value={scrollToTop}>
-                {docLoading ? (
-                    <Loader />
-                ) : (
-                    <div
-                        ref={scrollContainerRef}
-                        className="bg-[#F3F1E8] h-max border border-black"
-                    >
-                        <Nav />
-
-                        <div className=" container grid lg:grid-cols-3  gap-5 p-2.5 mx-auto sm:pb-20">
-                            <div className=" sm:col-span-2">
-                                <Routes>
-                                    <Route
-                                        path="/"
-                                        element={
-                                            <ArticleList
-                                                title="Recent Articles"
-                                                articles={articles}
-                                                moreBlog={moreBlog}
-                                                isDisable={isDisable}
-                                                loading={loading}
-                                                btnLoading={btnLoading}
-                                                setBtnLoading={setBtnLoading}
-                                            />
-                                        }
-                                    />
-                                    <Route
-                                        path="/articles/:articleId"
-                                        element={
-                                            <ArticleDetail
-                                                fetchAndSetArticles={
-                                                    fetchAndSetArticles
-                                                }
-                                            />
-                                        }
-                                    />
-                                    <Route
-                                        path="/articles/popular"
-                                        element={
-                                            <ArticleList
-                                                title="Popular Articles"
-                                                articles={popularArticles}
-                                            />
-                                        }
-                                    />
-                                    <Route
-                                        path="/categories/:categoryId"
-                                        element={
-                                            <FilterArticleList
+						<div className=" container grid lg:grid-cols-3  gap-5 p-2.5 mx-auto sm:pb-20">
+							<div className=" sm:col-span-2">
+								<Routes>
+									<Route
+										path="/"
+										element={
+											<ArticleList
+												title="Recent Articles"
+												articles={articles}
+												moreBlog={moreBlog}
+												isDisable={isDisable}
+												loading={loading}
+												btnLoading={btnLoading}
+												setBtnLoading={setBtnLoading}
+											/>
+										}
+									/>
+									<Route
+										path="/articles/:articleId"
+										element={<ArticleDetail fetchAndSetArticles={fetchAndSetArticles} />}
+									/>
+									<Route
+										path="/articles/popular"
+										element={
+											<ArticleList
+												title="Popular Articles"
+												articles={popularArticles}
+											/>
+										}
+									/>
+									<Route
+										path="/categories/:categoryId"
+										element={
+											<FilterArticleList
 												articles={articles}
 												setArticles={setArticles}
-                                            />
-                                        }
-                                    />
-                                    <Route
-                                        path="/categories"
-                                        element={
-                                            <CategoryList
-                                                categories={categories}
-                                            />
-                                        }
-                                    />
-                                </Routes>
-                            </div>
+											/>
+										}
+									/>
+									<Route
+										path="/categories"
+										element={<CategoryList categories={categories} />}
+									/>
+								</Routes>
+							</div>
 
-                            <SideBar
-                                categories={categories}
-                                popularArticles={popularArticles}
-                                searchArticles={searchArticles}
-                            />
-                        </div>
+							<SideBar
+								categories={categories}
+								popularArticles={popularArticles}
+								searchArticles={searchArticles}
+							/>
+						</div>
 
-                        <Footer categories={categories} />
-                    </div>
-                )}
-            </ScrollTopContext.Provider>
-        </BrowserRouter>
-    );
+						<Footer categories={categories} />
+					</div>
+				</ScrollTopContext.Provider>
+			</QueryClientProvider>
+		</BrowserRouter>
+	);
 };
 
 export default App;
