@@ -18,7 +18,6 @@ const ArticleBoxCard = ({ article }) => {
             }}
             className=" cursor-pointer"
         >
-            <hr className=" border-b-2 border-b-black" />
             <div className=" p-4 grid gap-2.5">
                 <div className=" flex gap-2">
                     {article.categories.map((category) => (
@@ -30,6 +29,7 @@ const ArticleBoxCard = ({ article }) => {
                 </h4>
                 <TimeLabel time={article.createdAt} />
             </div>
+            <hr className=" border-b-2 border-b-black" />
         </div>
     );
 };

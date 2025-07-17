@@ -9,11 +9,11 @@ const ArticleList = ({ title, fetchData }) => {
 		return  fetchData({ skip: pageParam });
 	};
 
-	const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, isLoading, refetch, error } = useInfiniteQuery({
+	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error } = useInfiniteQuery({
 		queryKey: ["articles"],
 		queryFn: fetchMoreArticles,
 		getNextPageParam: (lastPage, allPages) => {
-			const allItems = allPages.flatMap((p) => p.articles); // or your data path
+			const allItems = allPages.flatMap((p) => p.articles);
 			const totalLoaded = allItems.length;
 			const pageSize = 8; // match your `count`
 			const hasMore = lastPage.articles.length === pageSize;
@@ -22,8 +22,6 @@ const ArticleList = ({ title, fetchData }) => {
 		},
 		refetchOnWindowFocus: false,
 	});
-
-	console.log({ isLoading, isFetching, isFetchingNextPage, data });
 
 	if (error) {
 		console.error("Error fetching articles:", error);

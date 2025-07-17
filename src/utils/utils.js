@@ -17,13 +17,6 @@ export const formatArticles = (articles) => {
 		const newArticle = {
 			...article,
 			createdAt: formatDate(article.createdAt),
-			comments: article.comments.map((comment) => {
-				const newComment = {
-					...comment,
-					createdAt: formatDate(comment.createdAt),
-				};
-				return newComment;
-			}),
 		};
 
 		return newArticle;

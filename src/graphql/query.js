@@ -22,13 +22,37 @@ export const GET_ARTICLES = gql`
 				html
 			}
 			popularArticle
-			comments {
-				email
-				title
-				username
+		}
+	}
+`;
+
+export const GET_POPULAR_ARTICLES = gql`
+	query GetPopularArticles($limit: Int = 4, $skip: Int = 4) {
+		articles(
+			where: { popularArticle: true },
+			orderBy: publishedAt_DESC,
+			first: $limit, 
+			skip: $skip,
+		) {
+			id
+			title
+			slug
+			image {
+				url
+			}
+			createdAt
+			categories {
 				id
-				createdAt
+				color {
+					hex
 				}
+				name
+				slug
+			}
+			content {
+				html
+			}
+			popularArticle
 		}
 	}
 `;

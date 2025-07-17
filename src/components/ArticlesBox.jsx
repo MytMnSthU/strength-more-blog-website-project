@@ -1,31 +1,85 @@
 import { useNavigate } from "react-router";
 import ArticleBoxCard from "./ArticleBoxCard";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { GET_POPULAR_ARTICLES } from "../graphql/query";
+import { formatArticles } from "../utils/utils";
+import LoadMoreButton from "./LoadMoreButton";
+import Loader from "./Loader";
 
+const ArticlesBox = ({ boxTitle, fetchData }) => {
+	const navigate = useNavigate();
 
+	const fetchMoreArticles = ({ pageParam = 0 }) => {
+		return fetchData({ query: GET_POPULAR_ARTICLES, limit: 4, skip: pageParam });
+	};
 
-const ArticlesBox = ({ boxTitle, articles }) => {
-    const navigate = useNavigate();
-    return (
-        <div className=" relative">
-            <div className=" bg-[#F3F1E8] border-2 border-black relative z-10">
-                <span
-                    onClick={() => {
-                        navigate("/articles/popular");
-                    }}
-                    className=" text-xl font-semibold uppercase block p-4"
-                >
-                    {boxTitle}
-                </span>
+	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error } = useInfiniteQuery({
+		queryKey: ["popularArticles"],
+		queryFn: fetchMoreArticles,
+		getNextPageParam: (lastPage, allPages) => {
+			const allItems = allPages.flatMap((p) => p.articles);
+			const totalLoaded = allItems.length;
+			const pageSize = 4; // match your `count`
+			const hasMore = lastPage.articles.length === pageSize;
+			return hasMore ? totalLoaded : undefined;
+		},
+		refetchOnWindowFocus: false,
+	});
 
-                <div className="overflow-y-auto h-fit max-h-[47vh]">
-                    {articles.map((article) => (
-                        <ArticleBoxCard key={article.id} article={article} />
-                    ))}
-                </div>
-            </div>
-            <div className=" w-full h-full bg-black absolute top-0 left-0 translate-x-[3px] translate-y-[3px]"></div>
-        </div>
-    );
+	const formattedArticles = (() => {
+		if (error) {
+			console.error("Error fetching articles:", error);
+			return <div>Error loading articles</div>;
+		}
+
+		if (isLoading) return (
+			<div className=" w-full h-[200px] flex justify-center items-center  relative overflow-hidden">
+				<Loader />
+			</div>
+		);
+
+		if (!data?.pages?.length) {
+			return <div>No popular articles found</div>;
+		}
+
+		const articles = data.pages.flatMap((page) => page.articles);
+		return formatArticles(articles).map((article) => (
+			<ArticleBoxCard
+				key={article.id}
+				article={article}
+			/>
+		));
+	})();
+
+	return (
+		<div className=" relative">
+			<div className=" bg-[#F3F1E8] border-2 border-black relative z-10">
+				<span
+					onClick={() => {
+						navigate("/articles/popular");
+					}}
+					className=" text-xl font-semibold uppercase block p-4 border-b-2 border-black">
+					{boxTitle}
+				</span>
+
+				<div className="overflow-y-auto h-fit max-h-[47vh] flex flex-col relative">
+					{formattedArticles}
+
+					{!isLoading && hasNextPage && (
+						<div className="flex justify-center items-center pb-4">
+							<LoadMoreButton
+								onClickBtn={() => fetchNextPage()}
+								isSmall={true}
+								isLoading={isFetchingNextPage}>
+								more articles
+							</LoadMoreButton>
+						</div>
+					)}
+				</div>
+			</div>
+			<div className=" w-full h-full bg-black absolute top-0 left-0 translate-x-[3px] translate-y-[3px]"></div>
+		</div>
+	);
 };
 
-export default ArticlesBox
+export default ArticlesBox;

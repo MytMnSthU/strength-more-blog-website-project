@@ -132,7 +132,6 @@ const App = () => {
 	};
 
 	useEffect(() => {
-		fetchAndSetArticles();
 		fetchAndSetCategories(getCategoriesQuery);
 		fetchAndSetArticlesTotal();
 	}, [currentArticlesCount]);
@@ -195,6 +194,7 @@ const App = () => {
 								categories={categories}
 								popularArticles={popularArticles}
 								searchArticles={searchArticles}
+								fetchData={fetchData}
 							/>
 						</div>
 
