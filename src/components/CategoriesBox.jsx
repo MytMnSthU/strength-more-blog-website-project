@@ -1,9 +1,7 @@
 import { useNavigate } from "react-router";
-import CategoryLabel from "./CategoryLabel";
+import CategoryLabelList from "./CategoryLabelList";
 
-
-
-const CategoriesBox = ({ categories }) => {
+const CategoriesBox = () => {
     const navigate = useNavigate();
 
     return (
@@ -18,11 +16,7 @@ const CategoriesBox = ({ categories }) => {
                     categories
                 </span>
                 <hr className=" border-b-2 border-b-black" />
-                <div className=" flex flex-wrap gap-2 p-4">
-                    {categories.map((category) => (
-                        <CategoryLabel key={category.id} category={category} />
-                    ))}
-                </div>
+                <CategoryLabelList />
             </div>
             <div className=" w-full h-full bg-black absolute top-0 left-0 translate-x-[3px] translate-y-[3px]"></div>
         </div>

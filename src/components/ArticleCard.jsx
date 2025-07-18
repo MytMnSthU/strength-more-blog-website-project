@@ -23,7 +23,7 @@ const ArticleCard = ({ article }) => {
             className=" relative group cursor-pointer"
         >
             <div className=" bg-[#F3F1E8] h-full  grid gap-2.5 border-2 border-black  p-2.5 pb-5 relative z-10 group-hover:translate-x-[4px] group-hover:translate-y-[4px] transition-all">
-                <div className=" h-[250px] border border-black overflow-hidden relative ">
+                <div className=" h-[180px] border border-black overflow-hidden relative ">
                     <img
                         src={article.image.url}
                         className=" w-full h-full object-cover"
@@ -45,7 +45,7 @@ const ArticleCard = ({ article }) => {
                 <h3 className=" text-2xl font-extrabold leading-none">
                     {article.title}
                 </h3>
-				<p className=" leading-none text-zinc-800">
+				<p className=" leading-none text-zinc-800 text-[16px]">
 					{stripHTML(article.content.html).length > 100
 						? stripHTML(article.content.html).slice(0, 100) + "..."	
 						: stripHTML(article.content.html)}

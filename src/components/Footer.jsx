@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import CategoryLabel from "./CategoryLabel";
 import Logo from "./Logo";
 import { FaHeart } from "react-icons/fa";
+import CategoryLabelList from "./CategoryLabelList";
 
 
 
 
-const Footer = ({ categories }) => {
+const Footer = () => {
     return (
         <footer className=" border-t border-black">
             <div className=" container mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-10 my-5 p-2.5 sm:my-10">
@@ -30,14 +30,7 @@ const Footer = ({ categories }) => {
 
                     <hr className=" border-b border-b-black my-2" />
 
-                    <div className=" flex flex-wrap gap-2 mb-2.5">
-                        {categories.map((category) => (
-                            <CategoryLabel
-                                key={category.id}
-                                category={category}
-                            />
-                        ))}
-                    </div>
+                    <CategoryLabelList />
                 </div>
 
                 <div>

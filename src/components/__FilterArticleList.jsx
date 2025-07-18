@@ -50,7 +50,7 @@ const FilterArticleList = ({}) => {
 			const endpoint = import.meta.env.VITE_API_KEY;
 			const data = await request(endpoint, getCurrentCategoryArticles);
 			const formattedArticles = data.articles.map((article) => {
-				const newArticle = {
+				const newArticle = {	
 					...article,
 					createdAt: formatDate(article.createdAt),
 					comments: article.comments.map((comment) => {

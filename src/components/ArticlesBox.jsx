@@ -2,15 +2,15 @@ import { useNavigate } from "react-router";
 import ArticleBoxCard from "./ArticleBoxCard";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { GET_POPULAR_ARTICLES } from "../graphql/query";
-import { formatArticles } from "../utils/utils";
+import { fetchData, formatArticles } from "../utils/utils";
 import LoadMoreButton from "./LoadMoreButton";
 import Loader from "./Loader";
 
-const ArticlesBox = ({ boxTitle, fetchData }) => {
+const ArticlesBox = ({ boxTitle }) => {
 	const navigate = useNavigate();
 
 	const fetchMoreArticles = ({ pageParam = 0 }) => {
-		return fetchData({ query: GET_POPULAR_ARTICLES, limit: 4, skip: pageParam });
+		return fetchData({ query: GET_POPULAR_ARTICLES, limit: 4, pageParam });
 	};
 
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error } = useInfiniteQuery({
@@ -29,9 +29,13 @@ const ArticlesBox = ({ boxTitle, fetchData }) => {
 	const formattedArticles = (() => {
 		if (error) {
 			console.error("Error fetching articles:", error);
-			return <div>Error loading articles</div>;
+			return (
+				<div className=" text-red-700 px-4 py-3 relative my-4" role="alert">
+					<strong className="font-bold">Error:</strong>
+					<span className="block sm:inline ml-2 text-lg">Failed to load articles.</span>
+				</div>
+			);
 		}
-
 		if (isLoading) return (
 			<div className=" w-full h-[200px] flex justify-center items-center  relative overflow-hidden">
 				<Loader />
@@ -58,7 +62,7 @@ const ArticlesBox = ({ boxTitle, fetchData }) => {
 					onClick={() => {
 						navigate("/articles/popular");
 					}}
-					className=" text-xl font-semibold uppercase block p-4 border-b-2 border-black">
+					className=" text-xl font-semibold uppercase block p-4 border-b-2 border-black cursor-pointer">
 					{boxTitle}
 				</span>
 

@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import CategoryCard from "./CategoryCard";
-import { fetchData } from "../utils/utils";
+import CategoryLabel from "./CategoryLabel";
 import { GET_CATEGORIES } from "../graphql/query";
+import { fetchData } from "../utils/utils";
 import Loader from "./Loader";
 
-const CategoryList = () => {
+const CategoryLabelList = () => {
 	const { data, error, isLoading } = useQuery({
 		queryKey: ["categories"],
 		queryFn: () => fetchData({ query: GET_CATEGORIES }),
@@ -23,18 +23,14 @@ const CategoryList = () => {
 	if (!categories.length) {
 		return <div>No categories found</div>;
 	}
-	
+
     return (
-        <div>
-            <h3 className=" text-2xl font-extrabold mb-4">Categories</h3>
-            <div className="grid sm:grid-cols-2 gap-5">
-                {categories.map((category) => (
-                    <CategoryCard key={category.id} category={category} />
-                ))}
-            </div>
+        <div className=" flex flex-wrap gap-2 p-4">
+            {categories.map((category) => (
+                <CategoryLabel key={category.id} category={category} />
+            ))}
         </div>
     );
 };
 
-export default CategoryList
-
+export default CategoryLabelList;

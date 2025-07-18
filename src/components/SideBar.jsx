@@ -1,16 +1,15 @@
 import ArticlesBox from "./ArticlesBox";
 import CategoriesBox from "./CategoriesBox";
-import SearchBar from "./SearchBar";
+// import SearchBar from "./SearchBar";
 
-const SideBar = ({ categories, popularArticles, searchArticles, fetchData }) => {
+const SideBar = () => {
     return (
-        <div className=" hidden lg:flex flex-col gap-5 mt-12 px-8 sticky top-3 h-screen">
-            <SearchBar searchArticles={searchArticles} />
-            <CategoriesBox categories={categories} />
+        <div className=" hidden lg:flex flex-col gap-5 mt-12 ps-8 sticky top-3 h-screen">
+            {/* <SearchBar  /> */}
             <ArticlesBox
                 boxTitle={"popular articles"}
-				fetchData={fetchData}
             />
+            <CategoriesBox />
         </div>
     );
 };

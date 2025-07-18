@@ -1,5 +1,4 @@
-import React from "react";
-import { FaChevronRight } from "react-icons/fa";
+import { FaAngleRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const BreadCrumb = ({ items }) => {
@@ -22,7 +21,7 @@ const BreadCrumb = ({ items }) => {
 								</span>
 							)}
 							{!isLast && (
-								<span className=" ms-2 text-[12px]"><FaChevronRight /></span>
+								<span className=" ms-2 text-[12px] mt-2"><FaAngleRight /></span>
 							)}
 						</li>
 					);

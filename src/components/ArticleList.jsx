@@ -1,34 +1,36 @@
-import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import ArticleCard from "./ArticleCard";
 import LoadMoreButton from "./LoadMoreButton";
 import Loader from "./Loader";
 import { formatArticles } from "../utils/utils";
+import useArticles from "../hooks/useArticles";
+import { GET_ARTICLES, GET_POPULAR_ARTICLES } from "../graphql/query";
+import { useParams } from "react-router";
 
-const ArticleList = ({ title, fetchData }) => {
-	const fetchMoreArticles =  ({ pageParam = 0 }) => {
-		return  fetchData({ skip: pageParam });
-	};
+const ArticleList = ({ title, category }) => {
 
-	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error } = useInfiniteQuery({
-		queryKey: ["articles"],
-		queryFn: fetchMoreArticles,
-		getNextPageParam: (lastPage, allPages) => {
-			const allItems = allPages.flatMap((p) => p.articles);
-			const totalLoaded = allItems.length;
-			const pageSize = 8; // match your `count`
-			const hasMore = lastPage.articles.length === pageSize;
+	const { categoryId } = useParams();
 
-			return hasMore ? totalLoaded : undefined;
-		},
-		refetchOnWindowFocus: false,
+
+	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error } = useArticles({
+		query: category === "popular" ? GET_POPULAR_ARTICLES : GET_ARTICLES,
+		category: categoryId || category,
 	});
 
 	if (error) {
 		console.error("Error fetching articles:", error);
-		return <div>Error loading articles</div>;
+		return (
+			<div className=" text-red-700 px-4 py-3 relative my-4" role="alert">
+				<strong className="font-bold">Error:</strong>
+				<span className="block sm:inline ml-2 text-lg">Failed to load articles.</span>
+			</div>
+		);
 	}
 
-	if (isLoading) return <Loader />;
+	if (isLoading) return (
+		<div className=" w-full h-full">
+			<Loader />
+		</div>
+	);
 
 	if (data?.pages?.length) {
 		const formattedArticles = formatArticles(data.pages.flatMap((page) => page.articles));
@@ -36,7 +38,7 @@ const ArticleList = ({ title, fetchData }) => {
 		return (
 			<>
 				<div className="grid gap-2.5">
-					<h3 className=" text-2xl font-extrabold">{title}</h3>
+					<h3 className=" text-2xl font-extrabold">{title} {categoryId && `: "${categoryId}"`}</h3>
 					<div className=" grid sm:grid-cols-2 gap-5">
 						{formattedArticles.map((article) => (
 							<ArticleCard

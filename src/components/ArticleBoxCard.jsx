@@ -16,7 +16,7 @@ const ArticleBoxCard = ({ article }) => {
                 navigate(`/articles/${article.slug}`);
                 scrollToTop();
             }}
-            className=" cursor-pointer"
+            className=" cursor-pointer hover:bg-[#e3e3e3]"
         >
             <div className=" p-4 grid gap-2.5">
                 <div className=" flex gap-2">
