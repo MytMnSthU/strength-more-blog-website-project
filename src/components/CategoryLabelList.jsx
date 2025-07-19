@@ -16,7 +16,11 @@ const CategoryLabelList = () => {
 		return <div>Error loading categories</div>;
 	}
 
-	if (isLoading) return <div className="w-full h-[200px] flex justify-center items-center"><Loader /></div>;
+	if (isLoading) return (
+		<div className="w-full h-[200px] flex relative overflow-hidden justify-center items-center">
+			<Loader />
+		</div>
+	);
 
 	const categories = data?.categories || [];
 
