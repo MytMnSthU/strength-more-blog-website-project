@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import CategoryLabel from "./CategoryLabel";
 import TimeLabel from "./TimeLabel";
@@ -14,6 +14,8 @@ function stripHTML(html) {
 const ArticleCard = ({ article }) => {
     const navigate = useNavigate();
     const scrollToTop = useContext(ScrollTopContext);
+	const [isImageLoaded, setIsImageLoaded] = useState(false);
+
     return (
         <div
             onClick={() => {
@@ -24,7 +26,20 @@ const ArticleCard = ({ article }) => {
         >
             <div className=" bg-[#F3F1E8] h-full  grid gap-2.5 border-2 border-black  p-2.5 pb-5 relative z-10 group-hover:translate-x-[4px] group-hover:translate-y-[4px] transition-all">
                 <div className=" aspect-video border border-black overflow-hidden relative ">
+					{!isImageLoaded && (
+						<div className=" absolute inset-0 flex items-center justify-center bg-[#F3F1E8]">
+							<span className=" text-gray-500 uppercase">Loading...</span>
+						</div>
+					)}
+
+					{!article.image && isImageLoaded && (
+						<div className=" absolute inset-0 flex items-center justify-center bg-[#F3F1E8]">
+							<span className=" text-gray-500 uppercase">No Image Available</span>
+						</div>
+					)}
+
                     <img
+						onLoad={() => setIsImageLoaded(true)}
                         src={article.image.url}
                         className=" w-full h-full object-cover"
                         alt={article.image.url}
