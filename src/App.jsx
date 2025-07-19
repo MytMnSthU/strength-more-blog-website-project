@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import { ScrollTopContext } from "./components/ScrollTopContext";
 
@@ -11,12 +11,13 @@ import Footer from "./components/Footer";
 import CategoryList from "./components/CategoryList";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { fetchData } from "./utils/utils";
+import SearchModal from "./components/SearchModal";
 
 const queryClient = new QueryClient();
 
 const App = () => {
 	const scrollContainerRef = useRef(null);
+	const [isSearchModalOpened, setIsSearchModalOpened] = useState(false);
 
 	const searchArticles = (searchTerm) => {
 		const searchedArticles = articles.filter((article) => article.title.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -29,6 +30,10 @@ const App = () => {
 		});
 	};
 
+	const toggleSearchModal = () => { 
+		setIsSearchModalOpened(!isSearchModalOpened);
+	}
+
 	// Layout component for main content
 	const MainLayout = () => (
 		<div
@@ -39,10 +44,8 @@ const App = () => {
 				<div className="sm:col-span-2">
 					<Outlet />
 				</div>
-				<SideBar
-					searchArticles={searchArticles}
-					fetchData={fetchData}
-				/>
+				<SideBar onModalClick={toggleSearchModal} />
+				<SearchModal isOpen={isSearchModalOpened} onClose={toggleSearchModal} />
 			</div>
 			<Footer />
 		</div>

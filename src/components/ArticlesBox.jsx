@@ -69,7 +69,7 @@ const ArticlesBox = ({ boxTitle }) => {
 				<div className="overflow-y-auto h-fit max-h-[47vh] flex flex-col relative">
 					{formattedArticles}
 
-					{!isLoading && hasNextPage && (
+					{!isLoading && !error && hasNextPage && (
 						<div className="flex justify-center items-center pb-4">
 							<LoadMoreButton
 								onClickBtn={() => fetchNextPage()}

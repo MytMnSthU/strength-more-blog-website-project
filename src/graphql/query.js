@@ -100,3 +100,29 @@ export const GET_CATEGORIES = gql`
 		}
 	}
 `;
+
+export const SEARCH_ARTICLES = gql`
+	query SearchArticles($_search: String = "") {
+		articles(where: { _search: $_search }) {
+			id
+			title
+			slug
+			image {
+				url
+			}
+			createdAt
+			categories {
+				id
+				color {
+					hex
+				}
+				name
+				slug
+			}
+			content {
+				html
+			}
+			popularArticle
+		}
+	}
+`;
