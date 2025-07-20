@@ -1,132 +1,125 @@
 import { useEffect, useRef, useState } from "react";
 import { FaSearch, FaTimes } from "react-icons/fa";
+import { useQuery } from "@tanstack/react-query";
 import request from "graphql-request";
 import { SEARCH_ARTICLES } from "../graphql/query";
-
-import ArticleBoxCard from "./ArticleBoxCard";
-
 import ArticleCard from "./ArticleCard";
+
+import Loader from "./Loader";
+
+
+const fetchArticles = async (searchTerm) => {
+	if (!searchTerm.trim()) return { articles: [] };
+	const endpoint = import.meta.env.VITE_API_KEY;
+	return await request(endpoint, SEARCH_ARTICLES, { _search: searchTerm });
+};
 
 const SearchModal = ({ isOpen, onClose }) => {
 	const searchInputRef = useRef(null);
 	const [searchTerm, setSearchTerm] = useState("");
-	const [searchedArticles, setSearchedArticles] = useState([]);
 
-	const handleBackgroundClick = (e) => {
-		if (e.target === e.currentTarget) {
-			onClose();
-		}
-	};
-
-	// useEffect(() => {
-	// 	const fetchSearchedArticles = async () => {
-	// 		if (!searchInputRef.current) return;
-	// 		if (!searchInputRef.current.value.trim()) {
-	// 			setSearchedArticles([]);
-	// 			return;
-	// 		}
-
-	// 		try {
-	// 			const endpoint = import.meta.env.VITE_API_KEY;
-	// 			const searchTerm = searchInputRef.current.value.trim();
-	// 			const data = await request(endpoint, SEARCH_ARTICLES, { _search: searchTerm });
-	// 			setSearchedArticles(data.articles);
-	// 		} catch (error) {
-	// 			console.error("Error fetching searched articles:", error);
-	// 		}
-	// 	};
-
-	// 	const debounceFetch = setTimeout(fetchSearchedArticles, 300);
-
-	// 	console.log("Debounced search for:", searchInputRef.current.value);
-
-	// 	return () => clearTimeout(debounceFetch);
-	// }, [searchInputRef.current?.value]);
+	const {
+		data,
+		isLoading,
+		isError,
+		refetch,
+	} = useQuery({
+		queryKey: ["searchArticles", searchTerm],
+		queryFn: () => fetchArticles(searchTerm),
+		enabled: !!searchTerm.trim(),
+		staleTime: 0,
+	});
+	// Debounce searchTerm changes
+	// Only refetch when searchTerm changes and after debounce
+	// This is a simple debounce implementation
+	// You can use use-debounce or lodash.debounce for more complex cases
+	const [debouncedTerm, setDebouncedTerm] = useState("");
+	useEffect(() => {
+		const handler = setTimeout(() => setDebouncedTerm(searchTerm), 500);
+		return () => clearTimeout(handler);
+	}, [searchTerm]);
 
 	useEffect(() => {
-		const fetchSearchedArticles = async () => {
-			if (!searchTerm.trim()) {
-				setSearchedArticles([]);
-				return;
-			}
-
-			try {
-				const endpoint = import.meta.env.VITE_API_KEY;
-				const data = await request(endpoint, SEARCH_ARTICLES, { _search: searchTerm });
-				setSearchedArticles(data.articles);
-			} catch (error) {
-				console.error("Error fetching searched articles:", error);
-			}
-		};
-
-		const debounceFetch = setTimeout(fetchSearchedArticles, 300);
-
-		return () => clearTimeout(debounceFetch);
-	}, [searchTerm]);
+		if (debouncedTerm.trim()) refetch();
+	}, [debouncedTerm, refetch]);
 
 	if (!isOpen) return null;
 
+	const searchedArticles = data?.articles || [];
+
 	return (
 		<div
-			className=" fixed top-0 left-0 w-full h-full z-[100] bg-black bg-opacity-50 py-10 px-4 overflow-y-auto"
-			onClick={handleBackgroundClick}>
-			<div className="w-full max-w-[1140px] mx-auto bg-[#F3F1E8] relative">
+			className="fixed top-0 left-0 w-full h-full z-[100] bg-black bg-opacity-50 py-10 px-4 overflow-y-auto"
+			onClick={(e) => {
+				if (e.target === e.currentTarget) onClose();
+			}}
+		>
+			<div className="w-full max-w-[900px] mx-auto bg-[#F3F1E8] relative">
 				<form action="">
-					<div className="flex items-center gap-2.5 px-5 py-2.5  border-2 border-black relative">
+					<div className="flex items-center gap-2.5 px-5 py-2.5 border-2 border-black relative">
 						<FaSearch />
 						<input
 							ref={searchInputRef}
 							type="text"
 							placeholder="Search articles..."
-							className=" w-full p-2 bg-transparent focus:outline-none focus:border-blue-500 uppercase font-bold placeholder:uppercase placeholder:text-zinc-700"
-							onChange={(e) => {
-								const value = e.target.value;
-								setSearchTerm(value);
-							}}
+							className="w-full p-2 bg-transparent focus:outline-none focus:border-blue-500 uppercase font-bold placeholder:uppercase placeholder:text-zinc-700"
+							onChange={(e) => setSearchTerm(e.target.value)}
 							autoFocus
 						/>
-						<button
-							onClick={() => {
-								setSearchTerm("");
-								setSearchedArticles([]);
-								searchInputRef.current.value = "";
-							}}
-							type="button"
-							className=" w-[25px] h-[25px] text-gray-500 hover:text-black absolute right-5 top-1/2 transform -translate-y-1/2 z-10 flex items-center justify-center">
-							<FaTimes />
-						</button>
+						{searchInputRef.current && searchInputRef.current.value && (
+							<button
+								onClick={() => {
+									setSearchTerm("");
+									searchInputRef.current.value = "";
+								}}
+								type="button"
+								className="w-[25px] h-[25px] text-gray-500 hover:text-black absolute right-5 top-1/2 transform -translate-y-1/2 z-10 flex items-center justify-center"
+							>
+								<FaTimes />
+							</button>
+						)}
 					</div>
-					<div className="p-5 border-2 border-black border-t-0">
-						{searchedArticles.length > 0 && (
-							<div>
-								<h2 className=" text-2xl font-bold mb-3	">Search Results: {searchedArticles.length}</h2>
-								<p className=" text-gray-500">
-									Showing results for: <strong>{searchTerm}</strong>
+					<div className="border-2 border-black border-t-0">
+						{debouncedTerm.trim() && (
+							<div className="px-5 py-2.5 border-b-2 border-black">
+								<h2 className="text-2xl font-bold mb-1">
+									Searched Results: {searchedArticles.length}
+								</h2>
+								<p className="mb-0">
+									Showing results for: <strong>{debouncedTerm}</strong>
 								</p>
 							</div>
 						)}
-						<div
-							onClick={() => {
-								onClose();
-							}}
-							className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5  h-fit max-h-[400px] overflow-y-auto overflow-x-hidden mt-5">
-							{searchedArticles.length > 0 ? (
-								searchedArticles.map((article) => (
-									//<ArticleBoxCard key={article.id} article={article} />
-									<ArticleCard
-										key={article.id}
-										article={article}
-									/>
-								))
-							) : (
-								<div className=" min-h-[100px] flex items-center justify-center">
-									<p className=" text-gray-500 uppercase">No recent search</p>
+						{isLoading ? (
+							<div className="w-full h-full flex flex-col items-center justify-center py-5">
+								<div className="h-[100px] flex justify-center items-center overflow-hidden">
+									<Loader />
 								</div>
-							)}
-						</div>
+							</div>
+						) : isError ? (
+							<div className="w-full h-full flex items-center justify-center py-5">
+								<p className="uppercase mb-0 text-red-600">Error loading articles</p>
+							</div>
+						) : searchedArticles.length > 0 ? (
+							<div className="px-5 py-2.5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-h-[400px] overflow-y-auto overflow-x-hidden">
+								{searchedArticles.map((article) => (
+									<div
+										onClick={onClose}
+										className=""
+										key={article.id}
+									>
+										{/* <ArticleBoxCard article={article} /> */}
+										<ArticleCard article={article} />
+									</div>
+								))}
+							</div>
+						) : (
+							<div className="w-full h-full flex items-center justify-center py-10">
+								<p className="uppercase mb-0">No recent search</p>
+							</div>
+						)}
 					</div>
 				</form>
-
 				<div className="absolute top-0 left-0 w-full h-full -z-10 translate-x-[4px] translate-y-[4px] bg-black"></div>
 			</div>
 		</div>
