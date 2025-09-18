@@ -39,12 +39,6 @@ const NavBar = ({ isNavBarVisible, toggleNavbar }) => {
                 toggleNavbar={toggleNavbar}
             />
 
-            <FaFacebookF className=" text-sm hidden lg:block" />
-
-            <FaInstagram className=" hidden lg:block" />
-
-            <FaTwitter className=" hidden lg:block" />
-
             <button
                 onClick={() => toggleNavbar()}
                 type="button"

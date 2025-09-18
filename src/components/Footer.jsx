@@ -32,30 +32,6 @@ const Footer = () => {
 
                     <CategoryLabelList />
                 </div>
-
-                <div>
-                    <span className=" uppercase text-base font-semibold">
-                        social links
-                    </span>
-
-                    <hr className=" border-b border-b-black my-2" />
-
-                    <a href="#" className=" text-base  font-bold uppercase">
-                        facebook
-                    </a>
-
-                    <hr className=" border-b border-b-black my-2" />
-                    <a href="#" className=" text-base  font-bold uppercase">
-                        instagram
-                    </a>
-
-                    <hr className=" border-b border-b-black my-2" />
-                    <a href="#" className=" text-base  font-bold uppercase">
-                        twitter
-                    </a>
-
-                    {/* <hr className=" border-b border-b-black my-2" /> */}
-                </div>
             </div>
             <div className="sm:col-span-2 border-t border-t-black mb-5 sm:mb-0">
                 <span className=" flex justify-center items-center gap-1 text-sm py-3">
