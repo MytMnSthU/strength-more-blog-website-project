@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import CategoryLabel from "./CategoryLabel";
 import TimeLabel from "./TimeLabel";
 
-import { ScrollTopContext } from "./ScrollTopContext";
+import { ThemedAppContext } from "../context/ThemedAppContext";
 
 function stripHTML(html) {
 	const div = document.createElement('div');
@@ -13,7 +13,7 @@ function stripHTML(html) {
 
 const ArticleCard = ({ article }) => {
     const navigate = useNavigate();
-    const scrollToTop = useContext(ScrollTopContext);
+    const { scrollToTop } = useContext(ThemedAppContext);
 	const [isImageLoaded, setIsImageLoaded] = useState(false);
 
     return (
@@ -24,16 +24,16 @@ const ArticleCard = ({ article }) => {
             }}
             className=" relative group cursor-pointer h-full"
         >
-            <div className=" bg-[#F3F1E8] h-full  grid gap-2.5 border-2 border-black  p-2.5 pb-5 relative z-10 group-hover:translate-x-[4px] group-hover:translate-y-[4px] transition-all">
-                <div className=" aspect-video border border-black overflow-hidden relative ">
+            <div className=" bg-[#F3F1E8] dark:bg-[#1F1F1F] h-full  grid gap-2.5 border-2 border-black dark:border-[#aaa]  p-2.5 pb-5 relative z-10 group-hover:translate-x-[4px] group-hover:translate-y-[4px] transition-all">
+                <div className=" aspect-video border border-black dark:border-[#aaa] overflow-hidden relative ">
 					{!isImageLoaded && (
-						<div className=" absolute inset-0 flex items-center justify-center bg-[#F3F1E8]">
-							<span className=" text-gray-500 uppercase">Loading...</span>
+						<div className=" absolute inset-0 flex items-center justify-center bg-[#F3F1E8] dark:bg-[#111]">
+							<span className=" text-gray-500 dark:bg-[#aaa] uppercase">Loading...</span>
 						</div>
 					)}
 
 					{!article.image && isImageLoaded && (
-						<div className=" absolute inset-0 flex items-center justify-center bg-[#F3F1E8]">
+						<div className=" absolute inset-0 flex items-center justify-center bg-[#F3F1E8] dark:bg-[#111]">
 							<span className=" text-gray-500 uppercase">No Image Available</span>
 						</div>
 					)}
@@ -60,13 +60,13 @@ const ArticleCard = ({ article }) => {
                 <h3 className=" text-2xl font-extrabold leading-none">
                     {article.title}
                 </h3>
-				<p className=" leading-none text-zinc-800 text-[16px]">
+				<p className=" leading-none text-zinc-800 dark:text-zinc-300 text-[16px]">
 					{stripHTML(article.content.html).length > 100
 						? stripHTML(article.content.html).slice(0, 100) + "..."	
 						: stripHTML(article.content.html)}
 				</p>
             </div>
-            <div className=" w-full h-full bg-black  absolute top-0 left-0 translate-x-[4px] translate-y-[4px] z-0"></div>
+            <div className=" w-full h-full bg-black dark:bg-[#aaa]  absolute top-0 left-0 translate-x-[4px] translate-y-[4px] z-0"></div>
         </div>
     );
 };

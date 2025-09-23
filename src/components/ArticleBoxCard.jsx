@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router";
-import { ScrollTopContext } from "./ScrollTopContext";
+import { ThemedAppContext } from "../context/ThemedAppContext";
 import CategoryLabel from "./CategoryLabel";
 import TimeLabel from "./TimeLabel";
 
@@ -8,7 +8,7 @@ import TimeLabel from "./TimeLabel";
 
 const ArticleBoxCard = ({ article }) => {
     const navigate = useNavigate();
-    const scrollToTop = useContext(ScrollTopContext);
+	const { scrollToTop } = useContext(ThemedAppContext);
 
     return (
         <div
@@ -16,7 +16,7 @@ const ArticleBoxCard = ({ article }) => {
                 navigate(`/articles/${article.slug}`);
                 scrollToTop();
             }}
-            className=" cursor-pointer hover:bg-[#e3e3e3]"
+            className=" cursor-pointer hover:bg-[#e3e3e3] dark:hover:bg-[#333]"
         >
             <div className=" p-4 grid gap-2.5">
                 <div className=" flex gap-2">

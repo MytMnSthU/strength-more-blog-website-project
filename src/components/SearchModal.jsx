@@ -54,9 +54,9 @@ const SearchModal = ({ isOpen, onClose }) => {
 				if (e.target === e.currentTarget) onClose();
 			}}
 		>
-			<div className="w-full max-w-[900px] mx-auto bg-[#F3F1E8] relative">
+			<div className="w-full max-w-[900px] mx-auto bg-[#F3F1E8] dark:bg-[#1F1F1F] relative">
 				<form action="">
-					<div className="flex items-center gap-2.5 px-5 py-2.5 border-2 border-black relative">
+					<div className="flex items-center gap-2.5 px-5 py-2.5 border-2 border-black dark:border-[#aaa] relative">
 						<FaSearch />
 						<input
 							ref={searchInputRef}
@@ -73,13 +73,13 @@ const SearchModal = ({ isOpen, onClose }) => {
 									searchInputRef.current.value = "";
 								}}
 								type="button"
-								className="w-[25px] h-[25px] text-gray-500 hover:text-black absolute right-5 top-1/2 transform -translate-y-1/2 z-10 flex items-center justify-center"
+								className="w-[25px] h-[25px] text-black dark:text-white hover:text-gray-500 absolute right-5 top-1/2 transform -translate-y-1/2 z-10 flex items-center justify-center"
 							>
 								<FaTimes />
 							</button>
 						)}
 					</div>
-					<div className="border-2 border-black border-t-0">
+					<div className="border-2 border-black dark:border-[#aaa] border-t-0">
 						{debouncedTerm.trim() && (
 							<div className="px-5 py-2.5 border-b-2 border-black">
 								<h2 className="text-2xl font-bold mb-1">
@@ -120,7 +120,7 @@ const SearchModal = ({ isOpen, onClose }) => {
 						)}
 					</div>
 				</form>
-				<div className="absolute top-0 left-0 w-full h-full -z-10 translate-x-[4px] translate-y-[4px] bg-black"></div>
+				<div className="absolute top-0 left-0 w-full h-full -z-10 translate-x-[4px] translate-y-[4px] bg-black dark:bg-[#aaa]"></div>
 			</div>
 		</div>
 	);

@@ -27,3 +27,9 @@ p{
 .transition-all {
 	transition: all 0.2s cubic-bezier(0.25, 0.75, 0.5, 1.25);
 }
+
+.dark {
+	* {
+		color-scheme: dark;
+	}
+}

@@ -57,7 +57,7 @@ const ArticlesBox = ({ boxTitle }) => {
 
 	return (
 		<div className=" relative">
-			<div className=" bg-[#F3F1E8] border-2 border-black relative z-10">
+			<div className=" bg-[#F3F1E8] dark:bg-[#1F1F1F] border-2 border-black dark:border-[#aaa] relative z-10">
 				<span
 					onClick={() => {
 						navigate("/articles/popular");

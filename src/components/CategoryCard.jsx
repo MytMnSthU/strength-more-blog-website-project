@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router";
-import { ScrollTopContext } from "./ScrollTopContext";
+import { ThemedAppContext } from "../context/ThemedAppContext";
 
 
 
 const CategoryCard = ({ category }) => {
     const navigate = useNavigate();
-    const scrollToTop = useContext(ScrollTopContext);
+    const scrollToTop = useContext(ThemedAppContext);
     return (
         <div
             onClick={() => {
