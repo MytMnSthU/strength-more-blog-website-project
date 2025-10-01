@@ -71,7 +71,7 @@ const Nav = ({ toggleSearchModal }) => {
     };
 
     return (
-        <nav className="  border-b border-b-black">
+        <nav className="  border-b border-b-black dark:border-b-[#aaa]">
             <div className=" container flex items-center gap-5 p-2.5 mx-auto">
                 <Link to="/">
                     <Logo />

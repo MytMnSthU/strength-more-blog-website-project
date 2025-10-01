@@ -28,7 +28,7 @@ const ArticleCard = ({ article }) => {
                 <div className=" aspect-video border border-black dark:border-[#aaa] overflow-hidden relative ">
 					{!isImageLoaded && (
 						<div className=" absolute inset-0 flex items-center justify-center bg-[#F3F1E8] dark:bg-[#111]">
-							<span className=" text-gray-500 dark:bg-[#aaa] uppercase">Loading...</span>
+							<span className=" text-gray-500 dark:text-[#aaa] uppercase">Loading...</span>
 						</div>
 					)}
 

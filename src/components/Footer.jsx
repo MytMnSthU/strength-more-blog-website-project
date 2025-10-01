@@ -8,7 +8,7 @@ import CategoryLabelList from "./CategoryLabelList";
 
 const Footer = () => {
     return (
-        <footer className=" border-t border-black">
+        <footer className=" border-t border-black dark:border-[#aaa]">
             <div className=" container mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-10 my-5 p-2.5 sm:my-10">
                 <div className="  sm:row-span-2">
                     <Link to="/">
@@ -28,12 +28,12 @@ const Footer = () => {
                         categories
                     </span>
 
-                    <hr className=" border-b border-b-black my-2" />
+                    <hr className=" border-b border-b-black dark:border-b-[#aaa] my-2" />
 
                     <CategoryLabelList />
                 </div>
             </div>
-            <div className="sm:col-span-2 border-t border-t-black mb-5 sm:mb-0">
+            <div className="sm:col-span-2 border-t border-t-black dark:border-t-[#aaa] mb-5 sm:mb-0">
                 <span className=" flex justify-center items-center gap-1 text-sm py-3">
                     Made with <FaHeart />
                     by<a href="https://github.com/MytMnSthU">Myat</a>
