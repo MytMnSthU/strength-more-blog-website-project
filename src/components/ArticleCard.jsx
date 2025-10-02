@@ -2,8 +2,10 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import CategoryLabel from "./CategoryLabel";
 import TimeLabel from "./TimeLabel";
+import { FaHeart, FaShare, FaEye } from "react-icons/fa";
 
 import { ThemedAppContext } from "../context/ThemedAppContext";
+import { formatNumber } from "../utils/utils";
 
 function stripHTML(html) {
 	const div = document.createElement('div');
@@ -55,7 +57,24 @@ const ArticleCard = ({ article }) => {
                     </div>
                 </div>
 
-                <TimeLabel time={article.createdAt} />
+				<div className="flex flex-wrap justify-between items-center gap-2">
+					<TimeLabel time={article.createdAt} />
+					<div className=" flex">
+						<div className=" flex justify-center items-center gap-2 py-1 px-2">
+							<FaHeart className=" text-[10px]" />
+							<span className=" text-[14px] font-bold">{formatNumber(article.likes) || 0}</span>
+						</div>
+						<div className=" flex justify-center items-center gap-2 py-1 px-2">
+							<FaShare className=" text-[10px]" />
+							<span className=" text-[14px] font-bold">{formatNumber(article.shares) || 0}</span>
+						</div>
+						<div className=" flex justify-center items-center gap-2 py-1 px-2">
+							<FaEye className=" text-[10px]" />
+							<span className=" text-[14px] font-bold">{formatNumber(article.views) || 0}</span>
+						</div>
+					</div>
+				</div>
+
 
                 <h3 className=" text-2xl font-extrabold leading-none">
                     {article.title}

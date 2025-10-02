@@ -22,6 +22,9 @@ export const GET_ARTICLES = gql`
 				html
 			}
 			popularArticle
+			likes
+			shares
+			views
 		}
 	}
 `;
@@ -48,6 +51,9 @@ export const GET_POPULAR_ARTICLES = gql`
 				html
 			}
 			popularArticle
+			likes
+			shares
+			views
 		}
 	}
 `;
@@ -81,6 +87,9 @@ export const GET_ARTICLE = gql`
 				id
 				createdAt
 			}
+			likes
+			shares
+			views
 		}
 	}
 `;
@@ -123,6 +132,42 @@ export const SEARCH_ARTICLES = gql`
 				html
 			}
 			popularArticle
+			likes
+			shares
+			views
+		}
+	}
+`;
+
+export const TOGGLE_LIKE_MUTATION = gql`
+    # 1. The input variable is now a non-nullable String named $slug.
+    mutation ToggleLikeMutation($slug: String!, $likes: Int!) {
+        upsertArticle(
+            # 2. The 'where' clause now finds the article by its slug.
+            where: { slug: $slug }
+            upsert: {
+                # 3. If a new draft must be created, we provide the slug for it.
+                create: { slug: $slug, likes: $likes }
+                update: { likes: $likes }
+            }
+        ) {
+            id # You can still get the system ID back in the response.
+            slug
+        }
+
+        # 4. The publish operation also finds the article by its slug.
+        publishArticle(where: { slug: $slug }, to: PUBLISHED) {
+            id
+        }
+    }
+`;
+
+export const TEST = gql`
+	mutation UpdateLikesOnly {
+		updateArticle(where: { id: "clkmm5eds08xw0c2tugjoama5" }, data: { likes: 100 }) {
+			id
+			likes
+			stage
 		}
 	}
 `;

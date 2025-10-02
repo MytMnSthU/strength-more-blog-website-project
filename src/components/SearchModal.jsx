@@ -6,6 +6,7 @@ import { SEARCH_ARTICLES } from "../graphql/query";
 import ArticleCard from "./ArticleCard";
 
 import Loader from "./Loader";
+import { formatArticles } from "../utils/utils";
 
 
 const fetchArticles = async (searchTerm) => {
@@ -45,7 +46,8 @@ const SearchModal = ({ isOpen, onClose }) => {
 
 	if (!isOpen) return null;
 
-	const searchedArticles = data?.articles || [];
+	let searchedArticles = data?.articles || [];
+	searchedArticles = formatArticles(searchedArticles);
 
 	return (
 		<div

@@ -42,3 +42,7 @@ export const fetchData = async ({ query = GET_ARTICLES, limit = 8, pageParam = 0
 		throw error; // Re-throw the error to be handled by the calling function
 	}
 };
+
+export const formatNumber = (num) => {
+	return new Intl.NumberFormat("en", {notation: "compact"}).format(num);
+};
