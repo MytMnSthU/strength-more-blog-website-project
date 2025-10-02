@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import { ThemedAppContext } from "./context/ThemedAppContext";
 
@@ -31,9 +31,11 @@ const App = () => {
 		if (mode === "light") {
 			setMode("dark");
 			document.documentElement.classList.add("dark");
+			localStorage.setItem("SMtheme", "dark");
 		} else {
 			setMode("light");
 			document.documentElement.classList.remove("dark");
+			localStorage.setItem("SMtheme", "light");
 		}
 	}
 
@@ -65,6 +67,18 @@ const App = () => {
 			],
 		},
 	]);
+
+	useEffect(() => {
+	  if (localStorage.getItem("SMtheme") === "dark") {
+		setMode("dark");
+		document.documentElement.classList.add("dark");
+	  }
+	  else {
+		setMode("light");
+		document.documentElement.classList.remove("dark");
+	  }
+	}, [])
+
 
 	return (
 		<ThemedAppContext.Provider value={{ scrollContainerRef, scrollToTop, mode, toggleTheme, toggleSearchModal, isSearchModalOpened }}>
