@@ -6,7 +6,7 @@ import { ThemedAppContext } from "../context/ThemedAppContext";
 
 const CategoryCard = ({ category }) => {
     const navigate = useNavigate();
-    const scrollToTop = useContext(ThemedAppContext);
+    const { scrollToTop } = useContext(ThemedAppContext);
 	const [isImgLoaded, setIsImgLoaded] = useState(false);
 
     return (

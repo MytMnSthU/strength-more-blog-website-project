@@ -62,7 +62,7 @@ const ArticlesBox = ({ boxTitle }) => {
 					onClick={() => {
 						navigate("/articles/popular");
 					}}
-					className=" text-xl font-semibold uppercase block p-4 border-b-2 border-black cursor-pointer">
+					className=" text-xl font-semibold uppercase block p-4 border-b-2 border-black dark:border-[#aaa] cursor-pointer">
 					{boxTitle}
 				</span>
 

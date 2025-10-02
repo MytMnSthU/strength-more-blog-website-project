@@ -19,9 +19,9 @@ const NavLink = ({ route, title, toggleNavbar }) => (
 );
 
 const NavBar = ({ isNavBarVisible, toggleNavbar }) => {
-    const visibleNavbarStyle = ` ms-auto flex flex-col justify-center items-center gap-5 w-full h-full bg-white absolute top-0 right-0 z-30 transition-all lg:static lg:bg-transparent lg:flex-row lg:w-fit`;
+    const visibleNavbarStyle = ` ms-auto flex flex-col justify-center items-center gap-5 w-full h-full bg-[#F3F1E8] dark:bg-[#1F1F1F] absolute top-0 left-0 z-30 lg:static lg:bg-transparent lg:flex-row lg:w-fit`;
 
-    const hiddenNavbarStyle = `ms-auto flex flex-col justify-center items-center gap-5 w-full h-full bg-white absolute top-0 right-full z-30 transition-all lg:static lg:bg-transparent lg:flex-row lg:w-fit`;
+    const hiddenNavbarStyle = `ms-auto flex flex-col justify-center items-center gap-5 w-full h-full bg-[#F3F1E8] dark:bg-[#1F1F1F] absolute top-0 left-full z-30 lg:static lg:bg-transparent lg:flex-row lg:w-fit`;
 
 	const { mode, toggleTheme } = useContext(ThemedAppContext);
 
