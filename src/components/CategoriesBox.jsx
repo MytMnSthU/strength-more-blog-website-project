@@ -1,8 +1,11 @@
 import { useNavigate } from "react-router";
 import CategoryLabelList from "./CategoryLabelList";
+import { useContext } from "react";
+import { ThemedAppContext } from "../context/ThemedAppContext";
 
 const CategoriesBox = () => {
     const navigate = useNavigate();
+	const { scrollToTop } = useContext(ThemedAppContext);
 
     return (
         <div className=" relative">
@@ -10,6 +13,7 @@ const CategoriesBox = () => {
                 <span
                     onClick={() => {
                         navigate("/categories");
+						scrollToTop();
                     }}
                     className=" text-xl font-semibold uppercase block p-4 cursor-pointer"
                 >

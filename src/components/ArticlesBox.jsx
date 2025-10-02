@@ -5,9 +5,12 @@ import { GET_POPULAR_ARTICLES } from "../graphql/query";
 import { fetchData, formatArticles } from "../utils/utils";
 import LoadMoreButton from "./LoadMoreButton";
 import Loader from "./Loader";
+import { useContext } from "react";
+import { ThemedAppContext } from "../context/ThemedAppContext";
 
 const ArticlesBox = ({ boxTitle }) => {
 	const navigate = useNavigate();
+	const { scrollToTop } = useContext(ThemedAppContext);
 
 	const fetchMoreArticles = ({ pageParam = 0 }) => {
 		return fetchData({ query: GET_POPULAR_ARTICLES, limit: 4, pageParam });
@@ -61,6 +64,7 @@ const ArticlesBox = ({ boxTitle }) => {
 				<span
 					onClick={() => {
 						navigate("/articles/popular");
+						scrollToTop();
 					}}
 					className=" text-xl font-semibold uppercase block p-4 border-b-2 border-black dark:border-[#aaa] cursor-pointer">
 					{boxTitle}
