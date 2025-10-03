@@ -96,7 +96,7 @@ const ArticleDetail = () => {
                 <h1 className="text-3xl md:text-4xl font-extrabold leading-none mt-5">{formattedArticle.title}</h1>
                 <TimeLabel time={formattedArticle.createdAt} />
 
-                <div className="w-full h-[200px] sm:h-[400px] border-2 border-black dark:border-[#aaa] overflow-hidden relative mt-2.5">
+                <div className="w-full h-[200px] sm:h-[500px] border-2 border-black dark:border-[#aaa] overflow-hidden relative mt-2.5">
                     <img
                         src={formattedArticle.image.url}
                         className="w-full h-full object-cover"

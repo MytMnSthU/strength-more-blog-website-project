@@ -24,7 +24,7 @@ const ArticleCard = ({ article }) => {
                 navigate(`/articles/${article.slug}`);
                 scrollToTop();
             }}
-            className=" relative group cursor-pointer h-full"
+            className=" relative group cursor-pointer h-full article-card"
         >
             <div className=" bg-[#F3F1E8] dark:bg-[#1F1F1F] h-full  grid gap-2.5 border-2 border-black dark:border-[#aaa]  p-2.5 pb-5 relative z-10 group-hover:translate-x-[4px] group-hover:translate-y-[4px] transition-all">
                 <div className=" aspect-video border border-black dark:border-[#aaa] overflow-hidden relative ">

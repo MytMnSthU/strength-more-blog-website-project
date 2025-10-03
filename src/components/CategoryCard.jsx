@@ -15,7 +15,7 @@ const CategoryCard = ({ category }) => {
                 navigate(`/categories/${category.slug}`);
                 scrollToTop();
             }}
-            className=" relative group min-h-[250px]"
+            className=" relative group  h-[140px] cursor-pointer"
         >
             <div className=" h-full bg-[#F3F1E8] dark:bg-[#1F1F1F] p-2.5 border-2 border-black dark:border-[#aaa] group-hover:translate-x-[3px] group-hover:translate-y-[3px] transition-all relative z-10">
                 <div className=" h-full border border-black dark:border-[#aaa] relative  overflow-hidden">
