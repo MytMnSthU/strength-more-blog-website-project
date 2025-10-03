@@ -9,12 +9,14 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { GET_ARTICLE, TOGGLE_LIKE_MUTATION } from "../graphql/query"; 
 import { formatNumber } from "../utils/utils";
 import { FaHeart, FaRegHeart, FaShare, FaEye } from "react-icons/fa";
+import ShareModal from "./ShareModal";
 
 
 const ArticleDetail = () => {
     const contentRef = useRef(null);
     const { articleId } = useParams();
     const [isLiked, setIsLiked] = useState(false);
+	const [isShareModalOpened, setIsShareModalOpened] = useState(false);
 
     const queryClient = useQueryClient();
 
@@ -60,16 +62,12 @@ const ArticleDetail = () => {
    
     const handleToggleLike = () => {
         if (!data?.article || likeMutation.isPending) return;
-
-		console.log(typeof data.article.likes);
 		
         const currentLikes = Number(data.article.likes) || 0;
         const newLikes = isLiked ? currentLikes - 1 : currentLikes + 1;
 
         setIsLiked((prev) => !prev);
         likeMutation.mutate({ slug: articleId, likes: newLikes });
-		console.log("mutated");
-		
     };
 
     if (error) {
@@ -136,7 +134,7 @@ const ArticleDetail = () => {
                             )}
                         </div>
 
-                        <div className="flex flex-col justify-center items-center p-4 cursor-pointer hover:text-blue-500 transition-colors">
+                        <div onClick={() => setIsShareModalOpened(true)} className="flex flex-col justify-center items-center p-4 cursor-pointer hover:text-blue-500 transition-colors">
                             <FaShare className="text-lg" />
                             <span className="text-sm font-bold">{formatNumber(formattedArticle.shares)}</span>
                         </div>
@@ -149,6 +147,8 @@ const ArticleDetail = () => {
                 </div>
                 <div className="w-full h-full bg-black dark:bg-[#aaa] absolute top-0 left-0 translate-x-[3px] translate-y-[3px] z-[-1]"></div>
             </div>
+
+			<ShareModal isOpen={isShareModalOpened} onClose={() => setIsShareModalOpened(false)} />
         </div>
     );
 };
