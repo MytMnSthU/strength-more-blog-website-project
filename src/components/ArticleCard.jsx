@@ -79,7 +79,7 @@ const ArticleCard = ({ article }) => {
                 <h3 className=" text-2xl font-extrabold leading-none">
                     {article.title}
                 </h3>
-				<p className=" leading-none text-zinc-800 dark:text-zinc-300 text-[16px]">
+				<p className=" leading-[1.25] text-zinc-800 dark:text-zinc-300 text-[16px]">
 					{stripHTML(article.content.html).length > 100
 						? stripHTML(article.content.html).slice(0, 100) + "..."	
 						: stripHTML(article.content.html)}

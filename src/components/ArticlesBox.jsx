@@ -66,7 +66,7 @@ const ArticlesBox = ({ boxTitle }) => {
 						navigate("/articles/popular");
 						scrollToTop();
 					}}
-					className=" text-xl font-semibold uppercase block p-4 border-b-2 border-black dark:border-[#aaa] cursor-pointer">
+					className=" text-xl font-semibold uppercase block p-4 border-b-2 border-black dark:border-[#aaa] cursor-pointer title">
 					{boxTitle}
 				</span>
 

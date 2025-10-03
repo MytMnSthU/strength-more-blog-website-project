@@ -6,11 +6,11 @@ const BreadCrumb = ({ items }) => {
 
 	return (
 		<nav aria-label="breadcrumb">
-			<ul className=" flex items-start gap-2">
+			<ul className=" flex items-start gap-2 list-none p-0 m-0">
 				{items.map((item, idx) => {
 					const isLast = idx === items.length - 1;
 					return (
-						<li key={idx} className="flex items-center leading-tight">
+						<li key={idx} className="flex items-center leading-tight text-sm mb-0">
 							{item.to && !isLast ? (
 								<Link
 									to={item.to}
@@ -24,7 +24,7 @@ const BreadCrumb = ({ items }) => {
 								</span>
 							)}
 							{!isLast && (
-								<span className="ms-2 text-xs mt-2">
+								<span className="ms-2 text-xs">
 									<FaAngleRight />
 								</span>
 							)}

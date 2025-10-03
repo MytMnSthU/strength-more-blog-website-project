@@ -31,7 +31,7 @@ const CategoryCard = ({ category }) => {
                         onLoad={() => setIsImgLoaded(true)}
                     />
                     <div className=" w-full h-full bg-black opacity-40 absolute z-20 top-0 left-0"></div>
-                    <span className=" uppercase text-white text-4xl absolute bottom-3 left-3 z-30">
+                    <span className=" uppercase text-white text-4xl absolute bottom-3 left-3 z-30 title">
                         {category.name}
                     </span>
                 </div>

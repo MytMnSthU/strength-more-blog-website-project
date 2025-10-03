@@ -15,7 +15,7 @@ const CategoriesBox = () => {
                         navigate("/categories");
 						scrollToTop();
                     }}
-                    className=" text-xl font-semibold uppercase block p-4 cursor-pointer"
+                    className=" text-xl font-semibold uppercase block p-4 cursor-pointer title"
                 >
                     categories
                 </span>

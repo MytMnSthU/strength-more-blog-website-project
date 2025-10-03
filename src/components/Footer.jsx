@@ -14,12 +14,10 @@ const Footer = () => {
                     <Link to="/">
                         <Logo />
                     </Link>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. Placeat in laboriosam, voluptatem eaque neque
-                        deserunt voluptates expedita debitis rerum modi quos
-                        corporis architecto repellendus, dolorum id similique a
-                        nam alias!
+                    <p className=" text-sm">
+                        <span className="title">STRENGTH MORE</span> is a blog website that provides articles on various topics including
+						technology, health, lifestyle, and more. Our mission is to share knowledge and insights to help
+						our readers lead better lives.
                     </p>
                 </div>
 

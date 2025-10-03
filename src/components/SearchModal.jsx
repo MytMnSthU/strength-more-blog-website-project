@@ -64,7 +64,7 @@ const SearchModal = ({ isOpen, onClose }) => {
 							ref={searchInputRef}
 							type="text"
 							placeholder="Search articles..."
-							className="w-full p-2 bg-transparent focus:outline-none focus:border-blue-500 uppercase font-bold placeholder:uppercase placeholder:text-zinc-700"
+							className="w-full p-2 bg-transparent focus:outline-none focus:border-blue-500 uppercase font-bold placeholder:uppercase placeholder:text-zinc-700 title"
 							onChange={(e) => setSearchTerm(e.target.value)}
 							autoFocus
 						/>
@@ -116,7 +116,7 @@ const SearchModal = ({ isOpen, onClose }) => {
 								))}
 							</div>
 						) : (
-							<div className="w-full h-full flex items-center justify-center py-10">
+							<div className="w-full h-full flex items-center justify-center py-10 title">
 								<p className="uppercase mb-0">No recent search</p>
 							</div>
 						)}
