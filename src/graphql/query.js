@@ -9,7 +9,7 @@ export const GET_ARTICLES = gql`
 			image {
 				url(
 					transformation: {
-						image: { resize: { width: 220 } }
+						image: { resize: { width: 320 } }
 						document: { output: { format: webp } }
 					}
 				)
@@ -43,7 +43,7 @@ export const GET_POPULAR_ARTICLES = gql`
 			image {
 				url(
 					transformation: {
-						image: { resize: { width: 220 } }
+						image: { resize: { width: 320 } }
 						document: { output: { format: webp } }
 					}
 				)
@@ -117,7 +117,7 @@ export const GET_CATEGORIES = gql`
 			image {
 				url(
 					transformation: {
-						image: { resize: { width: 220 } }
+						image: { resize: { width: 320 } }
 						document: { output: { format: webp } }
 					}
 				)
@@ -139,7 +139,7 @@ export const SEARCH_ARTICLES = gql`
 			image {
 				url(
 					transformation: {
-						image: { resize: { width: 220 } }
+						image: { resize: { width: 320 } }
 						document: { output: { format: webp } }
 					}
 				)
