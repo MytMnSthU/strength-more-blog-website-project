@@ -8,7 +8,6 @@ import ArticleCard from "./ArticleCard";
 import Loader from "./Loader";
 import { formatArticles } from "../utils/utils";
 
-
 const fetchArticles = async (searchTerm) => {
 	if (!searchTerm.trim()) return { articles: [] };
 	const endpoint = import.meta.env.VITE_API_KEY;
@@ -19,30 +18,18 @@ const SearchModal = ({ isOpen, onClose }) => {
 	const searchInputRef = useRef(null);
 	const [searchTerm, setSearchTerm] = useState("");
 
-	const {
-		data,
-		isLoading,
-		isError,
-		refetch,
-	} = useQuery({
-		queryKey: ["searchArticles", searchTerm],
-		queryFn: () => fetchArticles(searchTerm),
-		enabled: !!searchTerm.trim(),
-		staleTime: 0,
-	});
-	// Debounce searchTerm changes
-	// Only refetch when searchTerm changes and after debounce
-	// This is a simple debounce implementation
-	// You can use use-debounce or lodash.debounce for more complex cases
 	const [debouncedTerm, setDebouncedTerm] = useState("");
 	useEffect(() => {
-		const handler = setTimeout(() => setDebouncedTerm(searchTerm), 500);
+		const handler = setTimeout(() => setDebouncedTerm(searchTerm), 1000);
 		return () => clearTimeout(handler);
 	}, [searchTerm]);
 
-	useEffect(() => {
-		if (debouncedTerm.trim()) refetch();
-	}, [debouncedTerm, refetch]);
+	const { data, isLoading, isError } = useQuery({
+		queryKey: ["searchArticles", debouncedTerm],
+		queryFn: () => fetchArticles(debouncedTerm),
+		enabled: !!debouncedTerm.trim(),
+		staleTime: 0,
+	});
 
 	if (!isOpen) return null;
 
@@ -54,8 +41,7 @@ const SearchModal = ({ isOpen, onClose }) => {
 			className="fixed top-0 left-0 w-full h-full z-[100] bg-black bg-opacity-50 py-10 px-4 overflow-y-auto"
 			onClick={(e) => {
 				if (e.target === e.currentTarget) onClose();
-			}}
-		>
+			}}>
 			<div className="w-full max-w-[900px] mx-auto bg-[#F3F1E8] dark:bg-[#1F1F1F] relative">
 				<form action="">
 					<div className="flex items-center gap-2.5 px-5 py-2.5 border-2 border-black dark:border-[#aaa] relative">
@@ -75,8 +61,7 @@ const SearchModal = ({ isOpen, onClose }) => {
 									searchInputRef.current.value = "";
 								}}
 								type="button"
-								className="w-[25px] h-[25px] text-black dark:text-white hover:text-gray-500 absolute right-5 top-1/2 transform -translate-y-1/2 z-10 flex items-center justify-center"
-							>
+								className="w-[25px] h-[25px] text-black dark:text-white hover:text-gray-500 absolute right-5 top-1/2 transform -translate-y-1/2 z-10 flex items-center justify-center">
 								<FaTimes />
 							</button>
 						)}
@@ -84,9 +69,7 @@ const SearchModal = ({ isOpen, onClose }) => {
 					<div className="border-2 border-black dark:border-[#aaa] border-t-0">
 						{debouncedTerm.trim() && (
 							<div className="px-5 py-2.5 border-b-2 border-black">
-								<h2 className="text-2xl font-bold mb-1">
-									Searched Results: {searchedArticles.length}
-								</h2>
+								<h2 className="text-2xl font-bold mb-1">Searched Results: {searchedArticles.length}</h2>
 								<p className="mb-0">
 									Showing results for: <strong>{debouncedTerm}</strong>
 								</p>
@@ -108,8 +91,7 @@ const SearchModal = ({ isOpen, onClose }) => {
 									<div
 										onClick={onClose}
 										className=""
-										key={article.id}
-									>
+										key={article.id}>
 										{/* <ArticleBoxCard article={article} /> */}
 										<ArticleCard article={article} />
 									</div>
