@@ -7,7 +7,12 @@ export const GET_ARTICLES = gql`
 			title
 			slug
 			image {
-				url
+				url(
+					transformation: {
+						image: { resize: { width: 400 } }
+						document: { output: { format: webp } }
+					}
+				)
 			}
 			createdAt
 			categories {
@@ -36,7 +41,12 @@ export const GET_POPULAR_ARTICLES = gql`
 			title
 			slug
 			image {
-				url
+				url(
+					transformation: {
+						image: { resize: { width: 400 } }
+						document: { output: { format: webp } }
+					}
+				)
 			}
 			createdAt
 			categories {
@@ -65,7 +75,12 @@ export const GET_ARTICLE = gql`
 			title
 			slug
 			image {
-				url
+				url(
+					transformation: {
+						image: { resize: { width: 800 } }
+						document: { output: { format: webp } }
+					}
+				)
 			}
 			createdAt
 			categories {
@@ -100,7 +115,12 @@ export const GET_CATEGORIES = gql`
 			id
 			name
 			image {
-				url
+				url(
+					transformation: {
+						image: { resize: { width: 400 } }
+						document: { output: { format: webp } }
+					}
+				)
 			}
 			slug
 			color {
@@ -117,7 +137,12 @@ export const SEARCH_ARTICLES = gql`
 			title
 			slug
 			image {
-				url
+				url(
+					transformation: {
+						image: { resize: { width: 400 } }
+						document: { output: { format: webp } }
+					}
+				)
 			}
 			createdAt
 			categories {
@@ -160,14 +185,4 @@ export const TOGGLE_LIKE_MUTATION = gql`
             id
         }
     }
-`;
-
-export const TEST = gql`
-	mutation UpdateLikesOnly {
-		updateArticle(where: { id: "clkmm5eds08xw0c2tugjoama5" }, data: { likes: 100 }) {
-			id
-			likes
-			stage
-		}
-	}
 `;
