@@ -19,13 +19,8 @@ const ArticleBoxCard = ({ article }) => {
             }}
             className=" cursor-pointer hover:bg-[#e3e3e3] dark:hover:bg-[#333]"
         >
-            <div className=" p-4 grid gap-2.5">
-                <div className=" flex gap-2">
-                    {article.categories.map((category) => (
-                        <CategoryLabel key={category.id} category={category} />
-                    ))}
-                </div>
-                <h4 className=" text-2xl font-bold leading-none">
+            <div className=" px-4 py-6 grid gap-3">
+                <h4 className=" text-xl font-bold leading-none mb-0">
                     {article.title}
                 </h4>
                 <div className="flex flex-wrap justify-between items-center gap-2">
@@ -45,6 +40,11 @@ const ArticleBoxCard = ({ article }) => {
 						</div>
 					</div>
 				</div>
+				<div className=" flex gap-2">
+                    {article.categories.map((category) => (
+                        <CategoryLabel key={category.id} category={category} />
+                    ))}
+                </div>
             </div>
             <hr className=" border-b-2 border-b-black" />
         </div>
