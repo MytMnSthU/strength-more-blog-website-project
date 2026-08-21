@@ -1,4 +1,4 @@
-import ArticlesBox from "./ArticlesBox";
+import ArticlesBox from "../features/articles/components/ArticlesBox";
 import CategoriesBox from "./CategoriesBox";
 import SearchBar from "./SearchBar";
 

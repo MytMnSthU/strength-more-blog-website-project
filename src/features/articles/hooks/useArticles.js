@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchArticles } from "../api/articlesApi";
 
-const useArticles = ({ category, isPopular }) => {
+const useArticles = ({ category, isPopular, pageSize = 8, limit = 8 }) => {
 	const {
 		data,
 		fetchNextPage,
@@ -13,17 +13,19 @@ const useArticles = ({ category, isPopular }) => {
 		queryKey: ["articles", category, isPopular],
 		queryFn: ({ pageParam = 0 }) => {
 			return fetchArticles({
+				limit,
 				pageParam,
 				where: {
-					popularArticle: isPopular,
 					categories_some: { slug: category },
+					...(isPopular && {
+						popularArticle: true,
+					}),
 				},
 			});
 		},
 		getNextPageParam: (lastPage, allPages) => {
 			const allItems = allPages.flatMap((p) => p.articles);
 			const totalLoaded = allItems.length;
-			const pageSize = 8; // match your `count`
 			const hasMore = lastPage.articles.length === pageSize;
 
 			return hasMore ? totalLoaded : undefined;

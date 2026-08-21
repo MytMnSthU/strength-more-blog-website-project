@@ -61,10 +61,6 @@ const ArticleCard = ({ article }) => {
 					<TimeLabel time={article.createdAt} />
 					<div className=" flex">
 						<div className=" flex justify-center items-center gap-2 py-1 px-2">
-							<FaHeart className=" text-[10px]" />
-							<span className=" text-[14px] font-bold">{formatNumber(article.likes) || 0}</span>
-						</div>
-						<div className=" flex justify-center items-center gap-2 py-1 px-2">
 							<FaShare className=" text-[10px]" />
 							<span className=" text-[14px] font-bold">{formatNumber(article.shares) || 0}</span>
 						</div>

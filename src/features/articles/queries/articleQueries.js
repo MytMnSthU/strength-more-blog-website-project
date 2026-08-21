@@ -83,3 +83,22 @@ export const GET_ARTICLE = gql`
 		}
 	}
 `;
+
+export const LIKE_ARTICLE = gql`
+    mutation LikeArticle($slug: String!, $likes: Int!) {
+        upsertArticle(
+            where: { slug: $slug }
+            upsert: {
+                create: { slug: $slug, likes: $likes }
+                update: { likes: $likes }
+            }
+        ) {
+            id
+            slug
+        }
+
+        publishArticle(where: { slug: $slug }, to: PUBLISHED) {
+            id
+        }
+    }
+`;

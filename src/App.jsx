@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from "react";
 
 import { ThemedAppContext } from "./context/ThemedAppContext";
 
-import ArticleDetail from "./components/ArticleDetail";
+import ArticleDetail from "./features/articles/components/ArticleDetail";
 import ArticleList from "./features/articles/components/ArticleList";
 import CategoryList from "./components/CategoryList";
 

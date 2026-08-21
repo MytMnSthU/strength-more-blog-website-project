@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router";
-import { ThemedAppContext } from "../context/ThemedAppContext";
-import CategoryLabel from "./CategoryLabel";
-import TimeLabel from "./TimeLabel";
+import { ThemedAppContext } from "../../../context/ThemedAppContext";
+import CategoryLabel from "../../../components/CategoryLabel";
+import TimeLabel from "../../../components/TimeLabel";
 import { FaHeart, FaShare, FaEye } from "react-icons/fa";
-import { formatNumber } from "../utils/utils";
+import { formatNumber } from "../../../utils/utils";
 
 
 const ArticleBoxCard = ({ article }) => {
@@ -26,10 +26,6 @@ const ArticleBoxCard = ({ article }) => {
                 <div className="flex flex-wrap justify-between items-center gap-2">
 					<TimeLabel time={article.createdAt} />
 					<div className=" flex">
-						<div className=" flex justify-center items-center gap-2 py-1 px-2">
-							<FaHeart className=" text-[10px]" />
-							<span className=" text-[12px] font-bold">{formatNumber(article.likes) || 0}</span>
-						</div>
 						<div className=" flex justify-center items-center gap-2 py-1 px-2">
 							<FaShare className=" text-[10px]" />
 							<span className=" text-[12px] font-bold">{formatNumber(article.shares) || 0}</span>

@@ -1,5 +1,5 @@
 import request from "graphql-request";
-import { GET_ARTICLE, GET_ARTICLES } from "../queries/articleQueries";
+import { GET_ARTICLE, GET_ARTICLES, LIKE_ARTICLE } from "../queries/articleQueries";
 import { API_ENDPOINT } from "../../../config/env";
 
 export async function fetchArticles({ limit = 8, pageParam = 0, where = {} }) {
@@ -24,7 +24,7 @@ export async function fetchArticle(id) {
 		});
 		return data;
 	} catch (error) {
-		onsole.error("Error fetching article:", error);
+		console.error("Error fetching article:", error);
 		throw error;
 	}
 }
