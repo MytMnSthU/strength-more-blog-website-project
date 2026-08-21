@@ -1,9 +1,8 @@
 import ArticleCard from "./ArticleCard";
-import LoadMoreButton from "./LoadMoreButton";
-import Loader from "./Loader";
-import { formatArticles } from "../utils/utils";
-import useArticles from "../features/articles/hooks/useArticles";
-import { GET_ARTICLES, GET_POPULAR_ARTICLES } from "../graphql/query";
+import LoadMoreButton from "../../../components/LoadMoreButton";
+import Loader from "../../../components/Loader";
+import { formatArticles } from "../../../utils/utils";
+import useArticles from "../../../features/articles/hooks/useArticles";
 import { useParams } from "react-router";
 import { useEffect, useRef } from "react";
 import { stagger, animate, createScope } from "animejs";

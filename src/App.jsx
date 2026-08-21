@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { ThemedAppContext } from "./context/ThemedAppContext";
 
 import ArticleDetail from "./components/ArticleDetail";
-import ArticleList from "./components/ArticleList";
+import ArticleList from "./features/articles/components/ArticleList";
 import CategoryList from "./components/CategoryList";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
