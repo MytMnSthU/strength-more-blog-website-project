@@ -5,7 +5,7 @@ import { ThemedAppContext } from "./context/ThemedAppContext";
 
 import ArticleDetail from "./features/articles/components/ArticleDetail";
 import ArticleList from "./features/articles/components/ArticleList";
-import CategoryList from "./components/CategoryList";
+import CategoryList from "./features/categories/components/CategoryList";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import MainLayout from "./MainLayout";
