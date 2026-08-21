@@ -1,8 +1,8 @@
 import ArticleCard from "./ArticleCard";
-import LoadMoreButton from "../../../components/LoadMoreButton";
-import Loader from "../../../components/Loader";
-import { formatArticles } from "../../../utils/utils";
-import useArticles from "../../../features/articles/hooks/useArticles";
+import LoadMoreButton from "@/components/LoadMoreButton";
+import Loader from "@/components/Loader";
+import { formatArticles } from "@/utils/utils";
+import useArticles from "@/features/articles/hooks/useArticles";
 import { useParams } from "react-router";
 import { useEffect, useRef } from "react";
 import { stagger, animate, createScope } from "animejs";

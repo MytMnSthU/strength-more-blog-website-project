@@ -1,6 +1,6 @@
 import request from "graphql-request";
-import { GET_ARTICLE, GET_ARTICLES, LIKE_ARTICLE } from "../queries/articleQueries";
-import { API_ENDPOINT } from "../../../config/env";
+import { GET_ARTICLE, GET_ARTICLES } from "../queries/articleQueries";
+import { API_ENDPOINT } from "@/config/env";
 
 export async function fetchArticles({ limit = 8, pageParam = 0, where = {} }) {
 	try {

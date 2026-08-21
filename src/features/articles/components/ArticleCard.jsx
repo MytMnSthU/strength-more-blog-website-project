@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
-import CategoryLabel from "../../../components/CategoryLabel";
-import TimeLabel from "../../../components/TimeLabel";
-import { FaHeart, FaShare, FaEye } from "react-icons/fa";
+import CategoryLabel from "@/components/CategoryLabel";
+import TimeLabel from "@/components/TimeLabel";
+import { FaShare, FaEye } from "react-icons/fa";
 
-import { ThemedAppContext } from "../../../context/ThemedAppContext";
-import { formatNumber } from "../../../utils/utils";
+import { ThemedAppContext } from "@/context/ThemedAppContext";
+import { formatNumber } from "@/utils/utils";
 
 function stripHTML(html) {
 	const div = document.createElement('div');

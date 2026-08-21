@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router";
 import ArticleBoxCard from "./ArticleBoxCard";
-import { formatArticles } from "../../../utils/utils";
-import LoadMoreButton from "../../../components/LoadMoreButton";
-import Loader from "../../../components/Loader";
+import { formatArticles } from "@/utils/utils";
+import LoadMoreButton from "@/components/LoadMoreButton";
+import Loader from "@/components/Loader";
 import { useContext } from "react";
-import { ThemedAppContext } from "../../../context/ThemedAppContext";
+import { ThemedAppContext } from "@/context/ThemedAppContext";
 import useArticles from "../hooks/useArticles";
 
 const ArticlesBox = ({ boxTitle }) => {

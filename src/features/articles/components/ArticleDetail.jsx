@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
-import TimeLabel from "../../../components/TimeLabel";
-import CategoryLabel from "../../../components/CategoryLabel";
-import BreadCrumb from "../../../components/BreadCrumb";
-import Loader from "../../../components/Loader";
-import { formatNumber } from "../../../utils/utils";
-import { FaHeart, FaRegHeart, FaShare, FaEye } from "react-icons/fa";
-import ShareModal from "../../../components/ShareModal";
+import TimeLabel from "@/components/TimeLabel";
+import CategoryLabel from "@/components/CategoryLabel";
+import BreadCrumb from "@/components/BreadCrumb";
+import Loader from "@/components/Loader";
+import { formatNumber } from "@/utils/utils";
+import { FaShare, FaEye } from "react-icons/fa";
+import ShareModal from "@/components/ShareModal";
 import useArticle from "../hooks/useArticle";
 
 const ArticleDetail = () => {
