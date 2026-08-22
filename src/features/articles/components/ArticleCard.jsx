@@ -26,8 +26,8 @@ const ArticleCard = ({ article }) => {
             }}
             className=" relative group cursor-pointer h-full article-card"
         >
-            <div className=" bg-[#F3F1E8] dark:bg-[#1F1F1F] h-full grid gap-2.5 border-2 border-black dark:border-[#aaa]  p-5 pb-5 relative z-10 group-hover:translate-x-[4px] group-hover:translate-y-[4px] transition-all">
-                <div className=" aspect-video border border-black dark:border-[#aaa] overflow-hidden relative  ">
+            <div className=" bg-[#F3F1E8] dark:bg-[#1F1F1F] h-full grid gap-2.5 border-2 border-black dark:border-[#aaa]  p-3 relative z-10 group-hover:translate-x-[4px] group-hover:translate-y-[4px] transition-all">
+                <div className=" aspect-video border border-black dark:border-[#aaa] overflow-hidden relative ">
 					{!isImageLoaded && (
 						<div className=" absolute inset-0 flex items-center justify-center bg-[#F3F1E8] dark:bg-[#111]">
 							<span className=" text-gray-500 dark:text-[#aaa] uppercase">Loading...</span>
@@ -43,7 +43,7 @@ const ArticleCard = ({ article }) => {
                     <img
 						onLoad={() => setIsImageLoaded(true)}
                         src={article.image.url}
-                        className=" w-full h-full object-cover"
+                        className=" w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all"
                         alt={article.image.url}
                     />
 
@@ -73,9 +73,7 @@ const ArticleCard = ({ article }) => {
 
 
                 <h3 className=" text-2xl font-extrabold leading-none">
-                    {article.title.length > 45
-						? article.title.slice(0, 45) + "..."
-						: article.title}
+					{article.title}
                 </h3>
 				<p className=" leading-[1.25] text-zinc-800 dark:text-zinc-300 text-[16px]">
 					{stripHTML(article.content.html).length > 80

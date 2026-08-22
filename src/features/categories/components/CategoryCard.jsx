@@ -24,7 +24,7 @@ const CategoryCard = ({ category }) => {
 					)}
                     <img
                         src={category.image.url}
-                        className=" w-full h-full object-cover"
+                        className=" w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all"
                         alt={category.image.url}
                         onLoad={() => setIsImgLoaded(true)}
                     />
