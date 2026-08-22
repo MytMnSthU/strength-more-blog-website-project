@@ -5,6 +5,7 @@ import SearchModal from "./components/SearchModal";
 import Nav from "./components/Nav";
 import SideBar from "./components/SideBar";
 import Footer from "./components/Footer";
+import ArticleSearchModal from "./features/articles/components/ArticleSearchModal";
 
 const MainLayout = () => {
 	const { scrollContainerRef, toggleSearchModal, isSearchModalOpened } = useContext(ThemedAppContext);
@@ -20,7 +21,7 @@ const MainLayout = () => {
 				<div className=" ">
 					<SideBar onModalClick={toggleSearchModal} />
 				</div>
-				<SearchModal
+				<ArticleSearchModal
 					isOpen={isSearchModalOpened}
 					onClose={toggleSearchModal}
 				/>

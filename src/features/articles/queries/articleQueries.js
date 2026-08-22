@@ -83,3 +83,37 @@ export const GET_ARTICLE = gql`
 		}
 	}
 `;
+
+export const SEARCH_ARTICLE = gql`
+	query SearchArticle($_search: String = "") {
+		articles(where: { _search: $_search }) {
+			id
+			title
+			slug
+			image {
+				url(
+					transformation: {
+						image: { resize: { width: 320 } }
+						document: { output: { format: webp } }
+					}
+				)
+			}
+			createdAt
+			categories {
+				id
+				color {
+					hex
+				}
+				name
+				slug
+			}
+			content {
+				html
+			}
+			popularArticle
+			likes
+			shares
+			views
+		}
+	}
+`;
