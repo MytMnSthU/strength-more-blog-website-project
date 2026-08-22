@@ -2,7 +2,7 @@ import request from "graphql-request";
 import { GET_CATEGORIES } from "../queries/categoryQueries";
 import { API_ENDPOINT } from "@/config/env";
 
-export async function fetchCategories() {
+export async function getCategories() {
 	try {
 		const data = await request(API_ENDPOINT, GET_CATEGORIES);
 		return data;

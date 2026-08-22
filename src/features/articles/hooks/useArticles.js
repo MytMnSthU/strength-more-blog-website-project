@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { fetchArticles } from "../api/articlesApi";
+import { getArticles } from "../api/getArticles";
 
 const useArticles = ({ category, isPopular, pageSize = 8, limit = 8 }) => {
 	const {
@@ -12,7 +12,7 @@ const useArticles = ({ category, isPopular, pageSize = 8, limit = 8 }) => {
 	} = useInfiniteQuery({
 		queryKey: ["articles", category, isPopular],
 		queryFn: ({ pageParam = 0 }) => {
-			return fetchArticles({
+			return getArticles({
 				limit,
 				pageParam,
 				where: {

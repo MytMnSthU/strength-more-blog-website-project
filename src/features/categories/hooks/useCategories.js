@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchCategories } from "../api/categoriesApi";
+import { getCategories } from "../api/getCategories";
 
 const useCategories = () => {
 	const { data, isLoading, error } = useQuery({
 		queryKey: ["categories"],
 		queryFn: () => {
-			return fetchCategories();
+			return getCategories();
 		},
 		refetchOnWindowFocus: false,
 	});
