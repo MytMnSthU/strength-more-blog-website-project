@@ -1,6 +1,3 @@
-import request from "graphql-request";
-import { GET_ARTICLES } from "../graphql/query";
-
 export const formatDate = (date) => {
 	const newDate = new Date(date);
 
@@ -26,23 +23,6 @@ export const formatArticles = (articles) => {
 	});
 };
 
-export const fetchData = async ({ query = GET_ARTICLES, limit = 8, pageParam = 0, where = {} } = {}) => {
-	try {
-		const endpoint = import.meta.env.VITE_API_KEY;
-
-		const data = await request(endpoint, query, {
-			limit,
-			skip: pageParam,
-			where,
-		});
-
-		return data;
-	} catch (error) {
-		console.error("Error fetching data:", error);
-		throw error; // Re-throw the error to be handled by the calling function
-	}
-};
-
 export const formatNumber = (num) => {
-	return new Intl.NumberFormat("en", {notation: "compact"}).format(num);
+	return new Intl.NumberFormat("en", { notation: "compact" }).format(num);
 };

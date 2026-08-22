@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { ThemedAppContext } from "@/context/ThemedAppContext";
-import CategoryLabel from "@/components/CategoryLabel";
+import CategoryLabel from "@/features/categories/components/CategoryLabel";
 import TimeLabel from "@/components/TimeLabel";
 import { FaShare, FaEye } from "react-icons/fa";
 import { formatNumber } from "@/utils/utils";

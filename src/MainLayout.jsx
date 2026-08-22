@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Outlet } from "react-router-dom";
 import { ThemedAppContext } from "./context/ThemedAppContext";
-import SearchModal from "./components/SearchModal";
 import Nav from "./components/Nav";
 import SideBar from "./components/SideBar";
 import Footer from "./components/Footer";

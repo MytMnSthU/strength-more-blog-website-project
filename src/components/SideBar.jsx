@@ -1,5 +1,5 @@
 import ArticlesBox from "../features/articles/components/ArticlesBox";
-import CategoriesBox from "./CategoriesBox";
+import CategoriesBox from "@/features/categories/components/CategoriesBox";
 import SearchBar from "./SearchBar";
 
 const SideBar = ({onModalClick}) => {

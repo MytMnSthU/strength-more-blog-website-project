@@ -1,10 +1,7 @@
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
 import { FaHeart } from "react-icons/fa";
-import CategoryLabelList from "./CategoryLabelList";
-
-
-
+import CategoryLabelList from "@/features/categories/components/CategoryLabelList";
 
 const Footer = () => {
     return (
