@@ -4,7 +4,7 @@ import CategoryLabel from "@/features/categories/components/CategoryLabel";
 import TimeLabel from "@/components/TimeLabel";
 import { FaShare, FaEye } from "react-icons/fa";
 
-import { ThemedAppContext } from "@/context/ThemedAppContext";
+import { AppContext } from "@/context/AppContext";
 import { formatNumber } from "@/utils/utils";
 
 function stripHTML(html) {
@@ -15,7 +15,7 @@ function stripHTML(html) {
 
 const ArticleCard = ({ article }) => {
     const navigate = useNavigate();
-    const { scrollToTop } = useContext(ThemedAppContext);
+    const { scrollToTop } = useContext(AppContext);
 	const [isImageLoaded, setIsImageLoaded] = useState(false);
 
     return (

@@ -4,12 +4,12 @@ import { formatArticles } from "@/utils/utils";
 import LoadMoreButton from "@/components/LoadMoreButton";
 import Loader from "@/components/Loader";
 import { useContext } from "react";
-import { ThemedAppContext } from "@/context/ThemedAppContext";
+import { AppContext } from "@/context/AppContext";
 import useArticles from "../hooks/useArticles";
 
 const ArticlesBox = ({ boxTitle }) => {
 	const navigate = useNavigate();
-	const { scrollToTop } = useContext(ThemedAppContext);
+	const { scrollToTop } = useContext(AppContext);
 
 	const {
 		data,

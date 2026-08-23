@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router";
 import CategoryLabelList from "./CategoryLabelList";
 import { useContext } from "react";
-import { ThemedAppContext } from "@/context/ThemedAppContext";
+import { AppContext } from "@/context/AppContext";
 
 const CategoriesBox = () => {
     const navigate = useNavigate();
-	const { scrollToTop } = useContext(ThemedAppContext);
+	const { scrollToTop } = useContext(AppContext);
 
     return (
         <div className=" relative">

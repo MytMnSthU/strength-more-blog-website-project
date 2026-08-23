@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import { Outlet } from "react-router-dom";
-import { ThemedAppContext } from "./context/ThemedAppContext";
 import Nav from "./components/Nav";
 import SideBar from "./components/SideBar";
 import Footer from "./components/Footer";
 import ArticleSearchModal from "./features/articles/components/ArticleSearchModal";
+import { AppContext } from "./context/AppContext";
 
 const MainLayout = () => {
-	const { scrollContainerRef, toggleSearchModal, isSearchModalOpened } = useContext(ThemedAppContext);
+	const { scrollContainerRef, toggleSearchModal, isSearchModalOpened } = useContext(AppContext);
 	return (
 		<div
 			ref={scrollContainerRef}

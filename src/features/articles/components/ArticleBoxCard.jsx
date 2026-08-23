@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router";
-import { ThemedAppContext } from "@/context/ThemedAppContext";
+import { AppContext } from "@/context/AppContext";
 import CategoryLabel from "@/features/categories/components/CategoryLabel";
 import TimeLabel from "@/components/TimeLabel";
 import { FaShare, FaEye } from "react-icons/fa";
@@ -9,7 +9,7 @@ import { formatNumber } from "@/utils/utils";
 
 const ArticleBoxCard = ({ article }) => {
     const navigate = useNavigate();
-	const { scrollToTop } = useContext(ThemedAppContext);
+	const { scrollToTop } = useContext(AppContext);
 
     return (
         <div

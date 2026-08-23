@@ -1,14 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 
-import { ThemedAppContext } from "./context/ThemedAppContext";
-
 import ArticleDetail from "./features/articles/components/ArticleDetail";
 import ArticleList from "./features/articles/components/ArticleList";
 import CategoryList from "./features/categories/components/CategoryList";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import MainLayout from "./MainLayout";
+import { AppContext } from "./context/AppContext";
 
 const queryClient = new QueryClient();
 
@@ -23,11 +22,11 @@ const App = () => {
 		});
 	};
 
-	const toggleSearchModal = () => { 
+	const toggleSearchModal = () => {
 		setIsSearchModalOpened(!isSearchModalOpened);
-	}
+	};
 
-	const toggleTheme = (mode) => { 
+	const toggleTheme = (mode) => {
 		if (mode === "light") {
 			setMode("dark");
 			document.documentElement.classList.add("dark");
@@ -37,7 +36,7 @@ const App = () => {
 			document.documentElement.classList.remove("dark");
 			localStorage.setItem("SMtheme", "light");
 		}
-	}
+	};
 
 	// Route configuration for createBrowserRouter
 	const router = createBrowserRouter([
@@ -50,7 +49,12 @@ const App = () => {
 				},
 				{
 					path: "articles/popular",
-					element: <ArticleList title="Popular Articles" category="popular" />,
+					element: (
+						<ArticleList
+							title="Popular Articles"
+							category="popular"
+						/>
+					),
 				},
 				{
 					path: "articles/:articleId",
@@ -69,23 +73,29 @@ const App = () => {
 	]);
 
 	useEffect(() => {
-	  if (localStorage.getItem("SMtheme") === "dark") {
-		setMode("dark");
-		document.documentElement.classList.add("dark");
-	  }
-	  else {
-		setMode("light");
-		document.documentElement.classList.remove("dark");
-	  }
-	}, [])
-
+		if (localStorage.getItem("SMtheme") === "dark") {
+			setMode("dark");
+			document.documentElement.classList.add("dark");
+		} else {
+			setMode("light");
+			document.documentElement.classList.remove("dark");
+		}
+	}, []);
 
 	return (
-		<ThemedAppContext.Provider value={{ scrollContainerRef, scrollToTop, mode, toggleTheme, toggleSearchModal, isSearchModalOpened }}>
+		<AppContext.Provider
+			value={{
+				scrollContainerRef,
+				scrollToTop,
+				mode,
+				toggleTheme,
+				toggleSearchModal,
+				isSearchModalOpened,
+			}}>
 			<QueryClientProvider client={queryClient}>
 				<RouterProvider router={router} />
 			</QueryClientProvider>
-		</ThemedAppContext.Provider>
+		</AppContext.Provider>
 	);
 };
 

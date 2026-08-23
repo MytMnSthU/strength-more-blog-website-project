@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router";
-import { ThemedAppContext } from "@/context/ThemedAppContext";
 import { useContext } from "react";
+import { AppContext } from "@/context/AppContext";
 
 const CategoryLabel = ({ category }) => {
     const navigate = useNavigate();
-	const { scrollToTop } = useContext(ThemedAppContext);
+	const { scrollToTop } = useContext(AppContext);
 	
     return (
         <div

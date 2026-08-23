@@ -2,10 +2,10 @@ import { FaBars, FaSearch, FaTimes, FaMoon, FaSun } from "react-icons/fa";
 import Logo from "./Logo";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { ThemedAppContext } from "../context/ThemedAppContext";
+import { AppContext } from "../context/AppContext";
 
 const NavLink = ({ route, title, toggleNavbar }) => {
-	const { scrollToTop } = useContext(ThemedAppContext);	
+	const { scrollToTop } = useContext(AppContext);	
 	return (
 		<li
 			onClick={() => {
@@ -25,7 +25,7 @@ const NavBar = ({ isNavBarVisible, toggleNavbar }) => {
 
 	const hiddenNavbarStyle = `ms-auto flex flex-col justify-center items-center gap-5 w-full h-full bg-[#F3F1E8] dark:bg-[#1F1F1F] fixed top-0 left-full z-30 lg:static lg:bg-transparent lg:flex-row lg:w-fit list-none ps-0 mb-0`;
 
-	const { mode, toggleTheme } = useContext(ThemedAppContext);
+	const { mode, toggleTheme } = useContext(AppContext);
 
 	return (
 		<ul className={isNavBarVisible ? visibleNavbarStyle : hiddenNavbarStyle}>
