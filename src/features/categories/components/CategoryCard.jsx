@@ -4,14 +4,12 @@ import { AppContext } from "@/context/AppContext";
 
 const CategoryCard = ({ category }) => {
     const navigate = useNavigate();
-    const { scrollToTop } = useContext(AppContext);
 	const [isImgLoaded, setIsImgLoaded] = useState(false);
 
     return (
         <div
             onClick={() => {
                 navigate(`/categories/${category.slug}`);
-                scrollToTop();
             }}
             className=" relative group  h-[140px] cursor-pointer"
         >

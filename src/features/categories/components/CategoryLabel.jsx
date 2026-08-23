@@ -4,13 +4,11 @@ import { AppContext } from "@/context/AppContext";
 
 const CategoryLabel = ({ category }) => {
     const navigate = useNavigate();
-	const { scrollToTop } = useContext(AppContext);
 	
     return (
         <div
             onClick={(e) => {
                 navigate(`/categories/${category.slug}`);
-                scrollToTop();
                 e.stopPropagation();
             }}
             className=" relative group cursor-pointer"

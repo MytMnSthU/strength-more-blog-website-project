@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import ArticleDetail from "./features/articles/components/ArticleDetail";
 import ArticleList from "./features/articles/components/ArticleList";
@@ -12,15 +12,8 @@ import { AppContext } from "./context/AppContext";
 const queryClient = new QueryClient();
 
 const App = () => {
-	const scrollContainerRef = useRef(null);
 	const [isSearchModalOpened, setIsSearchModalOpened] = useState(false);
 	const [mode, setMode] = useState("light");
-
-	const scrollToTop = () => {
-		scrollContainerRef.current.scrollIntoView({
-			block: "start",
-		});
-	};
 
 	const toggleSearchModal = () => {
 		setIsSearchModalOpened(!isSearchModalOpened);
@@ -85,8 +78,6 @@ const App = () => {
 	return (
 		<AppContext.Provider
 			value={{
-				scrollContainerRef,
-				scrollToTop,
 				mode,
 				toggleTheme,
 				toggleSearchModal,

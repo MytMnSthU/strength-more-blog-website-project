@@ -5,7 +5,6 @@ import { AppContext } from "@/context/AppContext";
 
 const CategoriesBox = () => {
     const navigate = useNavigate();
-	const { scrollToTop } = useContext(AppContext);
 
     return (
         <div className=" relative">
@@ -13,7 +12,6 @@ const CategoriesBox = () => {
                 <span
                     onClick={() => {
                         navigate("/categories");
-						scrollToTop();
                     }}
                     className=" text-xl font-semibold uppercase block p-4 cursor-pointer title"
                 >

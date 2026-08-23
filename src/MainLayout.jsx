@@ -5,6 +5,7 @@ import SideBar from "./components/SideBar";
 import Footer from "./components/Footer";
 import ArticleSearchModal from "./features/articles/components/ArticleSearchModal";
 import { AppContext } from "./context/AppContext";
+import ScrollToTop from "./components/ScrollToTop";
 
 const MainLayout = () => {
 	const { scrollContainerRef, toggleSearchModal, isSearchModalOpened } = useContext(AppContext);
@@ -12,6 +13,7 @@ const MainLayout = () => {
 		<div
 			ref={scrollContainerRef}
 			className={`bg-[#F3F1E8] dark:bg-[#1F1F1F] text-black dark:text-white h-max border border-black`}>
+			<ScrollToTop />
 			<Nav toggleSearchModal={toggleSearchModal} />
 			<div className="container grid lg:grid-cols-4 xl:grid-cols-4 gap-5 p-2.5 mx-auto sm:pb-20 ">
 				<div className="sm:col-span-3 xl:col-span-3">

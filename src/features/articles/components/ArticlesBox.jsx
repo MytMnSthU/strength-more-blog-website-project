@@ -9,7 +9,6 @@ import useArticles from "../hooks/useArticles";
 
 const ArticlesBox = ({ boxTitle }) => {
 	const navigate = useNavigate();
-	const { scrollToTop } = useContext(AppContext);
 
 	const {
 		data,
@@ -63,7 +62,6 @@ const ArticlesBox = ({ boxTitle }) => {
 				<span
 					onClick={() => {
 						navigate("/articles/popular");
-						scrollToTop();
 					}}
 					className=" text-xl font-semibold uppercase block p-4 border-b-2 border-black dark:border-[#aaa] cursor-pointer title">
 					{boxTitle}

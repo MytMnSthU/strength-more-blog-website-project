@@ -15,14 +15,12 @@ function stripHTML(html) {
 
 const ArticleCard = ({ article }) => {
     const navigate = useNavigate();
-    const { scrollToTop } = useContext(AppContext);
 	const [isImageLoaded, setIsImageLoaded] = useState(false);
 
     return (
         <div
             onClick={() => {
                 navigate(`/articles/${article.slug}`);
-                scrollToTop();
             }}
             className=" relative group cursor-pointer h-full article-card"
         >

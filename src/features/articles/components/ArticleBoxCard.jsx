@@ -9,13 +9,11 @@ import { formatNumber } from "@/utils/utils";
 
 const ArticleBoxCard = ({ article }) => {
     const navigate = useNavigate();
-	const { scrollToTop } = useContext(AppContext);
 
     return (
         <div
             onClick={() => {
                 navigate(`/articles/${article.slug}`);
-                scrollToTop();
             }}
             className=" cursor-pointer hover:bg-[#e3e3e3] dark:hover:bg-[#333]"
         >

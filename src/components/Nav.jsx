@@ -5,12 +5,10 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 
 const NavLink = ({ route, title, toggleNavbar }) => {
-	const { scrollToTop } = useContext(AppContext);	
 	return (
 		<li
 			onClick={() => {
 				toggleNavbar();
-				scrollToTop();
 			}}
 			className=" mb-0 link">
 			<Link to={route}>
