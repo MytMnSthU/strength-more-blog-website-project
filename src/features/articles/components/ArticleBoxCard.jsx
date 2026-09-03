@@ -1,6 +1,4 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router";
-import { AppContext } from "@/context/AppContext";
 import CategoryLabel from "@/features/categories/components/CategoryLabel";
 import TimeLabel from "@/components/TimeLabel";
 import { FaShare, FaEye } from "react-icons/fa";
@@ -15,9 +13,9 @@ const ArticleBoxCard = ({ article }) => {
             onClick={() => {
                 navigate(`/articles/${article.slug}`);
             }}
-            className=" cursor-pointer hover:bg-[#e3e3e3] dark:hover:bg-[#333]"
+            className=" cursor-pointer hover:bg-[#e6e4db] dark:hover:bg-[#282727] border-b border-black/20 dark:border-white/20"
         >
-            <div className=" px-4 py-6 grid gap-3">
+            <div className=" px-4 py-4 grid gap-3">
                 <h4 className=" text-xl font-bold leading-none mb-0">
                     {article.title}
                 </h4>
@@ -40,7 +38,6 @@ const ArticleBoxCard = ({ article }) => {
                     ))}
                 </div>
             </div>
-            <hr className=" border-b-2 border-b-black" />
         </div>
     );
 };

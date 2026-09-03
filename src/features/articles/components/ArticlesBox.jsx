@@ -3,8 +3,6 @@ import ArticleBoxCard from "./ArticleBoxCard";
 import { formatArticles } from "@/utils/utils";
 import LoadMoreButton from "@/components/LoadMoreButton";
 import Loader from "@/components/Loader";
-import { useContext } from "react";
-import { AppContext } from "@/context/AppContext";
 import useArticles from "../hooks/useArticles";
 
 const ArticlesBox = ({ boxTitle }) => {
@@ -58,12 +56,12 @@ const ArticlesBox = ({ boxTitle }) => {
 
 	return (
 		<div className=" relative">
-			<div className=" bg-[#F3F1E8] dark:bg-[#1F1F1F] border-2 border-black dark:border-[#aaa] relative z-10">
+			<div className=" bg-[#F3F1E8] dark:bg-[#1F1F1F] border rounded-lg border-black/20 dark:border-[#fff]/20 relative z-10">
 				<span
 					onClick={() => {
 						navigate("/articles/popular");
 					}}
-					className=" text-xl font-semibold uppercase block p-4 border-b-2 border-black dark:border-[#aaa] cursor-pointer title">
+					className=" text-xl font-semibold uppercase block p-4  border-black/20 dark:border-[#fff]/20 cursor-pointer border-b title">
 					{boxTitle}
 				</span>
 
@@ -82,7 +80,6 @@ const ArticlesBox = ({ boxTitle }) => {
 					)}
 				</div>
 			</div>
-			<div className=" w-full h-full bg-black absolute top-0 left-0 translate-x-[3px] translate-y-[3px]"></div>
 		</div>
 	);
 };

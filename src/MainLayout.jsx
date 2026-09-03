@@ -15,11 +15,11 @@ const MainLayout = () => {
 			className={`bg-[#F3F1E8] dark:bg-[#1F1F1F] text-black dark:text-white h-max border border-black`}>
 			<ScrollToTop />
 			<Nav toggleSearchModal={toggleSearchModal} />
-			<div className="container grid lg:grid-cols-4 xl:grid-cols-4 gap-5 p-2.5 mx-auto sm:pb-20 ">
-				<div className="sm:col-span-3 xl:col-span-3">
+			<div className="container grid lg:grid-cols-7 xl:grid-cols-7 gap-5 p-2.5 mx-auto sm:pb-20 ">
+				<div className="sm:col-span-5 xl:col-span-5">
 					<Outlet />
 				</div>
-				<div className=" ">
+				<div className=" sm:col-span-2">
 					<SideBar onModalClick={toggleSearchModal} />
 				</div>
 				<ArticleSearchModal

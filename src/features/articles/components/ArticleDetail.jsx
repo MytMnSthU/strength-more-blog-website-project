@@ -4,8 +4,6 @@ import TimeLabel from "@/components/TimeLabel";
 import CategoryLabel from "@/features/categories/components/CategoryLabel";
 import BreadCrumb from "@/components/BreadCrumb";
 import Loader from "@/components/Loader";
-import { formatNumber } from "@/utils/utils";
-import { FaShare, FaEye } from "react-icons/fa";
 import ShareModal from "@/components/ShareModal";
 import useArticle from "../hooks/useArticle";
 
@@ -53,7 +51,7 @@ const ArticleDetail = () => {
 				</h1>
 				<TimeLabel time={formattedArticle.createdAt} />
 
-				<div className="w-full h-[200px] sm:h-[500px] border-2 border-black dark:border-[#aaa] overflow-hidden relative mt-2.5">
+				<div className="w-full h-[200px] sm:h-[500px] border-0 border-black dark:border-[#fff] overflow-hidden relative mt-2.5 rounded-lg">
 					<img
 						src={formattedArticle.image.url}
 						className="w-full h-full object-cover"
@@ -74,8 +72,8 @@ const ArticleDetail = () => {
 					className="prose dark:prose-invert max-w-none mt-4"></div>
 			</div>
 
-			<div className="h-fit static sm:sticky top-1/2 left-0 transform sm:-translate-y-1/2 z-10">
-				<div className="sm:w-[80px] bg-[#F3F1E8] dark:bg-[#1F1F1F] border-2 border-black dark:border-[#aaa] relative z-10 p-2.5">
+			{/* <div className="h-fit static sm:sticky top-1/2 left-0 transform sm:-translate-y-1/2 z-10">
+				<div className="sm:w-[80px] bg-[#F3F1E8] dark:bg-[#1F1F1F] border-0 border-black dark:border-[#fff] relative z-10 p-2.5">
 					<div className="flex sm:flex-col justify-evenly items-center">
 						<div
 							onClick={() => setIsShareModalOpened(true)}
@@ -94,8 +92,7 @@ const ArticleDetail = () => {
 						</div>
 					</div>
 				</div>
-				<div className="w-full h-full bg-black dark:bg-[#aaa] absolute top-0 left-0 translate-x-[3px] translate-y-[3px] z-[-1]"></div>
-			</div>
+			</div> */}
 
 			<ShareModal
 				isOpen={isShareModalOpened}

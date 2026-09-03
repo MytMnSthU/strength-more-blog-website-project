@@ -1,10 +1,8 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import CategoryLabel from "@/features/categories/components/CategoryLabel";
 import TimeLabel from "@/components/TimeLabel";
 import { FaShare, FaEye } from "react-icons/fa";
-
-import { AppContext } from "@/context/AppContext";
 import { formatNumber } from "@/utils/utils";
 
 function stripHTML(html) {
@@ -24,8 +22,8 @@ const ArticleCard = ({ article }) => {
             }}
             className=" relative group cursor-pointer h-full article-card"
         >
-            <div className=" bg-[#F3F1E8] dark:bg-[#1F1F1F] h-full grid gap-2.5 border-2 border-black dark:border-[#aaa]  p-3 relative z-10 group-hover:translate-x-[4px] group-hover:translate-y-[4px] transition-all">
-                <div className=" aspect-video border border-black dark:border-[#aaa] overflow-hidden relative ">
+            <div className=" bg-[#e6e4db] dark:bg-[#282727] h-full grid gap-2.5  relative z-10 group-hover:translate-x-[4px] group-hover:translate-y-[4px] transition-all content-start p-2 rounded-lg border border-black/20 dark:border-t-white/20">
+                <div className=" aspect-video border-0 border-black dark:border-[#fff] overflow-hidden relative  rounded-lg">
 					{!isImageLoaded && (
 						<div className=" absolute inset-0 flex items-center justify-center bg-[#F3F1E8] dark:bg-[#111]">
 							<span className=" text-gray-500 dark:text-[#aaa] uppercase">Loading...</span>
@@ -55,31 +53,32 @@ const ArticleCard = ({ article }) => {
                     </div>
                 </div>
 
-				<div className="flex flex-wrap justify-between items-center gap-2">
-					<TimeLabel time={article.createdAt} />
-					<div className=" flex">
-						<div className=" flex justify-center items-center gap-2 py-1 px-2">
-							<FaShare className=" text-[10px]" />
-							<span className=" text-[14px] font-bold">{formatNumber(article.shares) || 0}</span>
-						</div>
-						<div className=" flex justify-center items-center gap-2 py-1 px-2">
-							<FaEye className=" text-[10px]" />
-							<span className=" text-[14px] font-bold">{formatNumber(article.views) || 0}</span>
+				<div className=" p-3 pt-0">
+					<div className="flex flex-wrap justify-between items-center gap-2">
+						<TimeLabel time={article.createdAt} />
+						<div className=" flex">
+							<div className=" flex justify-center items-center gap-2 py-1 px-2">
+								<FaShare className=" text-[10px]" />
+								<span className=" text-[14px] font-bold">{formatNumber(article.shares) || 0}</span>
+							</div>
+							<div className=" flex justify-center items-center gap-2 py-1 px-2">
+								<FaEye className=" text-[10px]" />
+								<span className=" text-[14px] font-bold">{formatNumber(article.views) || 0}</span>
+							</div>
 						</div>
 					</div>
+
+
+					<h3 className=" text-2xl font-extrabold mb-3 leading-none">
+						{article.title}
+					</h3>
+					<p className=" leading-[1.25] text-zinc-800 dark:text-zinc-300 text-[16px]">
+						{stripHTML(article.content.html).length > 80
+							? stripHTML(article.content.html).slice(0, 80) + "..."	
+							: stripHTML(article.content.html)}
+					</p>
 				</div>
-
-
-                <h3 className=" text-2xl font-extrabold leading-none">
-					{article.title}
-                </h3>
-				<p className=" leading-[1.25] text-zinc-800 dark:text-zinc-300 text-[16px]">
-					{stripHTML(article.content.html).length > 80
-						? stripHTML(article.content.html).slice(0, 80) + "..."	
-						: stripHTML(article.content.html)}
-				</p>
             </div>
-            <div className=" w-full h-full bg-black dark:bg-[#aaa]  absolute top-0 left-0 translate-x-[4px] translate-y-[4px] z-0"></div>
         </div>
     );
 };

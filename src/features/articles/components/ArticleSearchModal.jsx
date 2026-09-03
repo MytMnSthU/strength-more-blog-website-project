@@ -28,9 +28,9 @@ const ArticleSearchModal = ({ isOpen, onClose }) => {
 			onClick={(e) => {
 				if (e.target === e.currentTarget) onClose();
 			}}>
-			<div className="w-full max-w-[900px] mx-auto bg-[#F3F1E8] dark:bg-[#1F1F1F] relative">
+			<div className="w-full max-w-[900px] mx-auto bg-[#F3F1E8] dark:bg-[#1F1F1F] relative rounded-lg">
 				<form action="">
-					<div className="flex items-center gap-2.5 px-5 py-2.5 border-2 border-black dark:border-[#aaa] relative">
+					<div className="flex items-center gap-2.5 px-5 py-2.5 border-0 border-black dark:border-[#fff] relative">
 						<FaSearch />
 						<input
 							ref={searchInputRef}
@@ -52,9 +52,9 @@ const ArticleSearchModal = ({ isOpen, onClose }) => {
 							</button>
 						)}
 					</div>
-					<div className="border-2 border-black dark:border-[#aaa] border-t-0">
+					<div className="border-0 border-black dark:border-[#fff] border-t-0">
 						{debouncedTerm.trim() && (
-							<div className="px-5 py-2.5 border-b-2 border-black">
+							<div className="px-5 py-2.5 border-black">
 								<h2 className="text-2xl font-bold mb-1">Searched Results: {searchedArticles.length}</h2>
 								<p className="mb-0">
 									Showing results for: <strong>{debouncedTerm}</strong>
@@ -89,7 +89,6 @@ const ArticleSearchModal = ({ isOpen, onClose }) => {
 						)}
 					</div>
 				</form>
-				<div className="absolute top-0 left-0 w-full h-full -z-10 translate-x-[4px] translate-y-[4px] bg-black dark:bg-[#aaa]"></div>
 			</div>
 		</div>
 	);

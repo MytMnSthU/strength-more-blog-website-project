@@ -1,6 +1,5 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
-import { AppContext } from "@/context/AppContext";
 
 const CategoryCard = ({ category }) => {
     const navigate = useNavigate();
@@ -13,8 +12,8 @@ const CategoryCard = ({ category }) => {
             }}
             className=" relative group  h-[140px] cursor-pointer"
         >
-            <div className=" h-full bg-[#F3F1E8] dark:bg-[#1F1F1F] p-2.5 border-2 border-black dark:border-[#aaa] group-hover:translate-x-[3px] group-hover:translate-y-[3px] transition-all relative z-10">
-                <div className=" h-full border border-black dark:border-[#aaa] relative  overflow-hidden">
+            <div className=" h-full bg-[#F3F1E8] dark:bg-[#1F1F1F] p-2.5 border-0 border-black dark:border-[#fff] group-hover:translate-x-[3px] group-hover:translate-y-[3px] transition-all relative z-10">
+                <div className=" h-full relative  overflow-hidden rounded-lg">
 					{!isImgLoaded && (
 						<div className=" absolute inset-0 flex items-center justify-center bg-[#F3F1E8] dark:bg-[#111] z-40">
 							<span className=" text-gray-500 dark:text-[#aaa] uppercase">Loading...</span>
@@ -32,7 +31,6 @@ const CategoryCard = ({ category }) => {
                     </span>
                 </div>
             </div>
-            <div className=" w-full h-full bg-black dark:bg-[#aaa]  absolute top-0 left-0 translate-x-[3px] translate-y-[3px]"></div>
         </div>
     );
 };

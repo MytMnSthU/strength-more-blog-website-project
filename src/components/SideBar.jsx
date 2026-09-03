@@ -1,11 +1,9 @@
 import ArticlesBox from "../features/articles/components/ArticlesBox";
 import CategoriesBox from "@/features/categories/components/CategoriesBox";
-import SearchBar from "./SearchBar";
 
-const SideBar = ({onModalClick}) => {
+const SideBar = () => {
     return (
-        <div className=" hidden lg:flex flex-col gap-5 mt-12  sticky top-[60px] h-screen z-[10]">
-            <SearchBar onModalClick={onModalClick}  />
+        <div className=" hidden lg:flex flex-col gap-3  sticky top-[65px] h-screen z-[10] ">
             <ArticlesBox
                 boxTitle={"popular articles"}
             />

@@ -1,6 +1,4 @@
 import { useNavigate } from "react-router";
-import { useContext } from "react";
-import { AppContext } from "@/context/AppContext";
 
 const CategoryLabel = ({ category }) => {
     const navigate = useNavigate();
@@ -14,14 +12,13 @@ const CategoryLabel = ({ category }) => {
             className=" relative group cursor-pointer"
         >
             <div
-                className=" px-5 py-2 border-2 border-black dark:border-white dark:text-black relative z-10 hover:translate-x-[-3px] hover:translate-y-[-3px] transition-all"
+                className=" px-5 py-2 border border-black/20 dark:border-white/20 dark:text-black relative z-10 hover:translate-x-[-3px] hover:translate-y-[-3px] transition-all rounded-lg"
                 style={{ backgroundColor: category.color.hex }}
             >
                 <span className=" text-sm uppercase font-semibold  block leading-none label">
                     {category.name}
                 </span>
             </div>
-            <div className=" w-full h-full bg-black dark:bg-[#fff] absolute top-0 left-0 z-0"></div>
         </div>
     );
 };

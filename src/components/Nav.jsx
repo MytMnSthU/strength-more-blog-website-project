@@ -10,15 +10,17 @@ const NavLink = ({ route, title, toggleNavbar }) => {
 			onClick={() => {
 				toggleNavbar();
 			}}
-			className=" mb-0 link">
+			className=" mb-0 link flex items-center">
 			<Link to={route}>
-				<span className=" uppercase text-base font-medium">{title}</span>
+				<span className=" uppercase text-sm font-medium leading-none">
+					{title}
+				</span>
 			</Link>
 		</li>
 	);
 };
 
-const NavBar = ({ isNavBarVisible, toggleNavbar }) => {
+const NavBar = ({ isNavBarVisible, toggleNavbar, toggleSearchModal }) => {
 	const visibleNavbarStyle = ` ms-auto flex flex-col justify-center items-center gap-5 w-full h-full bg-[#F3F1E8] dark:bg-[#1F1F1F] fixed top-0 left-0 z-30 lg:static lg:bg-transparent lg:flex-row lg:w-fit list-none ps-0 mb-0`;
 
 	const hiddenNavbarStyle = `ms-auto flex flex-col justify-center items-center gap-5 w-full h-full bg-[#F3F1E8] dark:bg-[#1F1F1F] fixed top-0 left-full z-30 lg:static lg:bg-transparent lg:flex-row lg:w-fit list-none ps-0 mb-0`;
@@ -26,7 +28,10 @@ const NavBar = ({ isNavBarVisible, toggleNavbar }) => {
 	const { mode, toggleTheme } = useContext(AppContext);
 
 	return (
-		<ul className={isNavBarVisible ? visibleNavbarStyle : hiddenNavbarStyle}>
+		<ul
+			className={
+				isNavBarVisible ? visibleNavbarStyle : hiddenNavbarStyle
+			}>
 			<NavLink
 				route="/articles/popular"
 				title="popular articles"
@@ -39,17 +44,26 @@ const NavBar = ({ isNavBarVisible, toggleNavbar }) => {
 				toggleNavbar={toggleNavbar}
 			/>
 
+			<li className=" mb-0">
+				<button
+					onClick={toggleSearchModal}
+					type="button"
+					className=" block  ">
+					<FaSearch className=" text-[14px]" />
+				</button>
+			</li>
+
 			<li className="mb-0">
 				<button
-					className=" p-2.5 flex items-center gap-2"
+					className="  flex items-center gap-2"
 					onClick={() => toggleTheme(mode)}>
 					{mode === "light" ? (
 						<div className="">
-							<FaMoon size={14} />
+							<FaMoon size={13} />
 						</div>
 					) : (
 						<div>
-							<FaSun size={14} />
+							<FaSun size={13} />
 						</div>
 					)}
 				</button>
@@ -73,18 +87,11 @@ const Nav = ({ toggleSearchModal }) => {
 	};
 
 	return (
-		<nav className="  border-b border-b-black dark:border-b-[#aaa] sticky top-0 left-0 w-full h-[54px] bg-[#F3F1E8] dark:bg-[#1F1F1F] z-20">
-			<div className=" container flex items-center gap-5 p-2.5 mx-auto">
+		<nav className=" sticky top-0 left-0 w-full h-[54px] bg-[#F3F1E8] dark:bg-[#1F1F1F] z-20 border-black/20 dark:border-white/20 border-b">
+			<div className=" container flex justify-between items-center gap-5 p-2.5 mx-auto">
 				<Link to="/">
 					<Logo />
 				</Link>
-
-				<button
-					onClick={toggleSearchModal}
-					type="button"
-					className=" ms-auto block lg:hidden">
-					<FaSearch className=" text-xl" />
-				</button>
 
 				<button
 					onClick={() => toggleNavbar()}
@@ -96,6 +103,7 @@ const Nav = ({ toggleSearchModal }) => {
 				<NavBar
 					isNavBarVisible={isNavBarVisible}
 					toggleNavbar={toggleNavbar}
+					toggleSearchModal={toggleSearchModal}
 				/>
 			</div>
 		</nav>
