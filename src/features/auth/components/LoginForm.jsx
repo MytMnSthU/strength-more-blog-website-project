@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 const LoginForm = () => {
 	return (
-		<section className="relative mx-auto max-w-xl px-1 pb-1">
-			<div className="relative z-10 grid gap-6 border-0 border-black/20 bg-transparent p-5 dark:border-white/20 sm:p-8 rounded-lg">
+		<section className="relative mx-auto max-w-full px-1 pb-1">
+			<div className="relative z-10 grid gap-6 border border-black/20 bg-transparent p-5 dark:border-white/20 sm:p-5 rounded-lg">
 				<div className="grid gap-1">
 					<span className="label text-sm font-bold uppercase tracking-wide text-zinc-600 dark:text-zinc-400">
 						welcome back
