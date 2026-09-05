@@ -22,7 +22,7 @@ const ArticleCard = ({ article }) => {
             }}
             className=" relative group cursor-pointer h-full article-card"
         >
-            <div className=" bg-[#e6e4db] dark:bg-[#282727] h-full grid gap-2.5  relative z-10 group-hover:translate-x-[4px] group-hover:translate-y-[4px] transition-all content-start p-2 rounded-lg border border-black/20 dark:border-t-white/20">
+            <div className=" bg-[transparent] h-full grid gap-2.5  relative z-10 group-hover:translate-x-[4px] group-hover:translate-y-[4px] transition-all content-start p-2 rounded-lg border border-black/20 dark:border-white/20">
                 <div className=" aspect-video border-0 border-black dark:border-[#fff] overflow-hidden relative  rounded-lg">
 					{!isImageLoaded && (
 						<div className=" absolute inset-0 flex items-center justify-center bg-[#F3F1E8] dark:bg-[#111]">

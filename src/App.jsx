@@ -8,6 +8,8 @@ import CategoryList from "./features/categories/components/CategoryList";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import MainLayout from "./MainLayout";
 import { AppContext } from "./context/AppContext";
+import LoginForm from "./features/auth/components/LoginForm";
+import RegisterForm from "./features/auth/components/RegisterForm";
 
 const queryClient = new QueryClient();
 
@@ -61,6 +63,14 @@ const App = () => {
 					path: "categories/:categoryId",
 					element: <ArticleList title="Category" />,
 				},
+				{
+					path: "login",
+					element: <LoginForm />
+				},
+				{
+					path: "register",
+					element: <RegisterForm />
+				}
 			],
 		},
 	]);
