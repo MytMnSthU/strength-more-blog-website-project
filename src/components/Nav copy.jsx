@@ -69,6 +69,10 @@ const NavBar = ({ isNavBarVisible, toggleNavbar, toggleSearchModal }) => {
 				</button>
 			</li>
 
+			<button>
+				<span>login</span>
+			</button>
+
 			<button
 				onClick={() => toggleNavbar()}
 				type="button"

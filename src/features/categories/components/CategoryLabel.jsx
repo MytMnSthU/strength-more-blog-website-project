@@ -12,7 +12,7 @@ const CategoryLabel = ({ category }) => {
             className=" relative group cursor-pointer"
         >
             <div
-                className=" px-5 py-2 border border-black/20 dark:border-white/20 dark:text-black relative z-10 hover:translate-x-[-3px] hover:translate-y-[-3px] transition-all rounded-lg"
+                className=" px-5 py-2 border border-black/20 dark:border-white/20 dark:text-black relative z-10 hover:translate-x-[-3px] hover:translate-y-[-3px] transition-all rounded-0"
                 style={{ backgroundColor: category.color.hex }}
             >
                 <span className=" text-sm uppercase font-semibold  block leading-none label">

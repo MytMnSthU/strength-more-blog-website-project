@@ -10,6 +10,7 @@ import MainLayout from "./MainLayout";
 import { AppContext } from "./context/AppContext";
 import LoginForm from "./features/auth/components/LoginForm";
 import RegisterForm from "./features/auth/components/RegisterForm";
+import Profile from "./features/users/components/Profile";
 
 const queryClient = new QueryClient();
 
@@ -70,6 +71,10 @@ const App = () => {
 				{
 					path: "register",
 					element: <RegisterForm />
+				},
+				{
+					path: "profile",
+					element: <Profile />
 				}
 			],
 		},

@@ -55,7 +55,7 @@ const CategoryList = () => {
 
 	return (
 		<div>
-			<h3 className=" text-4xl font-extrabold mb-4">Categories</h3>
+			<h3 className=" text-4xl font-extrabold py-4 uppercase">Categories</h3>
 			<div
 				ref={categoryListRoot}
 				className="grid sm:grid-cols-2 gap-5">

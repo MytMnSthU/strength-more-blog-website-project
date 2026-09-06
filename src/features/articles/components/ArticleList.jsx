@@ -64,7 +64,7 @@ const ArticleList = ({ title, category }) => {
 			<>
 				<div
 					className="grid gap-2.5">
-					<h3 className=" text-4xl font-extrabold test-title">
+					<h3 className=" text-4xl font-extrabold py-4 uppercase">
 						{title} {categoryId && `: "${categoryId}"`}
 					</h3>
 					<div

@@ -3,7 +3,7 @@ import CategoriesBox from "@/features/categories/components/CategoriesBox";
 
 const SideBar = () => {
     return (
-        <div className=" hidden lg:flex flex-col gap-3  sticky top-[65px] h-screen z-[10] ">
+        <div className=" hidden lg:flex flex-col gap-3  sticky top-16 h-screen z-[10] ">
             <ArticlesBox
                 boxTitle={"popular articles"}
             />
