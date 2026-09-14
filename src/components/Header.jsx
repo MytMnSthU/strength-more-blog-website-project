@@ -1,44 +1,61 @@
 import { animate, stagger } from "animejs";
-import { FaBars, FaSearch, FaTimes, FaMoon, FaSun, FaUser } from "react-icons/fa";
+import {
+	FaBars,
+	FaSearch,
+	FaTimes,
+	FaMoon,
+	FaSun,
+	FaUser,
+} from "react-icons/fa";
 import Logo from "./Logo";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
+import useAuth from "../features/auth/hooks/useAuth";
+import useLogout from "../features/auth/hooks/useLogout";
 
 const menuItems = [
 	{ route: "/articles/popular", title: "popular articles" },
 	{ route: "/categories", title: "categories" },
 ];
 
-const ProfileMenu = () => {
+const ProfileMenu = ({ user, closeMenu }) => {
 	const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+	const { logout } = useLogout();
 
 	return (
-		<div className="relative" data-mobile-menu-item>
+		<div
+			className="relative"
+			data-mobile-menu-item>
 			<button
 				type="button"
 				aria-label="Open demo profile menu"
 				aria-expanded={isProfileMenuOpen}
 				onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
 				className="flex items-center gap-2 text-sm font-medium uppercase leading-none">
-				<img
-					src="/logo.jpg"
-					alt="demo profile"
-					className="h-6 w-6 rounded-full object-cover"
-				/>
-				<FaUser size={13} />
-				<span>demo</span>
+				{user?.photoUrl ? (
+					<img
+						src={user.photoUrl}
+						alt="demo profile"
+						className="h-6 w-6 rounded-full object-cover"
+					/>
+				) : (
+					<FaUser size={13} />
+				)}
+				<span>{user?.displayName?.split(" ")[0]}</span>
 			</button>
 
 			{isProfileMenuOpen && (
 				<div className="absolute left-1/2 top-full z-50 mt-3 min-w-40 -translate-x-1/2 border border-black/20 bg-[#F3F1E8] p-2 shadow-lg dark:border-white/20 dark:bg-[#1F1F1F] rounded-lg">
 					<Link
 						to="/profile"
+						onClick={closeMenu}
 						className="block whitespace-nowrap px-3 py-2 text-sm font-medium uppercase hover:bg-black/5 dark:hover:bg-white/10 rounded-sm">
 						view profile
 					</Link>
 					<button
 						type="button"
+						onClick={logout}
 						className="block w-full whitespace-nowrap px-3 py-2 text-left text-sm font-medium uppercase hover:bg-black/5 dark:hover:bg-white/10 rounded-sm">
 						logout
 					</button>
@@ -54,6 +71,7 @@ const Header = () => {
 	const mobileMenuRef = useRef(null);
 	const menuItemsRef = useRef(null);
 	const menuIconRef = useRef(null);
+	const { user } = useAuth();
 
 	useEffect(() => {
 		if (!window.matchMedia("(max-width: 1023px)").matches) return;
@@ -159,14 +177,15 @@ const Header = () => {
 							)}
 						</button>
 
-						<Link
-							to="/login"
-							onClick={closeMenu}
-							data-mobile-menu-item
-							className="uppercase text-sm font-medium leading-none">
-							login
-						</Link>
-						<ProfileMenu />
+						{!user ? (
+							<Link
+								to="/login"
+								className="uppercase text-sm font-medium">
+								login
+							</Link>
+						) : (
+							<ProfileMenu user={user} closeMenu={closeMenu} />
+						)}
 					</div>
 				</div>
 
@@ -197,12 +216,15 @@ const Header = () => {
 							<FaSun size={13} />
 						)}
 					</button>
-					<Link
-						to="/login"
-						className="uppercase text-sm font-medium">
-						login
-					</Link>
-					<ProfileMenu />
+					{!user ? (
+						<Link
+							to="/login"
+							className="uppercase text-sm font-medium">
+							login
+						</Link>
+					) : (
+						<ProfileMenu user={user} closeMenu={closeMenu} />
+					)}
 				</div>
 			</nav>
 		</header>

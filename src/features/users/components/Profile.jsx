@@ -1,11 +1,15 @@
 import { useRef, useState } from "react";
 import { FaCamera, FaCheck, FaPen, FaUser } from "react-icons/fa";
+import useAuth from "../../auth/hooks/useAuth";
+import { formatDate } from "../../../utils/utils";
 
 const Profile = () => {
-	const [name, setName] = useState("demo");
-	const [draftName, setDraftName] = useState("demo");
+	const { user } = useAuth();
+	const [name, setName] = useState(user?.displayName || "");
+	const [draftName, setDraftName] = useState(user?.displayName || "");
 	const [isEditingName, setIsEditingName] = useState(false);
 	const [profileImage, setProfileImage] = useState("");
+	const [joinedDate, setJoinedDate] = useState(formatDate(user?.metadata.creationTime) || "");
 	const fileInputRef = useRef(null);
 
 	const handleImageChange = (event) => {
@@ -100,7 +104,7 @@ const Profile = () => {
 						</div>
 
 						<p className="mb-0 text-sm font-semibold uppercase text-zinc-600 dark:text-zinc-400">
-							Joined September 2026
+							joined at {joinedDate}
 						</p>
 					</div>
 				</div>

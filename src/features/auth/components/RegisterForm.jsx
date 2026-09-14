@@ -63,7 +63,7 @@ const RegisterForm = () => {
 
 					<button
 						type="submit"
-						className="btn mt-2 border border-black rounded-lg bg-black px-5 py-3 text-xl font-extrabold uppercase leading-none text-white transition-all hover:-translate-y-0.5 hover:bg-zinc-800 dark:border-white dark:bg-white dark:text-black dark:hover:bg-zinc-200">
+						className="btn mt-2 border border-black rounded-lg bg-black px-5 py-4 text-xl font-extrabold uppercase leading-none text-white transition-all hover:-translate-y-0.5 hover:bg-zinc-800 dark:border-white dark:bg-white dark:text-black dark:hover:bg-zinc-200">
 						create account
 					</button>
 				</form>

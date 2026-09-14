@@ -11,6 +11,8 @@ import { AppContext } from "./context/AppContext";
 import LoginForm from "./features/auth/components/LoginForm";
 import RegisterForm from "./features/auth/components/RegisterForm";
 import Profile from "./features/users/components/Profile";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./features/auth/components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -73,9 +75,14 @@ const App = () => {
 					element: <RegisterForm />
 				},
 				{
-					path: "profile",
-					element: <Profile />
-				}
+					element: <ProtectedRoute />,
+					children: [
+						{
+							path: "profile",
+							element: <Profile />,
+						},
+					],	
+				},
 			],
 		},
 	]);
@@ -91,17 +98,19 @@ const App = () => {
 	}, []);
 
 	return (
-		<AppContext.Provider
-			value={{
-				mode,
-				toggleTheme,
-				toggleSearchModal,
-				isSearchModalOpened,
-			}}>
-			<QueryClientProvider client={queryClient}>
-				<RouterProvider router={router} />
-			</QueryClientProvider>
-		</AppContext.Provider>
+		<AuthProvider>
+			<AppContext.Provider
+				value={{
+					mode,
+					toggleTheme,
+					toggleSearchModal,
+					isSearchModalOpened,
+				}}>
+				<QueryClientProvider client={queryClient}>
+					<RouterProvider router={router} />
+				</QueryClientProvider>
+			</AppContext.Provider>
+		</AuthProvider>
 	);
 };
 
