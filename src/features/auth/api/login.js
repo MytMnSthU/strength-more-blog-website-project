@@ -10,8 +10,6 @@ export async function loginWithEmailAndPassword(email, password) {
 		);
 		return userCredential;
 	} catch (error) {
-		// console.error("Error code:", error.code);
-		// console.error("Error message:", error.message);
 		throw error;
 	}
 }

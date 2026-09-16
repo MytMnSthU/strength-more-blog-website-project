@@ -21,7 +21,6 @@ const LoginForm = () => {
 	const CIRCLE_CIRCUMFERENCE = 251.32;
 
 	useEffect(() => {
-		console.log({ status });
 		if (status === "loading") {
 			// Shrink button to circular spinner size
 			animate(submitButtonRef.current, {
@@ -77,7 +76,6 @@ const LoginForm = () => {
 		if (status === "error") {
 			animate(submitButtonRef.current, {
 				width: ["64px", "160px"],
-				// translateX: [-10, 10, -8, 8, -4, 4, 0],
 				duration: 500,
 				easing: "easeInOutSine",
 			});
