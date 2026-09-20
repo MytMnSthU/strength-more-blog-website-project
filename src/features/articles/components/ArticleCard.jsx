@@ -11,9 +11,10 @@ function stripHTML(html) {
 	return div.textContent || '';
 }
 
-const ArticleCard = ({ article }) => {
+const ArticleCard = ({ article, layout = "grid" }) => {
     const navigate = useNavigate();
 	const [isImageLoaded, setIsImageLoaded] = useState(false);
+	const isSingle = layout === "single";
 
     return (
         <div
@@ -22,8 +23,16 @@ const ArticleCard = ({ article }) => {
             }}
             className=" relative group cursor-pointer h-full article-card"
         >
-            <div className=" bg-[transparent] h-full grid md:flex-nowrap flex-wrap gap-2.5  relative z-10 group-hover:translate-x-[4px] group-hover:translate-y-[4px] transition-all content-start p-2 rounded-lg border border-black/20 dark:border-white/20">
-                <div className=" aspect-video border-0 border-black dark:border-[#fff] overflow-hidden relative  rounded-sm w-full">
+            <div className={` bg-[transparent] h-full relative z-10 group-hover:translate-x-[4px] group-hover:translate-y-[4px] transition-all content-start p-2 rounded-lg border border-black/20 dark:border-white/20 gap-2.5 ${
+				isSingle
+					? "flex flex-col md:flex-row"
+					: "grid grid-cols-1 md:flex-nowrap flex-wrap"
+			}`}>
+                <div className={` border-0 border-black dark:border-[#fff] overflow-hidden relative rounded-sm w-full ${
+					isSingle
+						? "aspect-video md:w-[40%]"
+						: "aspect-video"
+				}`}>
 					{!isImageLoaded && (
 						<div className=" absolute inset-0 flex items-center justify-center bg-[#F3F1E8] dark:bg-[#111]">
 							<span className=" text-gray-500 dark:text-[#aaa] uppercase">Loading...</span>
@@ -53,7 +62,9 @@ const ArticleCard = ({ article }) => {
                     </div>
                 </div>
 
-				<div className=" bg-red-0 flex flex-col gap-2 p-3  w-full md:flex-shrink flex-shrink-0">
+				<div className={` bg-red-0 flex flex-col gap-2 p-3  w-full md:flex-shrink flex-shrink-0 ${
+					isSingle ? "md:w-[60%]" : ""
+				}`}>
 					<div className="flex flex-wrap justify-between items-center gap-2">
 						<TimeLabel time={article.createdAt} />
 						{/* <div className=" flex">

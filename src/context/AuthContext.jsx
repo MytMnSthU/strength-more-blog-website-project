@@ -6,25 +6,25 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
-	// const [isLoading, setIsLoading] = useState(false);
+	const [isAuthLoading, setIsAuthLoading] = useState(true);
 
 	// (async () => {
 	// 	await signOut(auth);
 	// })();
 
-	// setIsLoading(true)
-
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			setUser(user);
-			// setIsLoading(false);
+			setIsAuthLoading(false);
 		});
 
 		return unsubscribe;
 	}, []);
 
 	return (
-		<AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+		<AuthContext.Provider value={{ user, isAuthLoading }}>
+			{children}
+		</AuthContext.Provider>
 	);
 };
 

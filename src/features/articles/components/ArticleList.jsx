@@ -1,10 +1,11 @@
 import ArticleCard from "./ArticleCard";
+import LayoutControl from "./LayoutControl";
 import LoadMoreButton from "@/components/LoadMoreButton";
 import Loader from "@/components/Loader";
 import { formatArticles } from "@/utils/utils";
 import useArticles from "@/features/articles/hooks/useArticles";
 import { useParams } from "react-router";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { stagger, animate, createScope } from "animejs";
 
 const ArticleList = ({ title, category }) => {
@@ -12,6 +13,7 @@ const ArticleList = ({ title, category }) => {
 	const articleListRoot = useRef(null);
 	const scope = useRef(null);
 	const isPopular = category === "popular"
+	const [layout, setLayout] = useState("grid");
 
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error } = useArticles({
 		category: categoryId,
@@ -64,16 +66,24 @@ const ArticleList = ({ title, category }) => {
 			<>
 				<div
 					className="grid gap-2.5">
-					<h3 className=" text-4xl font-extrabold py-4 uppercase">
-						{title} {categoryId && `: "${categoryId}"`}
-					</h3>
+					<div className="flex flex-wrap items-center justify-between gap-4 py-4">
+						<h3 className=" text-4xl font-extrabold uppercase">
+							{title} {categoryId && `: "${categoryId}"`}
+						</h3>
+						<LayoutControl layout={layout} onChange={setLayout} />
+					</div>
 					<div
 						ref={articleListRoot}
-						className=" grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+						className={` grid gap-5 ${
+							layout === "grid"
+								? "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+								: "grid-cols-1"
+						}`}>
 						{formattedArticles.map((article) => (
 							<ArticleCard
 								key={article.id}
 								article={article}
+								layout={layout}
 							/>
 						))}
 					</div>
