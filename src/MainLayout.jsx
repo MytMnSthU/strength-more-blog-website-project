@@ -15,8 +15,8 @@ const MainLayout = () => {
 			className={`bg-[#F3F1E8] dark:bg-[#1F1F1F] text-black dark:text-white h-max border border-black min-h-screen`}>
 			<ScrollToTop />
 			<Header toggleSearchModal={toggleSearchModal} />
-			<div className="container grid lg:grid-cols-7 xl:grid-cols-7 gap-3 p-2.5 mx-auto sm:pb-20  pt-14">
-				<div className="sm:col-span-5 xl:col-span-5">
+			<div className="container grid lg:grid-cols-8 xl:grid-cols-8 gap-3 p-2.5 mx-auto sm:pb-20  pt-14">
+				<div className="sm:col-span-6 xl:col-span-6">
 					<Outlet />
 				</div>
 				<div className=" sm:col-span-2">
