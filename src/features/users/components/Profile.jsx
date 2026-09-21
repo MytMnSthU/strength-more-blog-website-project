@@ -1,10 +1,12 @@
 import { useRef, useState } from "react";
 import { FaCamera, FaCheck, FaPen, FaUser } from "react-icons/fa";
 import useAuth from "../../auth/hooks/useAuth";
+import useUpdateName from "../hooks/useUpdateName";
 import { formatDate } from "../../../utils/utils";
 
 const Profile = () => {
 	const { user } = useAuth();
+	const { updateName } = useUpdateName();
 	const [name, setName] = useState(user?.displayName || "");
 	const [draftName, setDraftName] = useState(user?.displayName || "");
 	const [isEditingName, setIsEditingName] = useState(false);
@@ -24,10 +26,20 @@ const Profile = () => {
 		setIsEditingName(true);
 	};
 
-	const saveName = () => {
+	const saveName = async () => {
 		const nextName = draftName.trim();
-		if (nextName) setName(nextName);
-		setIsEditingName(false);
+		if (!nextName || nextName === name) {
+			setIsEditingName(false);
+			return;
+		}
+
+		try {
+			await updateName(nextName);
+			setName(nextName);
+			setIsEditingName(false);
+		} catch (error) {
+			console.error("Error updating profile name:", error);
+		}
 	};
 
 	return (
