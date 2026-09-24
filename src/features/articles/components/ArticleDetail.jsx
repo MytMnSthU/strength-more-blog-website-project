@@ -3,9 +3,9 @@ import { useParams } from "react-router";
 import TimeLabel from "@/components/TimeLabel";
 import CategoryLabel from "@/features/categories/components/CategoryLabel";
 import BreadCrumb from "@/components/BreadCrumb";
-import Loader from "@/components/Loader";
 import ShareModal from "@/components/ShareModal";
 import useArticle from "../hooks/useArticle";
+import ArticleDetailSkeleton from "./ArticleDetailSkeleton";
 
 const ArticleDetail = () => {
 	const contentRef = useRef(null);
@@ -25,7 +25,7 @@ const ArticleDetail = () => {
 		return <div>Error loading article</div>;
 	}
 
-	if (isLoading) return <Loader />;
+	if (isLoading) return <ArticleDetailSkeleton />;
 
 	if (!data?.article) {
 		return <div>No article found</div>;

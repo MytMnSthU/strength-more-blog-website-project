@@ -1,5 +1,5 @@
 import CategoryCard from "./CategoryCard";
-import Loader from "@/components/Loader";
+import CategoryCardSkeleton from "./CategoryCardSkeleton";
 import { useRef, useEffect } from "react";
 import { stagger, animate, createScope } from "animejs";
 import useCategories from "../hooks/useCategories";
@@ -41,8 +41,10 @@ const CategoryList = () => {
 		return (
 			<div>
 				<h3 className=" text-4xl font-extrabold mb-4">Categories</h3>
-				<div className="w-full h-[200px] relative">
-					<Loader />
+				<div className="grid sm:grid-cols-2 gap-5">
+					{Array.from({ length: 4 }).map((_, index) => (
+						<CategoryCardSkeleton key={index} />
+					))}
 				</div>
 			</div>
 		);

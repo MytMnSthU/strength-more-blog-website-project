@@ -1,5 +1,5 @@
 import CategoryLabel from "./CategoryLabel";
-import Loader from "@/components/Loader";
+import CategoryLabelSkeleton from "./CategoryLabelSkeleton";
 import useCategories from "../hooks/useCategories";
 
 const CategoryLabelList = () => {
@@ -16,8 +16,10 @@ const CategoryLabelList = () => {
 	}
 
 	if (isLoading) return (
-		<div className="w-full h-[200px] flex relative overflow-hidden justify-center items-center">
-			<Loader />
+		<div className=" flex flex-wrap gap-2 p-4">
+			{Array.from({ length: 6 }).map((_, index) => (
+				<CategoryLabelSkeleton key={index} />
+			))}
 		</div>
 	);
 

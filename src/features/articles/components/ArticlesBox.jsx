@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router";
 import ArticleBoxCard from "./ArticleBoxCard";
+import ArticleBoxCardSkeleton from "./ArticleBoxCardSkeleton";
 import { formatArticles } from "@/utils/utils";
 import LoadMoreButton from "@/components/LoadMoreButton";
-import Loader from "@/components/Loader";
 import useArticles from "../hooks/useArticles";
 
 const ArticlesBox = ({ boxTitle }) => {
@@ -36,8 +36,10 @@ const ArticlesBox = ({ boxTitle }) => {
 		}
 		if (isLoading)
 			return (
-				<div className=" w-full h-[200px] flex justify-center items-center  relative overflow-hidden">
-					<Loader />
+				<div className=" w-full h-[200px] relative overflow-hidden">
+					{Array.from({ length: 4 }).map((_, index) => (
+						<ArticleBoxCardSkeleton key={index} />
+					))}
 				</div>
 			);
 

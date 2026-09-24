@@ -1,7 +1,7 @@
 import ArticleCard from "./ArticleCard";
+import ArticleCardSkeleton from "./ArticleCardSkeleton";
 import LayoutControl from "./LayoutControl";
 import LoadMoreButton from "@/components/LoadMoreButton";
-import Loader from "@/components/Loader";
 import { formatArticles } from "@/utils/utils";
 import useArticles from "@/features/articles/hooks/useArticles";
 import { useParams } from "react-router";
@@ -54,8 +54,26 @@ const ArticleList = ({ title, category }) => {
 
 	if (isLoading)
 		return (
-			<div className=" w-full h-full">
-				<Loader />
+			<div className="grid gap-2.5">
+				<div className="flex flex-wrap items-center justify-between gap-4 py-4">
+					<h3 className=" text-4xl font-extrabold uppercase">
+						{title}
+					</h3>
+					<LayoutControl layout={layout} onChange={setLayout} />
+				</div>
+				<div
+					className={` grid gap-5 ${
+						layout === "grid"
+							? "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+							: "grid-cols-1"
+					}`}>
+					{Array.from({ length: 6 }).map((_, index) => (
+						<ArticleCardSkeleton
+							key={index}
+							layout={layout}
+						/>
+					))}
+				</div>
 			</div>
 		);
 
