@@ -5,17 +5,17 @@ import { useEffect, useState } from "react";
 const ShareButton = ({ platform, url, title }) => {
 	const platformData = {
 		telegram: {
-			icon: <FaTelegram className="text-[40px]" />,
+			icon: <FaTelegram className="text-[2.5rem]" />,
 			link: `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
 			color: "text-[#0088cc]",
 		},
 		facebook: {
-			icon: <FaFacebook className="text-[40px]" />,
+			icon: <FaFacebook className="text-[2.5rem]" />,
 			link: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
 			color: "text-[#1877F2]",
 		},
 		twitter: {
-			icon: <BsTwitterX className="text-[40px]" />,
+			icon: <BsTwitterX className="text-[2.5rem]" />,
 			link: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`,
 			color: "text-[#000] dark:text-[#fff]",
 		},

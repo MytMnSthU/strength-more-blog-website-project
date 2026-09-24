@@ -69,12 +69,12 @@ const ArticleCard = ({ article, layout = "grid" }) => {
 						<TimeLabel time={article.createdAt} />
 						{/* <div className=" flex">
 							<div className=" flex justify-center items-center gap-2 py-1 px-2">
-								<FaShare className=" text-[10px]" />
-								<span className=" text-[14px] font-bold">{formatNumber(article.shares) || 0}</span>
+								<FaShare className=" text-[0.625rem]" />
+								<span className=" text-[0.875rem] font-bold">{formatNumber(article.shares) || 0}</span>
 							</div>
 							<div className=" flex justify-center items-center gap-2 py-1 px-2">
-								<FaEye className=" text-[10px]" />
-								<span className=" text-[14px] font-bold">{formatNumber(article.views) || 0}</span>
+								<FaEye className=" text-[0.625rem]" />
+								<span className=" text-[0.875rem] font-bold">{formatNumber(article.views) || 0}</span>
 							</div>
 						</div> */}
 					</div>
@@ -83,7 +83,7 @@ const ArticleCard = ({ article, layout = "grid" }) => {
 					<h3 className=" text-3xl font-extrabold leading-none mb-2 group-hover:underline">
 						{article.title}
 					</h3>
-					<p className=" leading-[1.25] text-zinc-800 dark:text-zinc-300 text-[16px]">
+					<p className=" leading-[1.25] text-zinc-800 dark:text-zinc-300 text-[1rem]">
 						{stripHTML(article.content.html).length > 80
 							? stripHTML(article.content.html).slice(0, 80) + "..."	
 							: stripHTML(article.content.html)}

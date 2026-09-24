@@ -16,12 +16,26 @@ import ProtectedRoute from "./features/auth/components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
+const FONT_SIZES = {
+	small: "15px",
+	normal: "16px",
+	large: "17.5px",
+};
+
 const App = () => {
 	const [isSearchModalOpened, setIsSearchModalOpened] = useState(false);
 	const [mode, setMode] = useState("light");
+	const [fontSize, setFontSize] = useState("normal");
 
 	const toggleSearchModal = () => {
 		setIsSearchModalOpened(!isSearchModalOpened);
+	};
+
+	const changeFontSize = (size) => {
+		if (!FONT_SIZES[size]) return;
+		setFontSize(size);
+		document.documentElement.style.fontSize = FONT_SIZES[size];
+		localStorage.setItem("SMfontSize", size);
 	};
 
 	const toggleTheme = (mode) => {
@@ -95,17 +109,25 @@ const App = () => {
 			setMode("light");
 			document.documentElement.classList.remove("dark");
 		}
+
+		const savedFontSize = localStorage.getItem("SMfontSize");
+		if (savedFontSize && FONT_SIZES[savedFontSize]) {
+			setFontSize(savedFontSize);
+			document.documentElement.style.fontSize = FONT_SIZES[savedFontSize];
+		}
 	}, []);
 
 	return (
 		<AuthProvider>
 			<AppContext.Provider
-				value={{
-					mode,
-					toggleTheme,
-					toggleSearchModal,
-					isSearchModalOpened,
-				}}>
+			value={{
+				mode,
+				toggleTheme,
+				toggleSearchModal,
+				isSearchModalOpened,
+				fontSize,
+				changeFontSize,
+			}}>
 				<QueryClientProvider client={queryClient}>
 					<RouterProvider router={router} />
 				</QueryClientProvider>

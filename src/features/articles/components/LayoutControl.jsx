@@ -22,7 +22,7 @@ const LayoutControl = ({ layout, onChange }) => {
 								? "bg-black text-white dark:bg-white dark:text-black"
 								: "text-zinc-600 dark:text-zinc-400 hover:bg-black/5 dark:hover:bg-white/10"
 						}`}>
-						<Icon className="text-[12px]" />
+						<Icon className="text-[0.75rem]" />
 					</button>
 				);
 			})}

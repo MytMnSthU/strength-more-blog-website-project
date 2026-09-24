@@ -23,12 +23,12 @@ const ArticleBoxCard = ({ article }) => {
 					<TimeLabel time={article.createdAt} />
 					<div className=" flex">
 						<div className=" flex justify-center items-center gap-2 py-1 px-2">
-							<FaShare className=" text-[10px]" />
-							<span className=" text-[12px] font-bold">{formatNumber(article.shares) || 0}</span>
+							<FaShare className=" text-[0.625rem]" />
+							<span className=" text-[0.75rem] font-bold">{formatNumber(article.shares) || 0}</span>
 						</div>
 						<div className=" flex justify-center items-center gap-2 py-1 px-2">
-							<FaEye className=" text-[10px]" />
-							<span className=" text-[12px] font-bold">{formatNumber(article.views) || 0}</span>
+							<FaEye className=" text-[0.625rem]" />
+							<span className=" text-[0.75rem] font-bold">{formatNumber(article.views) || 0}</span>
 						</div>
 					</div>
 				</div>

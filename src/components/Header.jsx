@@ -8,6 +8,7 @@ import {
 	FaUser,
 } from "react-icons/fa";
 import Logo from "./Logo";
+import FontSizeControl from "./FontSizeControl";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
@@ -153,6 +154,8 @@ const Header = () => {
 							</div>
 						))}
 
+						<FontSizeControl />
+
 						<button
 							type="button"
 							aria-label="Search articles"
@@ -161,7 +164,7 @@ const Header = () => {
 								toggleSearchModal();
 							}}
 							className="mb-0">
-							<FaSearch className="text-[14px]" />
+							<FaSearch className="text-[0.875rem]" />
 						</button>
 
 						<button
@@ -199,6 +202,7 @@ const Header = () => {
 							</span>
 						</Link>
 					))}
+					<FontSizeControl />
 					<button
 						type="button"
 						aria-label="Search articles"
