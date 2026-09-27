@@ -36,9 +36,6 @@ export const GET_ARTICLES = gql`
 				html
 			}
 			popularArticle
-			likes
-			shares
-			views
 		}
 	}
 `;
@@ -70,16 +67,6 @@ export const GET_ARTICLE = gql`
 				html
 			}
 			popularArticle
-			comments {
-				email
-				title
-				username
-				id
-				createdAt
-			}
-			likes
-			shares
-			views
 		}
 	}
 `;
@@ -111,9 +98,6 @@ export const SEARCH_ARTICLE = gql`
 				html
 			}
 			popularArticle
-			likes
-			shares
-			views
 		}
 	}
 `;
