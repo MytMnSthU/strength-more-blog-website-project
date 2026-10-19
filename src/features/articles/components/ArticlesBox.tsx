@@ -4,8 +4,13 @@ import ArticleBoxCardSkeleton from "./ArticleBoxCardSkeleton";
 import { formatArticles } from "@/utils/utils";
 import LoadMoreButton from "@/components/LoadMoreButton";
 import useArticles from "../hooks/useArticles";
+import { Article } from "@/types/article";
 
-const ArticlesBox = ({ boxTitle }) => {
+type ArticlesBoxProps = {
+	boxTitle: string
+}
+
+const ArticlesBox = ({ boxTitle } : ArticlesBoxProps) => {
 	const navigate = useNavigate();
 
 	const {
@@ -48,7 +53,7 @@ const ArticlesBox = ({ boxTitle }) => {
 		}
 
 		const articles = data.pages.flatMap((page) => page.articles);
-		return formatArticles(articles).map((article) => (
+		return formatArticles(articles).map((article: Article) => (
 			<ArticleBoxCard
 				key={article.id}
 				article={article}

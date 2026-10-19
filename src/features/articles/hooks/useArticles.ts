@@ -1,7 +1,14 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getArticles } from "../api/getArticles";
 
-const useArticles = ({ category, isPopular, pageSize = 8, limit = 8 }) => {
+type UseArticlesProps = {
+	category?: string | undefined;
+	isPopular?: boolean;
+	pageSize?: number;
+	limit?: number
+}
+
+const useArticles = ({ category, isPopular, pageSize = 8, limit = 8 }: UseArticlesProps) => {
 	const {
 		data,
 		fetchNextPage,
@@ -10,13 +17,14 @@ const useArticles = ({ category, isPopular, pageSize = 8, limit = 8 }) => {
 		isLoading,
 		error,
 	} = useInfiniteQuery({
+		initialPageParam: 0,
 		queryKey: ["articles", category, isPopular],
 		queryFn: ({ pageParam = 0 }) => {
 			return getArticles({
 				limit,
 				pageParam,
 				where: {
-					categories_some: { slug: category },
+					categories_some: { slug: category! },
 					...(isPopular && {
 						popularArticle: true,
 					}),

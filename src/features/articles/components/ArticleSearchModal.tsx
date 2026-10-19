@@ -5,8 +5,13 @@ import Loader from "@/components/Loader";
 import { formatArticles } from "@/utils/utils";
 import useArticleSearch from "../hooks/useArticleSearch";
 
-const ArticleSearchModal = ({ isOpen, onClose }) => {
-	const searchInputRef = useRef(null);
+type ArticleSearchModalProps = {
+	isOpen: boolean;
+	onClose: () => void
+}
+
+const ArticleSearchModal = ({ isOpen, onClose } : ArticleSearchModalProps) => {
+	const searchInputRef = useRef<HTMLInputElement>(null);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [debouncedTerm, setDebouncedTerm] = useState("");
 
@@ -44,7 +49,9 @@ const ArticleSearchModal = ({ isOpen, onClose }) => {
 							<button
 								onClick={() => {
 									setSearchTerm("");
-									searchInputRef.current.value = "";
+									if (searchInputRef.current) {
+										searchInputRef.current.value = "";
+									}
 								}}
 								type="button"
 								className="w-[25px] h-[25px] text-black dark:text-white hover:text-gray-500 absolute right-5 top-1/2 transform -translate-y-1/2 z-10 flex items-center justify-center">

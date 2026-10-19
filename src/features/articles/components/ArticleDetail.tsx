@@ -7,16 +7,17 @@ import ShareModal from "@/components/ShareModal";
 import useArticle from "../hooks/useArticle";
 import ArticleDetailSkeleton from "./ArticleDetailSkeleton";
 
+import { Article } from "@/types/article";
+
 const ArticleDetail = () => {
-	const contentRef = useRef(null);
 	const { articleId } = useParams();
+	const { data, isLoading, error } = useArticle(articleId);
+	const contentRef = useRef<HTMLDivElement>(null);
 	const [isShareModalOpened, setIsShareModalOpened] = useState(false);
 
-	const { data, isLoading, error } = useArticle(articleId);
-
 	useEffect(() => {
-		if (data?.article) {
-			contentRef.current.innerHTML = data.article.content.html;
+		if (data && contentRef.current) {
+			contentRef.current.innerHTML = data.content.html;
 		}
 	}, [data, articleId]);
 
@@ -27,13 +28,13 @@ const ArticleDetail = () => {
 
 	if (isLoading) return <ArticleDetailSkeleton />;
 
-	if (!data?.article) {
+	if (!data) {
 		return <div>No article found</div>;
 	}
 
-	const formattedArticle = {
-		...data.article,
-		createdAt: new Date(data.article.createdAt).toLocaleDateString(),
+	const formattedArticle: Article = {
+		...data,
+		createdAt: new Date(data.createdAt).toLocaleDateString(),
 	};
 
 	const breadCrumbItems = [
@@ -51,7 +52,7 @@ const ArticleDetail = () => {
 				</h1>
 				<TimeLabel time={formattedArticle.createdAt} />
 
-				<div className="w-full h-[200px] sm:h-[500px] border-0 border-black dark:border-[#fff] overflow-hidden relative mt-2.5 rounded-lg">
+				{formattedArticle.image && (<div className="w-full h-[200px] sm:h-[500px] border-0 border-black dark:border-[#fff] overflow-hidden relative mt-2.5 rounded-lg">
 					<img
 						src={formattedArticle.image.url}
 						className="w-full h-full object-cover"
@@ -65,34 +66,12 @@ const ArticleDetail = () => {
 							/>
 						))}
 					</div>
-				</div>
+				</div>)}
 
 				<div
 					ref={contentRef}
 					className="prose dark:prose-invert max-w-none mt-4"></div>
 			</div>
-
-			{/* <div className="h-fit static sm:sticky top-1/2 left-0 transform sm:-translate-y-1/2 z-10">
-				<div className="sm:w-[80px] bg-[#F3F1E8] dark:bg-[#1F1F1F] border-0 border-black dark:border-[#fff] relative z-10 p-2.5">
-					<div className="flex sm:flex-col justify-evenly items-center">
-						<div
-							onClick={() => setIsShareModalOpened(true)}
-							className="flex flex-col justify-center items-center p-4 cursor-pointer hover:text-blue-500 transition-colors">
-							<FaShare className="text-lg" />
-							<span className="text-sm font-bold">
-								{formatNumber(formattedArticle.shares)}
-							</span>
-						</div>
-
-						<div className="flex flex-col justify-center items-center p-4">
-							<FaEye className="text-lg" />
-							<span className="text-sm font-bold">
-								{formatNumber(formattedArticle.views)}
-							</span>
-						</div>
-					</div>
-				</div>
-			</div> */}
 
 			<ShareModal
 				isOpen={isShareModalOpened}

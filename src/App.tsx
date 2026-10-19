@@ -69,6 +69,10 @@ const App = () => {
 					),
 				},
 				{
+					path: "articles/",
+					element: <ArticleList title="Recent Articles" />,
+				},
+				{
 					path: "articles/:articleId",
 					element: <ArticleDetail />,
 				},

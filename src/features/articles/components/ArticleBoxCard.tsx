@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router";
 import CategoryLabel from "@/features/categories/components/CategoryLabel";
 import TimeLabel from "@/components/TimeLabel";
-import { FaShare, FaEye } from "react-icons/fa";
-import { formatNumber } from "@/utils/utils";
+import { Article } from "@/types/article";
 
+type ArticleBoxCardProps = {
+	article: Article;
+}
 
-const ArticleBoxCard = ({ article }) => {
+const ArticleBoxCard = ({ article }: ArticleBoxCardProps) => {
     const navigate = useNavigate();
 
     return (
@@ -21,16 +23,7 @@ const ArticleBoxCard = ({ article }) => {
                 </h4>
                 <div className="flex flex-wrap justify-between items-center gap-2">
 					<TimeLabel time={article.createdAt} />
-					<div className=" flex">
-						<div className=" flex justify-center items-center gap-2 py-1 px-2">
-							<FaShare className=" text-[0.625rem]" />
-							<span className=" text-[0.75rem] font-bold">{formatNumber(article.shares) || 0}</span>
-						</div>
-						<div className=" flex justify-center items-center gap-2 py-1 px-2">
-							<FaEye className=" text-[0.625rem]" />
-							<span className=" text-[0.75rem] font-bold">{formatNumber(article.views) || 0}</span>
-						</div>
-					</div>
+					
 				</div>
 				<div className=" flex gap-2">
                     {article.categories.map((category) => (

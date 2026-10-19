@@ -6,25 +6,31 @@ import { formatArticles } from "@/utils/utils";
 import useArticles from "@/features/articles/hooks/useArticles";
 import { useParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
-import { stagger, animate, createScope } from "animejs";
+import { stagger, animate, createScope, Scope } from "animejs";
+import { Article } from "@/types/article";
 
-const ArticleList = ({ title, category }) => {
+type ArticleListProps = {
+	title: string;
+	category: string
+}
+
+const ArticleList = ({ title, category }: ArticleListProps) => {
 	const { categoryId } = useParams();
-	const articleListRoot = useRef(null);
-	const scope = useRef(null);
+	const articleListRoot = useRef<HTMLDivElement>(null);
+	const scope = useRef<Scope | null>(null);
 	const isPopular = category === "popular"
-	const [layout, setLayout] = useState("grid");
+	const [layout, setLayout] = useState<"grid" | "single">("grid");
 
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error } = useArticles({
 		category: categoryId,
-		isPopular 
+		isPopular
 	});
 
 	useEffect(() => {
-		if(!articleListRoot?.current?.children?.length) return;
-		
+		if (!articleListRoot?.current?.children?.length) return;
+
 		const newCards = Array.from(articleListRoot.current.children).slice(-((data?.pages?.[data.pages.length - 1]?.articles?.length) || articleListRoot.current.children.length));
-		
+
 		scope.current = createScope({ root: articleListRoot.current }).add(() => {
 			animate(newCards, {
 				translateY: [100, 0],
@@ -37,7 +43,8 @@ const ArticleList = ({ title, category }) => {
 				delay: stagger(80, { start: 50, from: 'first' }),
 			});
 		});
-		return () => scope.current.revert();
+
+		return () => scope.current?.revert();
 	}, [data]);
 
 	if (error) {
@@ -62,11 +69,10 @@ const ArticleList = ({ title, category }) => {
 					<LayoutControl layout={layout} onChange={setLayout} />
 				</div>
 				<div
-					className={` grid gap-5 ${
-						layout === "grid"
+					className={` grid gap-5 ${layout === "grid"
 							? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
 							: "grid-cols-1"
-					}`}>
+						}`}>
 					{Array.from({ length: 6 }).map((_, index) => (
 						<ArticleCardSkeleton
 							key={index}
@@ -92,12 +98,11 @@ const ArticleList = ({ title, category }) => {
 					</div>
 					<div
 						ref={articleListRoot}
-						className={` grid gap-5 ${
-							layout === "grid"
+						className={` grid gap-5 ${layout === "grid"
 								? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
 								: "grid-cols-1"
-						}`}>
-						{formattedArticles.map((article) => (
+							}`}>
+						{formattedArticles.map((article: Article) => (
 							<ArticleCard
 								key={article.id}
 								article={article}
