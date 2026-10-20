@@ -15,10 +15,8 @@ const CategoriesBox = () => {
                 >
                     categories
                 </span>
-                {/* <hr className=" border-b-2 border-b-black" /> */}
                 <CategoryLabelList />
             </div>
-            {/* <div className=" w-full h-full bg-black absolute top-0 left-0 translate-x-[3px] translate-y-[3px]"></div> */}
         </div>
     );
 };

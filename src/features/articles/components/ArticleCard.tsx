@@ -4,6 +4,7 @@ import CategoryLabel from "@/features/categories/components/CategoryLabel";
 import TimeLabel from "@/components/TimeLabel";
 
 import { Article } from "@/types/article";
+import { useImageStatus } from "@/hooks/hooks";
 
 function stripHTML(html: string) {
 	const div = document.createElement('div');
@@ -22,8 +23,7 @@ type ArticleImageProps = {
 }
 
 const ArticleImage = ({ article, isSingle }: ArticleImageProps) => {
-	const [isImageLoaded, setIsImageLoaded] = useState(false);
-	const [isImageError, setIsImageError] = useState(false);
+	const { isImageLoaded, isImageError, handleError, handleLoad } = useImageStatus();
 
 	if (!article.image) {
 		return (
@@ -57,11 +57,8 @@ const ArticleImage = ({ article, isSingle }: ArticleImageProps) => {
 			)}
 
 			<img
-				onLoad={() => setIsImageLoaded(true)}
-				onError={() => {
-					setIsImageLoaded(false)
-					setIsImageError(true);
-				}}
+				onLoad={handleLoad}
+				onError={handleError}
 				src={article.image?.url}
 				className=" w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all"
 				alt={article.image?.url}

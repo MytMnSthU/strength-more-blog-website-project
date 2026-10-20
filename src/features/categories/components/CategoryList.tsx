@@ -1,14 +1,14 @@
 import CategoryCard from "./CategoryCard";
 import CategoryCardSkeleton from "./CategoryCardSkeleton";
 import { useRef, useEffect } from "react";
-import { stagger, animate, createScope } from "animejs";
+import { stagger, animate, createScope, Scope } from "animejs";
 import useCategories from "../hooks/useCategories";
 
 const CategoryList = () => {
 	const { data, error, isLoading } = useCategories();
 
-	const categoryListRoot = useRef(null);
-	const scope = useRef(null);
+	const categoryListRoot = useRef<HTMLDivElement>(null);
+	const scope = useRef<Scope | null>(null);
 
 	useEffect(() => {
 		if (!categoryListRoot?.current?.children?.length) return;
@@ -29,7 +29,7 @@ const CategoryList = () => {
 				});
 			},
 		);
-		return () => scope.current.revert();
+		return () => scope.current?.revert();
 	}, [data]);
 
 	if (error) {
