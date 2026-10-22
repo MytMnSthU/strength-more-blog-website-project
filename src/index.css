@@ -8,7 +8,7 @@
 
 body {
 	font-family: "Nunito Sans", sans-serif;
-	font-size: 18px;
+	font-size: 1.125rem;
 	overflow-x: hidden;
 }
 
@@ -27,19 +27,19 @@ h6,
 }
 
 h4 {
-	font-size: 32px;
+	font-size: 2rem;
 	font-weight: 800;
 	margin-bottom: 1rem;
 }
 
 h6 {
-	font-size: 24px;
+	font-size: 1.5rem;
 	font-weight: 800;
 	margin-bottom: 1rem;
 }
 
 p {
-	font-size: 16px;
+	font-size: 1rem;
 	font-weight: 500;
 	line-height: 1.5;
 	margin-bottom: 1rem;
@@ -51,18 +51,30 @@ ul {
 	margin-bottom: 1rem;
 
 	li {
-		font-size: 20px;
+		font-size: 1.25rem;
 		margin-bottom: 0.5rem;
 	}
 }
 
 .container {
-	max-width: 1140px;
+	max-width: 1240px;
 }
 
 @media (min-width: 1640px) {
 	.container {
 		max-width: 1420px;
+	}
+}
+
+@media (max-width: 1240px) {
+	.container {
+		max-width: 1000px;
+	}
+}
+
+@media (max-width: 1024px) {
+	.container {
+		max-width: 780px;
 	}
 }
 

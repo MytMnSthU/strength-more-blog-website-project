@@ -1,0 +1,10 @@
+const ResetButton = ({ type = "reset", children }) => (
+    <button
+        type={type}
+        className=" px-8 py-4 text-base font-bold uppercase text-black bg-transparent border-0 mt-5 leading-none border-black"
+    >
+        {children}
+    </button>
+);
+
+export default ResetButton

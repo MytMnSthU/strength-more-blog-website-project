@@ -1,0 +1,128 @@
+import ArticleCard from "./ArticleCard";
+import ArticleCardSkeleton from "./ArticleCardSkeleton";
+import LayoutControl from "./LayoutControl";
+import LoadMoreButton from "@/components/LoadMoreButton";
+import { formatArticles } from "@/utils/utils";
+import useArticles from "@/features/articles/hooks/useArticles";
+import { useParams } from "react-router";
+import { useEffect, useRef, useState } from "react";
+import { stagger, animate, createScope, Scope } from "animejs";
+import { Article } from "@/types/article";
+
+type ArticleListProps = {
+	title: string;
+	category?: string
+}
+
+const ArticleList = ({ title, category }: ArticleListProps) => {
+	const { categoryId } = useParams();
+	const articleListRoot = useRef<HTMLDivElement>(null);
+	const scope = useRef<Scope | null>(null);
+	const isPopular = category === "popular"
+	const [layout, setLayout] = useState<"grid" | "single">("grid");
+
+	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error } = useArticles({
+		category: categoryId,
+		isPopular
+	});
+
+	useEffect(() => {
+		if (!articleListRoot?.current?.children?.length) return;
+
+		const newCards = Array.from(articleListRoot.current.children).slice(-((data?.pages?.[data.pages.length - 1]?.articles?.length) || articleListRoot.current.children.length));
+
+		scope.current = createScope({ root: articleListRoot.current }).add(() => {
+			animate(newCards, {
+				translateY: [100, 0],
+				translateX: [100, 0],
+				scale: [0.8, 1],
+				filter: ['blur(30px)', 'blur(0px)'],
+				opacity: [0, 1],
+				ease: 'out(2.4)',
+				duration: 400,
+				delay: stagger(80, { start: 50, from: 'first' }),
+			});
+		});
+
+		return () => scope.current?.revert();
+	}, [data]);
+
+	if (error) {
+		console.error("Error fetching articles:", error);
+		return (
+			<div
+				className=" text-red-700 px-4 py-3 relative my-4"
+				role="alert">
+				<strong className="font-bold">Error:</strong>
+				<span className="block sm:inline ml-2 text-lg">Failed to load articles.</span>
+			</div>
+		);
+	}
+
+	if (isLoading)
+		return (
+			<div className="grid gap-2.5">
+				<div className="flex flex-wrap items-center justify-between gap-4 py-4">
+					<h3 className=" text-4xl font-extrabold uppercase">
+						{title}
+					</h3>
+					<LayoutControl layout={layout} onChange={setLayout} />
+				</div>
+				<div
+					className={` grid gap-5 ${layout === "grid"
+							? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+							: "grid-cols-1"
+						}`}>
+					{Array.from({ length: 6 }).map((_, index) => (
+						<ArticleCardSkeleton
+							key={index}
+							layout={layout}
+						/>
+					))}
+				</div>
+			</div>
+		);
+
+	if (data?.pages?.length) {
+		const formattedArticles = formatArticles(data.pages.flatMap((page) => page.articles));
+
+		return (
+			<>
+				<div
+					className="grid gap-2.5">
+					<div className="flex flex-wrap items-center justify-between gap-4 py-4">
+						<h3 className=" text-4xl font-extrabold uppercase">
+							{title} {categoryId && `: "${categoryId}"`}
+						</h3>
+						<LayoutControl layout={layout} onChange={setLayout} />
+					</div>
+					<div
+						ref={articleListRoot}
+						className={` grid gap-5 ${layout === "grid"
+								? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+								: "grid-cols-1"
+							}`}>
+						{formattedArticles.map((article: Article) => (
+							<ArticleCard
+								key={article.id}
+								article={article}
+								layout={layout}
+							/>
+						))}
+					</div>
+					{title.toLowerCase() === "recent articles" && hasNextPage && (
+						<div className="flex justify-center items-center">
+							<LoadMoreButton
+								onClickBtn={() => fetchNextPage()}
+								isLoading={isFetchingNextPage}>
+								more articles
+							</LoadMoreButton>
+						</div>
+					)}
+				</div>
+			</>
+		);
+	}
+};
+
+export default ArticleList;
