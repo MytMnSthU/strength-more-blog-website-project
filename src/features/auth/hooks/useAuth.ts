@@ -1,8 +1,14 @@
 import { useContext } from "react"
-import AuthContext from "../../../context/AuthContext"
+import AuthContext from "@/context/AuthContext"
 
-const useAuth = () => { 
-	const { user, isAuthLoading } = useContext(AuthContext);
+const useAuth = () => {
+	const context = useContext(AuthContext);
+
+	if (context === null) {
+		throw new Error("Must be used with AuthProvider");
+	}
+
+	const { user, isAuthLoading } = context;
 
 	return {
 		user,

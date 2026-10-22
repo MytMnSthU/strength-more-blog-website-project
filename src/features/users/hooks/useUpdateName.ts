@@ -1,7 +1,7 @@
 import { updateUserName } from "../api/updateName";
 
 const useUpdateName = () => {
-	const updateName = async (name) => {
+	const updateName = async (name: string) => {
 		const user = await updateUserName(name);
 		return user;
 	};

@@ -8,19 +8,23 @@ import ScrollToTop from "./components/ScrollToTop";
 import Header from "./components/Header";
 
 const MainLayout = () => {
-	const { scrollContainerRef, toggleSearchModal, isSearchModalOpened } = useContext(AppContext);
+	const context = useContext(AppContext);
+	if (context === null) {
+		throw new Error(" must be used within AppProvider");
+	}
+	const { toggleSearchModal, isSearchModalOpened } = context;
+
 	return (
 		<div
-			ref={scrollContainerRef}
 			className={`bg-[#F3F1E8] dark:bg-[#1F1F1F] text-black dark:text-white h-max border border-black min-h-screen`}>
 			<ScrollToTop />
-			<Header toggleSearchModal={toggleSearchModal} />
+			<Header />
 			<div className="container grid lg:grid-cols-8 xl:grid-cols-8 gap-3 p-2.5 mx-auto sm:pb-20  pt-14">
 				<div className="sm:col-span-6 xl:col-span-6">
 					<Outlet />
 				</div>
 				<div className=" sm:col-span-2">
-					<SideBar onModalClick={toggleSearchModal} />
+					<SideBar />
 				</div>
 				<ArticleSearchModal
 					isOpen={isSearchModalOpened}

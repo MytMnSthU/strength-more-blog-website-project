@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { AppContext } from "../../../context/AppContext";
 import { animate } from "animejs";
 import useLogin from "../hooks/useLogin";
@@ -8,26 +8,32 @@ import useRegister from "../hooks/useRegister";
 const INPUT_CLASS =
 	"w-full border border-black/20 bg-transparent px-4 py-3 text-base font-semibold outline-none transition-all placeholder:font-normal placeholder:text-zinc-500 focus:-translate-y-0.5 focus:bg-white dark:border-white/20 dark:focus:bg-[#282727] rounded-lg";
 
-const AuthForm = ({ mode }) => {
+type AuthFormProps = {
+	mode: "register" | "login"
+}
+
+const AuthForm = ({ mode }: AuthFormProps) => {
 	const isRegister = mode === "register";
 	const { login } = useLogin();
 	const { register } = useRegister();
-	const { mode: themeMode } = useContext(AppContext);
+	const context = useContext(AppContext);
+	const themeMode = context?.mode;
 	const navigate = useNavigate();
 	const location = useLocation();
 
 	// States: "idle" | "loading" | "success" | "error"
 	const [status, setStatus] = useState("idle");
 
-	const submitButtonRef = useRef(null);
-	const circlePathRef = useRef(null);
+	const submitButtonRef = useRef<HTMLButtonElement>(null);
+	const circlePathRef = useRef<SVGCircleElement>(null);
 	const svgSpinnerRef = useRef(null);
-	const checkmarkPathRef = useRef(null);
+	const checkmarkPathRef = useRef<SVGPathElement>(null);
 
 	const CIRCLE_CIRCUMFERENCE = 251.32;
 
 	useEffect(() => {
 		if (status === "loading") {
+			if (!submitButtonRef.current || !circlePathRef.current || !svgSpinnerRef.current) return;
 			// Shrink button to circular spinner size
 			animate(submitButtonRef.current, {
 				width: ["100%", "64px"],
@@ -57,6 +63,7 @@ const AuthForm = ({ mode }) => {
 		}
 
 		if (status === "success") {
+			if (!submitButtonRef.current) return;
 			// Expand button to fit checkmark + "Success"
 			animate(submitButtonRef.current, {
 				width: ["64px", "160px"],
@@ -67,8 +74,8 @@ const AuthForm = ({ mode }) => {
 			// Draw checkmark stroke
 			if (checkmarkPathRef.current) {
 				const pathLength = checkmarkPathRef.current.getTotalLength();
-				checkmarkPathRef.current.style.strokeDasharray = pathLength;
-				checkmarkPathRef.current.style.strokeDashoffset = pathLength;
+				checkmarkPathRef.current.style.strokeDasharray = pathLength + "";
+				checkmarkPathRef.current.style.strokeDashoffset = pathLength + "";
 
 				animate(checkmarkPathRef.current, {
 					strokeDashoffset: [pathLength, 0],
@@ -80,6 +87,8 @@ const AuthForm = ({ mode }) => {
 		}
 
 		if (status === "error") {
+			if (!submitButtonRef.current) return;
+
 			animate(submitButtonRef.current, {
 				width: ["64px", "160px"],
 				duration: 500,
@@ -87,6 +96,8 @@ const AuthForm = ({ mode }) => {
 			});
 
 			const timer = setTimeout(() => {
+				if (!submitButtonRef.current) return;
+
 				animate(submitButtonRef.current, {
 					width: "100%",
 					duration: 500,
@@ -99,12 +110,12 @@ const AuthForm = ({ mode }) => {
 		}
 	}, [status]);
 
-	async function handleFormSubmit(e) {
+	async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
-		const formData = new FormData(e.target);
-		const name = formData.get("name");
-		const email = formData.get("email");
-		const password = formData.get("password");
+		const formData = new FormData(e.target as HTMLFormElement);
+		const name = formData.get("name") as string;
+		const email = formData.get("email") as string;
+		const password = formData.get("password") as string;
 		const confirmPassword = formData.get("confirmPassword");
 
 		if (isRegister && password !== confirmPassword) {
@@ -237,13 +248,12 @@ const AuthForm = ({ mode }) => {
 						type="submit"
 						ref={submitButtonRef}
 						disabled={status !== "idle"}
-						className={`btn border rounded-lg py-3 text-xl font-extrabold uppercase leading-none transition-colors duration-300 mx-auto w-full relative flex items-center justify-center gap-2 overflow-hidden ${
-							status === "success"
-								? "bg-black dark:bg-white border-black dark:border-white text-white dark:text-black"
-								: status === "error"
-									? "bg-red-600 border-red-600 text-white"
-									: "bg-black border-black text-white dark:bg-white dark:border-white dark:text-black"
-						}`}>
+						className={`btn border rounded-lg py-3 text-xl font-extrabold uppercase leading-none transition-colors duration-300 mx-auto w-full relative flex items-center justify-center gap-2 overflow-hidden ${status === "success"
+							? "bg-black dark:bg-white border-black dark:border-white text-white dark:text-black"
+							: status === "error"
+								? "bg-red-600 border-red-600 text-white"
+								: "bg-black border-black text-white dark:bg-white dark:border-white dark:text-black"
+							}`}>
 						{status === "idle" &&
 							(isRegister ? "create account" : "sign in")}
 

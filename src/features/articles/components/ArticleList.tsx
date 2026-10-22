@@ -11,7 +11,7 @@ import { Article } from "@/types/article";
 
 type ArticleListProps = {
 	title: string;
-	category: string
+	category?: string
 }
 
 const ArticleList = ({ title, category }: ArticleListProps) => {

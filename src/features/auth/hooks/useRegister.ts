@@ -1,7 +1,7 @@
 import { registerWithEmailAndPassword } from "../api/register";
 
 const useRegister = () => {
-	const register = async (email, password, name) => {
+	const register = async (email: string, password: string, name: string) => {
 		try {
 			const userCredential = await registerWithEmailAndPassword(
 				email,

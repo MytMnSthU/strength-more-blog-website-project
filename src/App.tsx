@@ -20,7 +20,7 @@ const FONT_SIZES = {
 	small: "15px",
 	normal: "16px",
 	large: "17.5px",
-};
+} as const;
 
 const App = () => {
 	const [isSearchModalOpened, setIsSearchModalOpened] = useState(false);
@@ -31,14 +31,14 @@ const App = () => {
 		setIsSearchModalOpened(!isSearchModalOpened);
 	};
 
-	const changeFontSize = (size) => {
+	const changeFontSize = (size: "small" | "normal" | "large") => {
 		if (!FONT_SIZES[size]) return;
 		setFontSize(size);
 		document.documentElement.style.fontSize = FONT_SIZES[size];
 		localStorage.setItem("SMfontSize", size);
 	};
 
-	const toggleTheme = (mode) => {
+	const toggleTheme = (mode: "dark" | "light") => {
 		if (mode === "light") {
 			setMode("dark");
 			document.documentElement.classList.add("dark");
@@ -99,7 +99,7 @@ const App = () => {
 							path: "profile",
 							element: <Profile />,
 						},
-					],	
+					],
 				},
 			],
 		},
@@ -115,23 +115,24 @@ const App = () => {
 		}
 
 		const savedFontSize = localStorage.getItem("SMfontSize");
-		if (savedFontSize && FONT_SIZES[savedFontSize]) {
-			setFontSize(savedFontSize);
-			document.documentElement.style.fontSize = FONT_SIZES[savedFontSize];
+		if (savedFontSize && savedFontSize in FONT_SIZES) {
+			const validKey = savedFontSize as keyof typeof FONT_SIZES;
+			setFontSize(validKey);
+			document.documentElement.style.fontSize = FONT_SIZES[validKey];
 		}
 	}, []);
 
 	return (
 		<AuthProvider>
 			<AppContext.Provider
-			value={{
-				mode,
-				toggleTheme,
-				toggleSearchModal,
-				isSearchModalOpened,
-				fontSize,
-				changeFontSize,
-			}}>
+				value={{
+					mode,
+					toggleTheme,
+					toggleSearchModal,
+					isSearchModalOpened,
+					fontSize,
+					changeFontSize,
+				}}>
 				<QueryClientProvider client={queryClient}>
 					<RouterProvider router={router} />
 				</QueryClientProvider>

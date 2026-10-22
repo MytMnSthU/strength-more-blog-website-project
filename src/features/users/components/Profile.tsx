@@ -14,11 +14,8 @@ const Profile = () => {
 	const [joinedDate, setJoinedDate] = useState(formatDate(user?.metadata.creationTime) || "");
 	const fileInputRef = useRef(null);
 
-	const handleImageChange = (event) => {
-		const file = event.target.files?.[0];
-		if (!file) return;
-
-		setProfileImage(URL.createObjectURL(file));
+	const handleImageChange = () => {
+		// profile image upload feature...
 	};
 
 	const startEditingName = () => {
@@ -68,7 +65,6 @@ const Profile = () => {
 						<button
 							type="button"
 							aria-label="Upload profile image"
-							onClick={() => fileInputRef.current?.click()}
 							className="absolute bottom-1 right-1 flex h-9 w-9 items-center justify-center rounded-full border border-black/20 bg-[#F3F1E8] dark:border-white/20 dark:bg-[#1F1F1F]">
 							<FaCamera size={13} />
 						</button>
