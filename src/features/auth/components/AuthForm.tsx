@@ -23,13 +23,89 @@ const AuthForm = ({ mode }: AuthFormProps) => {
 
 	// States: "idle" | "loading" | "success" | "error"
 	const [status, setStatus] = useState("idle");
+	const [errorMessage, setErrorMessage] = useState<string>("");
 
 	const submitButtonRef = useRef<HTMLButtonElement>(null);
 	const circlePathRef = useRef<SVGCircleElement>(null);
 	const svgSpinnerRef = useRef(null);
 	const checkmarkPathRef = useRef<SVGPathElement>(null);
+	const turnstileContainerRef = useRef<HTMLDivElement>(null);
+	const turnstileWidgetIdRef = useRef<string | null>(null);
 
 	const CIRCLE_CIRCUMFERENCE = 251.32;
+	const siteKey = import.meta.env.VITE_SITE_KEY;
+
+	const resetTurnstile = () => {
+		const turnstile = (window as unknown as { turnstile?: any }).turnstile;
+		if (turnstile) {
+			try {
+				if (turnstileWidgetIdRef.current) {
+					turnstile.reset(turnstileWidgetIdRef.current);
+				} else {
+					turnstile.reset();
+				}
+			} catch {
+				// Ignore reset errors
+			}
+		}
+	};
+
+	// Initialize and handle Cloudflare Turnstile widget across React route changes
+	useEffect(() => {
+		let isMounted = true;
+		if (!siteKey) return;
+
+		const renderTurnstile = () => {
+			const turnstile = (window as unknown as { turnstile?: any }).turnstile;
+			if (
+				turnstile &&
+				turnstileContainerRef.current &&
+				turnstileContainerRef.current.childElementCount === 0
+			) {
+				try {
+					turnstileWidgetIdRef.current = turnstile.render(
+						turnstileContainerRef.current,
+						{
+							sitekey: siteKey,
+							theme: themeMode === "dark" ? "dark" : "light",
+						}
+					);
+				} catch {
+					// Element may already have been initialized by Turnstile scanner
+				}
+			}
+		};
+
+		const turnstile = (window as unknown as { turnstile?: any }).turnstile;
+		if (turnstile) {
+			renderTurnstile();
+		} else {
+			const interval = setInterval(() => {
+				const t = (window as unknown as { turnstile?: any }).turnstile;
+				if (t) {
+					clearInterval(interval);
+					if (isMounted) renderTurnstile();
+				}
+			}, 100);
+			return () => {
+				isMounted = false;
+				clearInterval(interval);
+			};
+		}
+
+		return () => {
+			isMounted = false;
+			const t = (window as unknown as { turnstile?: any }).turnstile;
+			if (turnstileWidgetIdRef.current && t) {
+				try {
+					t.remove(turnstileWidgetIdRef.current);
+					turnstileWidgetIdRef.current = null;
+				} catch {
+					// Ignore cleanup errors
+				}
+			}
+		};
+	}, [mode, themeMode, siteKey]);
 
 	useEffect(() => {
 		if (status === "loading") {
@@ -104,7 +180,8 @@ const AuthForm = ({ mode }: AuthFormProps) => {
 					easing: "easeOutQuad",
 				});
 				setStatus("idle");
-			}, 2000);
+				setErrorMessage("");
+			}, 2500);
 
 			return () => clearTimeout(timer);
 		}
@@ -117,8 +194,16 @@ const AuthForm = ({ mode }: AuthFormProps) => {
 		const email = formData.get("email") as string;
 		const password = formData.get("password") as string;
 		const confirmPassword = formData.get("confirmPassword");
+		const turnstileToken = formData.get("cf-turnstile-response");
 
 		if (isRegister && password !== confirmPassword) {
+			setErrorMessage("Passwords do not match. Please try again.");
+			setStatus("error");
+			return;
+		}
+
+		if (!turnstileToken) {
+			setErrorMessage("Please complete the Cloudflare security verification.");
 			setStatus("error");
 			return;
 		}
@@ -137,9 +222,29 @@ const AuthForm = ({ mode }: AuthFormProps) => {
 					navigate(location.state?.from || "/profile");
 				}, 1200);
 			} else {
+				resetTurnstile();
+				setErrorMessage(
+					isRegister
+						? "Could not create account. Please check your details and try again."
+						: "Invalid email or password. Please try again."
+				);
 				setStatus("error");
 			}
-		} catch (err) {
+		} catch (err: any) {
+			resetTurnstile();
+			if (err?.code === "auth/too-many-requests") {
+				setErrorMessage("Too many failed attempts. Access to this account has been temporarily disabled. Please try again later.");
+			} else if (err?.code === "auth/email-already-in-use") {
+				setErrorMessage("An account with this email already exists.");
+			} else if (err?.code === "auth/weak-password") {
+				setErrorMessage("Password should be at least 6 characters.");
+			} else {
+				setErrorMessage(
+					isRegister
+						? "Could not create account. Please check your details and try again."
+						: "Invalid email or password. Please try again."
+				);
+			}
 			setStatus("error");
 		}
 	}
@@ -235,12 +340,23 @@ const AuthForm = ({ mode }: AuthFormProps) => {
 						</label>
 					)}
 
+					{/* Cloudflare Turnstile Verification */}
+					<div className="flex justify-center my-1 min-h-[65px]">
+						<div
+							ref={turnstileContainerRef}
+							className="cf-turnstile"
+							data-sitekey={siteKey}
+							data-theme={themeMode === "dark" ? "dark" : "light"}
+						/>
+					</div>
+
 					{/* Show error message if present */}
 					{status === "error" && (
 						<p className="text-sm font-semibold text-red-500 text-center mb-0">
-							{isRegister
-								? "Could not create account. Please check your details and try again."
-								: "Invalid email or password. Please try again."}
+							{errorMessage ||
+								(isRegister
+									? "Could not create account. Please check your details and try again."
+									: "Invalid email or password. Please try again.")}
 						</p>
 					)}
 
